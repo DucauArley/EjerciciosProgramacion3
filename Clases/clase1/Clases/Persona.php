@@ -8,10 +8,5 @@ class Persona extends Humano
 		Parent::__construct($nombre, $apellido);
 		$this->dni = $dni;
 	}
-
-	public function to_json()
-	{
-		json_encode($this);
-	}
 }
 ?>

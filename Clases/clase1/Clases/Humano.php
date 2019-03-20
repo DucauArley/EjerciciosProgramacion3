@@ -9,11 +9,5 @@ class Humano
 		$this->nombre = $nombre;
 		$this->apellido = $apellido;
 	}
-
-	public function to_json()
-	{
-		json_encode($this);
-	}
-
 }
 ?>

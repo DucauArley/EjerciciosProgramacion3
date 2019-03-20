@@ -9,10 +9,5 @@ class Alumno extends Persona
 		$this->legajo = $legajo;
 	}
 
-	public function to_json()
-	{
-		json_encode($this);
-	}
-
 }
 ?>
