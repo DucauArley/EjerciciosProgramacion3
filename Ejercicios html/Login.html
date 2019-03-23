@@ -1,0 +1,46 @@
+<html>
+    <head>
+    <title>Login</title>
+    <script>
+
+        window.onload = carga; //el puntero a la funcion que es una variable
+
+
+        function carga() // Tambien se puede escribir var carga = function otroNombre()
+        {
+            var boton = document.getElementById("btn").addEventListener("click", validarUsuario); //para agregar un evento
+            //var boton = document.getElementById("btn").removeEventListener("click", validarUsuario); para sacar un evento
+            //Se puede hacer asi tambien boton.onclick = validarUsuario;
+        }
+
+        function validarUsuario()
+        {
+            var usuario = document.getElementById("usr"); 
+            var password = document.getElementById("pass");
+
+            if(usuario.value == "Juan" && password.value == "caca")
+            {
+                alert("Todo piola ameo");
+            }
+            else
+            {
+                alert("Para la mierda loco, deja de robar cuentas ajenas");
+            }
+        }
+
+    </script>
+    </head>
+    <body>
+        <form method="POST"> <!--action="Url del servidor que quiero que vaya"--> 
+        <fieldset>
+            <legend>Login:</legend>
+            Usuario<br>
+            <input type="text" name="txtUsr" id="usr" size="40"><br>
+            Contraseña<br>
+            <input type="password" name="pass" id="pass" size="40"><br>
+            <input type="checkbox" checked> Recordar usar Contraseña<br>
+            <input type="button" value ="Enviar" id="btn"> <!--Se puede poner dentro del boton tambien onclick="validarUsuario();"-->   <input type="reset" value="Limpiar">
+        </fieldset>
+        </form>
+    </body>
+</html>
