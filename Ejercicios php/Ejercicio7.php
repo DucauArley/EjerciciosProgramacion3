@@ -6,16 +6,13 @@
 
 	switch ($fecha) 
 	{
-		case $fecha >= 321:
-		case $fecha <= 620:
+		case ($fecha >= 321 && $fecha <= 620):
 			$estacion = "Otoño";
 			break;
-		case $fecha >= 621:
-		case $fecha <= 820:
+		case ($fecha >= 621 && $fecha <= 820):
 			$estacion = "Invierno";
 			break;
-		case $fecha >= 821:
-		case $fecha <= 1220:
+		case ($fecha >= 821 && $fecha <= 1220):
 			$estacion = "Primavera";
 			break;
 		default:
