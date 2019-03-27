@@ -6,7 +6,7 @@
 	$total;
 	$ok = true;
 
-	switch ($operador) 
+	switch ($operador)
 	{
 		case '+':
 			$total = $op1 + $op2;
@@ -14,8 +14,16 @@
 		case '-':
 			$total = $op1 - $op2;
 			break;
-		case '/':
-			$total = $op1 / $op2;
+    case '/':
+      if($op2 != 0)
+      {
+        $total = $op1 / $op2;
+      }
+      else
+      {
+        echo "No se puede dividir por cero";
+        ok = false;
+      }
 			break;
 		case '*':
 			$total = $op1 * $op2;

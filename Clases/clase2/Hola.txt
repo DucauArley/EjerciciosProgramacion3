@@ -1,0 +1,3 @@
+Pepe;Perez;222;620
+Juan;Lopez;435;982
+Maria;Disalvo;423;452
