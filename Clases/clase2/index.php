@@ -4,13 +4,9 @@
 
 	$vec = array();
 	$i = 0;
-	$alumno1 = new alumno();
-	$alumno2 = new alumno(); 
-	$alumno3 =  new alumno();
+	$json;
 	$alumnos = array();
-	$alumnos[] = $alumno1;
-	$alumnos[] = $alumno2;
-	$alumnos[] = $alumno3;
+
 
 	$archivo = fopen("Hola.txt", "w");
 
@@ -23,7 +19,6 @@
 	fclose($archivo);
 
 	$archivo = fopen("Hola.txt", "r");
-	var_dump($alumnos);
 
 	if(!is_null($archivo))
 	{
@@ -31,27 +26,28 @@
 		{
 			$vec[] =  fgets($archivo);
 			$vec[$i] = explode(";", $vec[$i]);
-			$alumnos[$i]->nombre = $vec[$i]->{0};
-			$alumnos[$i]->apellido = $vec[$i]->{1};
-			$alumnos[$i]->legajo = $vec[$i]->{2};
-			$alumnos[$i]->id = $vec[$i]->{3};
 
 			$i++;
 		}
 
-		foreach ($alumnos as $item) 
-		{
-			foreach($item as $var)
-			{
-				echo $var;
-			}
-
-			echo "<br/>";
-		}
-
 	}
 
-	var_dump($vec);
+	$json = json_encode($vec);
+
+	$json = json_decode($json);
+
+	foreach ($json as $arrays) 
+	{
+		$alumnoAux = new Alumno();
+		$alumnoAux->nombre = $arrays[0];
+		$alumnoAux->apellido = $arrays[1];
+		$alumnoAux->legajo = $arrays[2];
+		$alumnoAux->id = $arrays[3];
+
+		$alumnos[] = $alumnoAux;
+	}
+
+	var_dump($alumnos);
 
 	fclose($archivo);
 
