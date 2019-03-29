@@ -29,14 +29,9 @@
 			return $retorno;		
 		}
 
-		public abstract function Dibujar()
-		{
-		}
+		public abstract function Dibujar();
 
-		protected abstract function CalcularDatos()
-		{
-
-		}
+		protected abstract function CalcularDatos();
 
 	}
 
