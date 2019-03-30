@@ -1,0 +1,162 @@
+<html>
+	<head>
+		<title>Calculadora</title>
+		<script>
+
+			function Sumar()
+			{
+				var num1 = document.getElementById("num1").value;
+				var num2 = document.getElementById("num2").value;
+				num1 = parseInt(num1);
+				num2 = parseInt(num2);
+
+				document.getElementById("res").value = num1 + num2;
+			}
+
+			function Guardar()
+			{
+				Sumar();
+				var num1 = document.getElementById("num1").value;
+				var num2 = document.getElementById("num2").value;
+				var resul = document.getElementById("res").value;
+				var tbody = document.getElementById("tbody").value;
+				var tabla = document.getElementById("tabla").value;
+
+				tbody.innerHTML = "<tr><td>"+num1+"</td></tr>";
+
+			}
+		</script>
+
+		<style>
+			p
+			{ 
+				color:red; 
+				font-size:10pt;
+			}
+			p.negrita
+			{
+				font-weight: bold;
+				font-size: 15pt;
+			}
+			p.otra
+			{
+				background-color: lightblue;
+			}
+			input[type='button']
+			{
+				margin: 5px 0px 5px 0px;/*Arriba, Derecha, Abajo, Izquierda */
+				padding: 0px 25px 0px 0px;/*Espacio de lo inteno*/
+				color: white;
+				font-weight: bold;
+				font-size: 15pt;
+				border-radius: 8px;
+				cursor: pointer;
+				border-style: none;
+
+			}
+			.boton
+			{
+				background-color: green;			
+				width: 125px;
+				height: 50px;
+			}
+			.botonG
+			{
+				background-color: red;
+				width: 250px;
+				height: 50px;
+			}
+			input[type='number']
+			{
+				text-align: right;
+				margin-right: 30px;
+				width: 200px;
+				height: 50px;
+			}
+		</style>
+
+	</head>
+	<body>
+		<header>
+			<h1>Titulo</h1>
+			<nav>
+				<ul>
+					<li><a href="#">Link1</a></li>
+					<li><a href="#">Link2</a></li>
+					<li><a href="#">Link3</a></li>
+					<li><a href="http://www.google.com">Pag externa</a></li>
+				</ul>
+			</nav>		
+		</header>
+
+		<main>
+			<section>
+				<p>
+					Hola que tal
+				</p>
+				<p class = negrita>
+					Rogelio Frigelio
+				</p>
+				<p class = otra>
+					Picantovich
+				</p>
+				<article>
+					Que onda gente soy el coscu y hoy voy a decir la palabra con n	
+				</article>
+				<article>
+					No coscu no lo hagas
+				</article>
+				<article>
+					No me importa nada Frankkaster, ahi lo digo... NNNNEEEDDDDEEEEEAHHHHHHH!!!!
+				</article>
+			</section>
+		</main>
+
+		<footer>
+			
+		</footer>
+
+		<h1>Calculadora</h1>
+		<fieldset>
+            <legend>Sumar numeros</legend>
+            Se deben ingresar dos numeros y hacer click en el boton sumar para ver el resultado<br>
+            <input type="number" name="txtnum1" id="num1" size="20"> <label class="negrita" style="margin:30px">+</label> 
+            <input type="number" name="txtnum2" id="num2" size="20">
+            <input type="button" value="Sumar" class= "boton" id="sum" onclick="Sumar();">
+            <input type="button" value="Sumar y Guardar" class="botonG" id="sumGuar" onclick="Guardar();"><br>
+            Resultado <input type="number" name="txtres"  id="res" size="20">
+            <h2>Historial de resultados</h2>
+            <table border = "1" id = "tabla">
+            	<thread>
+            		<th>Numero 1</th>
+            		<th>Numero 2</th>
+            		<th>Numero 3</th>
+            	</thread>
+            	<tbody id = "tbody">
+            		<tr>
+            			<td>1</td>
+            			<td>2</td>
+            			<td>3</td>
+            		</tr>
+            		<tr>
+            			<td>1</td>
+            			<td>2</td>
+            			<td></td>
+            		</tr>
+
+
+            	</tbody>
+
+
+
+            </table>
+
+
+        </fieldset>		
+	</body>
+
+
+
+
+
+</html>
