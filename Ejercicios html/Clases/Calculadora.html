@@ -3,6 +3,14 @@
 		<title>Calculadora</title>
 		<script>
 
+			window.onload = carga;
+
+			 function carga()
+        	{
+            	var botonS = document.getElementById("sum").addEventListener("click", Sumar);
+            	var botonG = document.getElementById("sumGuar").addEventListener("click", Guardar);
+        	}
+
 			function Sumar()
 			{
 				var num1 = document.getElementById("num1").value;
@@ -122,8 +130,8 @@
             Se deben ingresar dos numeros y hacer click en el boton sumar para ver el resultado<br>
             <input type="number" name="txtnum1" id="num1" size="20"> <label class="negrita" style="margin:30px">+</label> 
             <input type="number" name="txtnum2" id="num2" size="20">
-            <input type="button" value="Sumar" class= "boton" id="sum" onclick="Sumar();">
-            <input type="button" value="Sumar y Guardar" class="botonG" id="sumGuar" onclick="Guardar();"><br>
+            <input type="button" value="Sumar" class= "boton" id="sum">
+            <input type="button" value="Sumar y Guardar" class="botonG" id="sumGuar"><br>
             Resultado <input type="number" name="txtres"  id="res" size="20">
             <h2>Historial de resultados</h2>
             <table border = "1" id = "tabla">
