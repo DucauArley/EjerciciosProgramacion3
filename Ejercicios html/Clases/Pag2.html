@@ -1,0 +1,175 @@
+<html>
+	<head>
+		<title>Pagina 2</title>
+		<script>
+
+			function Agregar()
+			{
+				var apellido = document.getElementById("apellido").value;
+				var nombre = document.getElementById("nombre").value;
+
+				if(nombre == "")
+				{
+					document.getElementById("nombre").className = "error";
+					alert("Debe ingresar un nombre y un apellido");
+					return;
+				}
+
+				if (apellido == "")
+				{
+					document.getElementById("apellido").className = "error";
+					alert("Debe ingresar un nombre y un apellido");
+					return;
+				}
+
+				if(confirm("¿Esta seguro que desea agregar una persona"))
+				{
+					document.getElementById("apellido").className = "sinError";
+					document.getElementById("nombre").className = "sinError";
+					var tCuerpo = document.getElementById("tbody");
+
+					tbody.innerHTML = tbody.innerHTML +
+					"<td>" +nombre+ "</td>"+
+					"<td>" +apellido+ "</td>"+
+					"<td><a href=''>borrar</a></td>"
+
+				}
+			}
+
+			function Abrir()
+			{
+				var contAgregar = document.getElementById("contAgregar");
+				var btn = document.getElementById("btnAgregar");
+				btn.hidden = true;
+				contAgregar.hidden = false;
+			}
+
+			function Cerrar()
+			{
+				var contAgregar = document.getElementById("contAgregar");
+				var btn = document.getElementById("btnCerrar");
+				var btnAg = document.getElementById("btnAgregar");
+				//contAgregar.className ="contenedor c1Ds"
+				btn.hidden = false;
+				contAgregar.hidden = true;
+				btnAg.hidden = false;
+			}
+
+			
+
+		</script>
+		<style>
+			.boton
+			{
+				color: white;
+				background-color: green;
+				width: 225px;
+				height: 50px;
+			}
+			.cerrar
+			{
+				color: white;
+				background-color: red; 
+				width: 9%;
+				padding: 16px;
+				position: absolute;
+				right: 1px;
+				top: 1px;
+			}
+			@keyframes aparecer
+			{
+				from{opacity: 0}
+				to{opacity: 1}
+			}
+			input[type='text']
+			{
+				width: 100%;/*No esta disponible para los display que tienen inline*/
+				padding: 12px 20px;
+				display: inline-block;/*Cada elemento tiene una propiedad de estas seteada por defecto block: 100% de la pantalla Lineal: Lo que ocupan los elementos en la pantalla*/
+				border-radius: 4px;
+				box-sizing: border-box;/*Todo lo que es externo lo mete para adentro, osea todo lo que le agrega tamaño, el border-width, el padding, etc*/
+				/*Para posicionar algo en la pantalla esta el top, bottom, left y right, todos usan pixeles (px)*/
+			}
+			th
+			{
+				background-color: lightblue;
+				color: white;
+			}
+			.td2
+			{
+				background-color: lightgrey;
+			}
+			.tabla
+			{
+				border-collapse: collapse;
+				text-align: left;
+				font-size: 15pt;
+			}
+			.contenedor
+			{
+				position: fixed;
+				width: 50%;
+				border-radius: 5px;
+				background-color: lightgrey;
+				padding: 20px;
+				box-sizing: border-box;
+				margin: 20px auto;
+				left: 25%;
+				top: 100px;
+				animation-name: aparecer;
+				animation-duration: 4s;
+			}
+			.sinError
+			{
+				border: 1px solid #ccc;
+			}
+			.error
+			{
+				border: 1px solid red;
+			}
+
+		</style>
+
+	</head>
+	<body>
+		<form class = "contenedor" hidden id="contAgregar">
+			<input type="button" value="x" class="cerrar" id="btnCerrar" onclick="Cerrar()"><br>
+			Nombre<br>
+			<input type="text" placeholder="Tu nombre..." class="sinError" size="40" id="nombre"><br>
+			Apellido<br>
+			<input type="text" placeholder="Tu apellido..." class="sinError" size="40" id="apellido"><br><br>
+			<input type="button" value = "Guardar" onclick="Agregar()" class="boton"><br>
+		</form>
+			<input type="button" id="btnAgregar" onclick="Abrir()" value="Agregar">
+			<h2>Lista de personas</h2>
+		<table style="width: 100%"  border = "0" class = "tabla">
+           	<thread>
+            	<th>Nombre</th>
+            	<th>Apellido</th>
+           		<th>Accion</th>
+           	</thread>
+           	<tbody id = "tbody">
+           		<tr>
+           			<td>Peter</td>
+           			<td>Griffin</td>
+           			<td>borar</td>
+           		</tr>
+           		<tr class="td2">
+           			<td>Lois</td>
+           			<td>Griffin</td>
+            		<td>borar</td>
+            	</tr>
+            	<tr>
+           			<td>Joe</td>
+           			<td>Swanson</td>
+           			<td>borar</td>
+           		</tr>
+           		<tr class="td2">
+           			<td>Cleveland</td>
+           			<td>Brown</td>
+           			<td>borar</td>
+           		</tr>
+           	</tbody>
+         </table>
+	</body>
+</html>
