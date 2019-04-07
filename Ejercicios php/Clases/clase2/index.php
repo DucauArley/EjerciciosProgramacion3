@@ -7,7 +7,6 @@
 	$json;
 	$alumnos = array();
 
-
 	$archivo = fopen("Hola.txt", "w");
 
 	if(!is_null($archivo))
