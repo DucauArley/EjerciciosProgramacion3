@@ -1,0 +1,30 @@
+	h1
+	{
+		color: green;
+		background-color: black;
+	}
+	h2
+	{
+		color: red;
+		background-color: yellow;
+	}
+	h3
+	{
+		color: blue;
+		background-color: orange;
+	}
+	h4
+	{
+		color: brown;
+		background-color: lightblue;
+	}
+	h5
+	{
+		color: white;
+		background-color: black;
+	}
+	h6
+	{
+		color: orange;
+		background-color: white;
+	}

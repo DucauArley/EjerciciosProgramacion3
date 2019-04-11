@@ -1,0 +1,16 @@
+	p
+	{
+		color:red;
+	}
+	p.h1
+	{
+		background-color: lightblue;
+	}
+	p.h2
+	{
+		background-color: green;
+	}
+	p.h3
+	{
+		background-color: black;
+	}
