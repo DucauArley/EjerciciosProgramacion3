@@ -1,0 +1,77 @@
+<html lang = "en">
+	<head>
+		<title>EjemploAjax</title>
+		<script>
+			var xml = new XMLHttpRequest();
+
+			var obj = {}//Objeto vacio
+			var array = []
+			var persona = {nombre: "Matias", edad: 30, apellido: "Ramos"};//Estan compuestos de claves y valores
+			alert(persona.nombre);
+			alert(persona.edad);
+			array = [persona, {nombre: "Rogelio", edad: 32, apellido: "Perez"}];//Array de objetos json
+
+
+			function callback()
+			{
+				if(xml.readyState === 4)
+				{
+					if(xml.status === 200)
+					{
+						console.log("LLego respuesta del servidor ", xml.readyState, xml.status, xml.responseText);
+						var respuesta = xml.responseText;
+						if (respuesta == "true") 
+						{
+							alert("Se ha registrado correctamente");
+						}
+						else
+						{
+							alert("Usuario o contraseña incorrecta");
+						}
+					}
+					else
+					{
+						alert("Error del servidor ", xml.status);
+					}
+				}
+			}
+
+			function enviarGet()
+			{
+				var usuario = document.getElementById("usr");
+				var contraseña = document.getElementById("pass");
+
+				if(usuario.value != "" && pass.value != "")
+				{
+					var parametros = "usr=" + usuario.value + "&pass=" + pass.value;
+					xml.open("POST", "http://localHost:3000/loginUsuario",true);
+					xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");//Para que reconozca que tipo de variable le estamos pasando
+					xml.onreadystatechange = callback;
+					xml.send(parametros);
+				}
+				else
+				{
+					alert("Debe ingresar el usuario y la contraseña");
+				}
+
+			}
+
+
+		</script>
+	</head>
+	<body>
+
+		<form method="POST">
+		<fieldset>
+            <legend>Login:</legend>
+            Usuario<br>
+            <input type="text" name="txtUsr" id="usr" size="40"><br>
+            Contraseña<br>
+            <input type="password" name="pass" id="pass" size="40"><br>
+            <input type="checkbox" checked> Recordar usar Contraseña<br>
+            <input type="button" value ="Enviar" id="btn" onclick="enviarGet();">  
+            <input type="reset" value="Limpiar">
+        </fieldset>
+        </form>
+	</body>
+</html>
