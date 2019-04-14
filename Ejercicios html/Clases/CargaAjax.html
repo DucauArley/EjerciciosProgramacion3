@@ -2,6 +2,44 @@
 	<head>
 		<title>CargaAjax</title>
 		<script>
+			window.addEventListener("load",listar);
+			var xml = new XMLHttpRequest();
+
+			function callback()
+			{
+				alert("Esta cargada");
+				if(xml.readyState === 4)
+				{
+					if(xml.status === 200)
+					{
+						/*for (var i = Things.length - 1; i >= 0; i--) 
+						{
+						Things[i]
+						}
+						tbody.innerHTML = tbody.innerHTML +
+						"<td>" +nombre+ "</td>"+
+						"<td>" +apellido+ "</td>"+
+						"<td><a href=''>borrar</a></td>"*/
+						alert("Algo");
+					}
+					else
+					{
+						alert("Error del servidor ", xml.status);
+					}
+				}
+				else
+				{
+					alert("Que se yo estoy re loco");
+				}
+
+			}
+
+			function listar()
+			{
+				xml.open("POST", "http://localHost:3000/personas", true);
+				xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xml.onreadystatechange = callback();
+			}
 
 			function Agregar()
 			{
@@ -53,8 +91,6 @@
 				contAgregar.hidden = true;
 				btnAg.hidden = false;
 			}
-
-			
 
 		</script>
 		<style>
@@ -138,7 +174,7 @@
 			<input type="text" placeholder="Tu apellido..." class="sinError" size="40" id="apellido"><br><br>
 			<input type="button" value = "Guardar" onclick="Agregar()" class="boton"><br>
 		</form>
-			<input type="button" id="btnAgregar" onclick="Abrir()" value="Agregar">
+			<input type="button" id="btnAgregar" onclick="Abrir();" value="Agregar">
 			<h2>Lista de personas</h2>
 		<table style="width: 100%"  border = "0" class = "tabla">
            	<thread>
