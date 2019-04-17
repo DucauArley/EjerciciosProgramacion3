@@ -1,0 +1,2 @@
+SELECT A.Id, A.Nombre, A.Legajo, L.localidad FROM `alumnos` A, `localidad` L WHERE A.localidad = L.Id AND A.Localidad = 1
+SELECT A.Id, A.Nombre, A.Legajo, M.nombre FROM `alumnos` A, `materias` M, `materia-alumno` MA WHERE A.Id = MA.Id_Alumno AND MA.Id_Materia = M.Id
