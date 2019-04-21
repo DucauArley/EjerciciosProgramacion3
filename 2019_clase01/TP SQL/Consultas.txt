@@ -1,0 +1,18 @@
+Consultas
+1)SELECT * FROM `productos` ORDER BY pNombre ASC
+2)SELECT * FROM `proveedores` WHERE Localidad = "Quilmes"
+3)SELECT * FROM `envios` WHERE Cantidad >= 200 AND Cantidad <=300
+4)SELECT SUM(Cantidad) FROM `envios`
+5)SELECT * FROM `envios` LIMIT 0, 3
+6)SELECT P.Nombre, PR.pNombre FROM `productos`PR, `proveedores` P, `envios`E WHERE PR.pNumero = E.pNumero AND P.Numero = E.Numero
+7)SELECT ROUND(P.Precio * E.Cantidad, 0) AS Monto FROM `productos`P, `envios` E WHERE P.pNumero = E.pNumero
+8)SELECT Cantidad FROM `envios` WHERE pNumero = 1 AND Numero = 102
+9)SELECT E.pNumero FROM `envios`E WHERE E.Numero = ANY (SELECT Numero FROM `proveedores` WHERE Localidad = "Avellaneda")
+10)SELECT Domicilio, Localidad FROM `proveedores` WHERE Nombre LIKE '%i%'
+11)INSERT INTO `productos`(`pNombre`, `Precio`, `Tamaño`) VALUES ("Chocolate", 25.35, "Chico")
+12)INSERT INTO `proveedores`(`Nombre`) VALUES ("Rodriguez")
+13)INSERT INTO `proveedores`(`Numero`, `Nombre`,  `Localidad`) VALUES (107, "Rosales", "La Plata")
+14)UPDATE `productos` SET `Precio`=97.50 WHERE Tamaño = "Grande"
+15)UPDATE `productos`P, `envios`E SET `Tamaño`= "Mediano" WHERE P.Tamaño = "Chico" AND P.pNumero = ANY(SELECT pNumero FROM `envios` WHERE Cantidad >= 300)
+16)DELETE FROM `productos` WHERE pNumero = 1
+17)DELETE FROM `proveedores` WHERE Numero NOT IN (SELECT Numero FROM `envios`)
