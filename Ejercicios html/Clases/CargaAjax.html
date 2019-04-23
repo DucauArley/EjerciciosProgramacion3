@@ -2,44 +2,39 @@
 	<head>
 		<title>CargaAjax</title>
 		<script>
-			window.addEventListener("load",listar);
-			var xml = new XMLHttpRequest();
 
-			function callback()
+		var xml = new XMLHttpRequest();
+		var tbody = document.querySelector('tbody');
+		window.addEventListener('load',listar);
+
+		function callback() 
+		{
+			if(xml.readyState === 4)
 			{
-				alert("Esta cargada");
-				if(xml.readyState === 4)
+				if (xml.status === 200) 
 				{
-					if(xml.status === 200)
-					{
-						/*for (var i = Things.length - 1; i >= 0; i--) 
-						{
-						Things[i]
-						}
-						tbody.innerHTML = tbody.innerHTML +
-						"<td>" +nombre+ "</td>"+
-						"<td>" +apellido+ "</td>"+
-						"<td><a href=''>borrar</a></td>"*/
-						alert("Algo");
+	    		 	var res = xml.responseText;
+	     		 	var obj = JSON.parse(res);
+	     		 	var miTabla = document.getElementById('tbody');
+	     
+	    		 	for (var i=0;i<obj.length;i++)
+	   			 	{
+						miTabla.innerHTML=miTabla.innerHTML+"<tr>"+"<td>"+obj[i].nombre+"</td>"+"<td>"+obj[i].apellido+"</td>"+"<td>"+obj[i].telefono+"</td>"+"<td>"+obj[i].fecha+"</td>"+"<td>"+"<a href='#'>"+"borrar"+"</a>"+"</td>"+"</tr>";
 					}
-					else
-					{
-						alert("Error del servidor ", xml.status);
-					}
-				}
-				else
-				{
-					alert("Que se yo estoy re loco");
-				}
+	  			}
+	  			else
+	  			{
+	  				alert("Error del servidor ", xml.status);
+	  			}
+  			}
+		}
 
-			}
-
-			function listar()
-			{
-				xml.open("POST", "http://localHost:3000/personas", true);
-				xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-				xml.onreadystatechange = callback();
-			}
+		function listar()
+		{
+			xml.open("GET", "http://localhost:3000/personas", true);
+			xml.onreadystatechange = callback;
+  			xml.send();
+		}
 
 			function Agregar()
 			{
@@ -66,7 +61,7 @@
 					document.getElementById("nombre").className = "sinError";
 					var tCuerpo = document.getElementById("tbody");
 
-					tbody.innerHTML = tbody.innerHTML +
+					tCuerpo.innerHTML = tCuerpo.innerHTML +
 					"<td>" +nombre+ "</td>"+
 					"<td>" +apellido+ "</td>"+
 					"<td><a href=''>borrar</a></td>"
