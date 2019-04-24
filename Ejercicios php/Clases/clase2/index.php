@@ -15,7 +15,7 @@
 		fwrite($archivo, "Pepe;Perez;222;620" . PHP_EOL . "Juan;Lopez;435;982" . PHP_EOL . "Maria;Disalvo;423;452");
 	}
 
-	fclose($archivo);
+		
 
 	$archivo = fopen("Hola.txt", "r");
 
