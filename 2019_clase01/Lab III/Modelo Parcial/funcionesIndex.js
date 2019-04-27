@@ -3,7 +3,7 @@ window.addEventListener("load", alerta);
 
 		function alerta()
 		{
-			alert(getParameterByName("color"));
+			alert(getParameterByName("color", null));
 		}
 
 		function getParameterByName(name, url) 
