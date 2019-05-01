@@ -35,10 +35,10 @@ window.addEventListener("load", carga);
 
                 if(usuario.value != "" && contraseña.value != "")
                 {
-                    var parametros = {email: usuario.value,  password: contraseña.value};
+                    var datosLogin = {email: usuario.value,  password: contraseña.value};
                     xml.open("POST", "http://localHost:1337/login",true);
                     xml.onreadystatechange = callback;
-                    xml.send(JSON.stringify(parametros));
+                    xml.send(JSON.stringify(datosLogin));
                 }
                 else
                 {
@@ -56,7 +56,7 @@ window.addEventListener("load", carga);
                     {
                         console.log("LLego respuesta del servidor ", xml.readyState, xml.status, xml.responseText);
                         var respuesta = xml.responseText;
-                        if (respuesta == "true") 
+                        if (respuesta != "true") 
                         {
                             alert("Se ha registrado correctamente");
                         }

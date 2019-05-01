@@ -3,7 +3,7 @@ window.addEventListener("load", alerta);
 
 		function alerta()
 		{
-			alert(getParameterByName("color", null));
+			//alert(getParameterByName("datosLogin.email", null));
 		}
 
 		function getParameterByName(name, url) 
@@ -16,3 +16,12 @@ window.addEventListener("load", alerta);
             if (!results[2]) return '';
             return decodeURIComponent(results[2].replace(/\+/g, " "));
         }   
+
+        function enviarPost()
+        {
+            var datosPost = {"title": texttitle, "header": textheader, "posttext": posttext, "author": author};
+            xml.open("POST", "http://localhost:1337/postearNuevaEntrada", true);
+            xml.onreadystatechange = callback;
+            xml.send(JSON.stringify(datosPost));
+        }
+
