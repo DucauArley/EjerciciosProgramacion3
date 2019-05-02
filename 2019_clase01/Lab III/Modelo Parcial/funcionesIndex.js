@@ -3,7 +3,7 @@ window.addEventListener("load", alerta);
 
 		function alerta()
 		{
-			//alert(getParameterByName("datosLogin.email", null));
+			alert(getParameterByName("datosLogin.email", null));
 		}
 
 		function getParameterByName(name, url) 
