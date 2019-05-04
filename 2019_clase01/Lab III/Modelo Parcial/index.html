@@ -11,6 +11,22 @@
 				</ul>
 			</nav>		
 		</header>
-		<input type="button" value ="Alerta" id="btn" onclick="Alerta();">
+		<button id="btnPostear">Nuevo post</button>
+        <div id="div" hidden class="formulario">
+            <button id="btnCerrar" class="cerrar">X</button>
+            <input id="titulo" placeholder="Titulo">
+            <input id="header" placeholder="Header">
+            <input id="texto" placeholder="Texto">
+            <button id="btnAceptar">Aceptar</button>
+            <input type="button" value ="Alerta" id="btn" onclick="Alerta();">	
+        </div>
+        <table>
+            <tbody id="tbody">
+            </tbody>
+        </table>
+
+        <div id="fondo" class="fondo" hidden>
+            <div class="loader"></div>
+        </div>
 	</body>
 </html>

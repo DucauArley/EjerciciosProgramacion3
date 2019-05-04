@@ -15,17 +15,11 @@ window.addEventListener("load", carga);
             if(email.value == "email" && password.value == "password")
             {
                 enviarPost();   
-                usuarioValido();
-            }
+           	}
             else
             {
                 alert("Datos equivocados");
             }
-        }
-
-        function usuarioValido()
-        {
-            window.location.replace("./index.html");
         }
 
         function enviarPost()
@@ -56,9 +50,12 @@ window.addEventListener("load", carga);
                     {
                         console.log("LLego respuesta del servidor ", xml.readyState, xml.status, xml.responseText);
                         var respuesta = xml.responseText;
-                        if (respuesta != "true") 
+                        respuesta = JSON.parse(respuesta);
+                        console.log(respuesta.autenticado);
+                        if (respuesta.autenticado == "si") 
                         {
-                            alert("Se ha registrado correctamente");
+                            var email = document.getElementById("email").value;
+                			window.location.replace("index.html" + "?preferencias=" + JSON.stringify(respuesta.preferencias) + "&?email=" + email);
                         }
                         else
                         {
