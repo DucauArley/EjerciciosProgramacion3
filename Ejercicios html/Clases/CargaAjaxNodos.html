@@ -25,16 +25,19 @@
 	     		 		var nodoTd3 = document.createElement("td");
 	     		 		var nodoTd4 = document.createElement("td");
 	     		 		var nodoTd5 = document.createElement("td");
+	     		 		var nodoTd6 = document.createElement("td");
 	     		 		var nodoNombre;
 	     		 		var nodoApellido;
 	     		 		var nodoTelefono;
 	     		 		var nodoFecha;
 	     		 		var nodoBorrar = document.createTextNode("borrar");
-	     		 		var nodoA = document.createElement("a");
+	     		 		var nodoModificar = document.createTextNode("Modificar");
+	     		 		var nodoABor = document.createElement("a");
+	     		 		var nodoAMod
 
-	     		 		nodoA.setAttribute('href', "#");
-	     		 		nodoA.addEventListener("click", Borrar);
-	     		 		nodoA.appendChild(nodoBorrar);
+	     		 		nodoABor.setAttribute('href', "#");
+	     		 		nodoABor.addEventListener("click", Borrar);
+	     		 		nodoABor.appendChild(nodoBorrar);
 
 	   			 		nodoNombre = document.createTextNode(obj[i].nombre + " ");
 	     		 		nodoApellido = document.createTextNode(obj[i].apellido + " ");
@@ -55,13 +58,16 @@
 	     		 		nodoTd2.appendChild(nodoApellido);
 	     		 		nodoTd3.appendChild(nodoTelefono);
 	     		 		nodoTd4.appendChild(nodoFecha);
-	     		 		nodoTd5.appendChild(nodoA);
+	     		 		nodoTd5.appendChild(nodoABor);
+	     		 		nodoTd6.appendChild(nodoAMod);
 
 	     		 		nodoTr.appendChild(nodoTd1);
 	     		 		nodoTr.appendChild(nodoTd2);
 	     		 		nodoTr.appendChild(nodoTd3);
 	     		 		nodoTr.appendChild(nodoTd4);
 	     		 		nodoTr.appendChild(nodoTd5);
+	     		 		nodoTr.appendChild(nodoTd6);
+
 
 	     		 		miTabla.appendChild(nodoTr);
 					}
@@ -233,7 +239,8 @@
             	<th>Apellido</th>
             	<th>Telefono</th>
             	<th>Fecha</th>
-           		<th>Accion</th>
+           		<th>Borrar</th>
+           		<th>Modificar</th>
            	</thread>
            	<tbody id = "tbody">
            		
