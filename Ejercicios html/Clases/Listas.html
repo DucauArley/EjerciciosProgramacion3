@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript">
+		
+		window.addEventListener("load", function()
+		{
+			console.log(document);
+			var lista = document.getElementById("lista");
+
+			/*console.log(lista.parentNode);
+			var elementosHijos = lista.children;
+
+			for (var i =0; i < elementosHijos.length; i++) 
+			{
+				console.log(elementosHijos[i].innerHTML);
+			}*/
+
+			/*console.log(lista.firstChild.nodeType);
+			console.log(lista.firstElementChild);
+
+			console.log(lista.nextElementSibling);//Se recorre de arriba para abajo, seria como proximo hermano, si se llega a el ultimo hermano, despues devuelve null se usa con un while o un for
+
+			console.log(lista.lastChild);
+			console.log(lista.lastElementChild);*/
+
+			var parrafo = document.getElementById("parrafo");
+
+			var nuevoNodo = document.createTextNode("Texto plano");// No se va a ver porque no esta posicionado. Los nodos que admiten hijos son los de element
+			parrafo.appendChild(nuevoNodo);//Con esto si se va a ver
+
+			var nuevoNodoElemento = document.createElement("li");
+			var nuevoNodoTextoli = document.createTextNode("Otro");
+			nuevoNodoElemento.appendChild(nuevoNodoTextoli);
+			lista.appendChild(nuevoNodoElemento);
+
+			lista.setAttribute("id", "unId");//Hace referencia a los atributos del xml, puede crear cualquier atributo pero este no va a servir para nada porque el navegador no lo va a poder interpretar
+			lista.getAttribute("id");//Devuelve el atributo
+
+			/*var primerElemento = lista.firstElementChild; Para borrar hijos
+			primerElemento.parentNode.removeChild(primerElemento); o lista.removeChild(primerElemento) el primero es infalible*/
+
+			var objJson = {"key": "value", "edad": 30};
+			localStorage.setItem("clave", "valor");
+			localStorage.setItem("obj", JSON.stringify(objJson));//Si uso la misma clave, pisa el valor
+			alert(localStorage.getItem("clave"));
+			var obj = JSON.parse(localStorage.getItem("obj"));
+
+			//if(localStorage.getItem(miTabla) != null) y si es igual a lo que hay escrito en la grilla, sino le pego al servidor para que me lo escriba en la lista
+
+			var array = ["asdas", "adasda"];
+			array.spice(0,1);// Para borrar cosas de un array del elemento cero, 1 elemento osea el elemento 0
+		})
+
+
+
+	</script>
+</head>
+<body>
+<p id = "parrafo"> </p>
+
+	<ul id = "lista">
+		<li>Java</li>
+		<li>JavaScript</li>
+		<li>TypeScript</li>
+	</ul>
+</body>
+</html>
