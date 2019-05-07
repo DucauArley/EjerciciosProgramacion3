@@ -1,14 +1,21 @@
 <?php
 
-		function guardar($path, $datos)
+		function guardar($path, $datos, $tipo)
 		{
-			if(file_exists($path))
+			if(is_null($tipo))
 			{
-				$archivo = fopen($path, "a");		 
-			}
-			else
-			{
-				$archivo = fopen($path, "w");	 
+				if(file_exists($path))
+				{
+					$archivo = fopen($path, "a");		 
+				}
+				else
+				{
+					$archivo = fopen($path, "w");	 
+	        	}
+        	}
+        	else
+        	{
+        		$archivo = fopen($path, $tipo . "");
         	}
 
 			if(!is_null($archivo))

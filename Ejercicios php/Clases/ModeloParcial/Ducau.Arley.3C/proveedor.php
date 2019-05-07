@@ -20,7 +20,7 @@
 		public function cargarProveedor()
 		{
 			$datos = $this->id . " " . $this->nombre . " " . $this->email . " " . $this->foto . PHP_EOL;
-			guardar("proveedores.txt", $datos);
+			guardar("proveedores.txt", $datos, null);
 		}
 
 		public function consultarProveedor($nombre)
@@ -62,6 +62,51 @@
 				foreach ($item as $variables ) 
 				{
 					echo $variables;
+				}
+			}
+		}
+
+		public function modificarProveedor()
+		{
+			$id = $_POST["id"];
+			$nombre = $_POST["nombre"];
+			$email = $_POST["email"];
+			$foto = $_FILES["foto"];
+			$contador = 0;
+			$idCont == 0;
+
+			$arrayProveedores = leer("proveedores.txt");
+
+
+			foreach ($arrayProveedores as $item) 
+			{
+				if($id = $item[0])
+				{
+					$item[1] = $nombre;
+					$item[2] = $email;
+					$arrayProveedores[$idCont] = $item;
+					//$item[3]["name"] = $id . "" . date("j/n/Y");
+					//move_uploaded_file($item[3]["tmp_name"], "./backUpFotos/" . $item[3]["name"]); 
+					//$item[3] = $foto;
+					break;
+				}
+				$idCont ++;
+			}
+
+			var_dump($arrayProveedores);
+			foreach ($arrayProveedores as $proveedor) 
+			{
+				echo "Llego";
+				if($contador == 0)
+				{
+					$datos = $proveedor[0] . " " . $proveedor[1] . " " . $proveedor[2] . " " . $proveedor[3];
+					guardar("proveedores.txt", $datos, "w");
+					$contador ++;
+				}
+				else
+				{
+					$datos = $proveedor[0] . " " . $proveedor[1] . " " . $proveedor[2] . " " . $proveedor[3];
+					guardar("proveedores.txt", $datos, "a");
 				}
 			}
 		}

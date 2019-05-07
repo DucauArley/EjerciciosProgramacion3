@@ -25,7 +25,7 @@
 			{
 				if($proveedor[0] == $this->idProveedor)
 				{
-					guardar("pedidos.txt", $datos);
+					guardar("pedidos.txt", $datos, null);
 					$contador ++;
 				}
 			}

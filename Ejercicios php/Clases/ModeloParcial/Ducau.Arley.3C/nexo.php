@@ -5,7 +5,7 @@
 
 	//$proveedor1 = new proveedor($_POST["id"], $_POST["nombre"], $_POST["email"], $_FILES["foto"]["tmp_name"]);
 	//$pedido1 = new pedido($_POST["producto"], $_POST["cantidad"], $_POST["idproveedor"]);
-	$proveedor = new proveedor(1, "Carlos", "ajeiowjerk", "erijewitjiewt");
+	$proveedor = new proveedor(1, "Juan", "ajeiowjerk", "erijewitjiewt");
 	$pedido = new pedido("Golosinas", 32, 5);
 
 	//var_dump($proveedor);
@@ -20,5 +20,7 @@
 
 	//$pedido->listarPedidos();
 
-	$pedido->listarPedidoProveedor(5);
+	//$pedido->listarPedidoProveedor(5);
+
+	$proveedor->modificarProveedor();
 ?>
