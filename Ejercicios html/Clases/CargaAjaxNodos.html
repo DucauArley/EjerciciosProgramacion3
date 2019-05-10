@@ -15,74 +15,79 @@
 				{
 	    		 	var res = xml.responseText;
 	     		 	var obj = JSON.parse(res);
-	     		 	var miTabla = document.getElementById('tbody');
-	     
-	    		 	for (var i=0;i<obj.length;i++)
-	   			 	{
-	   			 		var nodoTr = document.createElement("tr");
-	     		 		var nodoTd1 = document.createElement("td");
-	     		 		var nodoTd2 = document.createElement("td");
-	     		 		var nodoTd3 = document.createElement("td");
-	     		 		var nodoTd4 = document.createElement("td");
-	     		 		var nodoTd5 = document.createElement("td");
-	     		 		var nodoTd6 = document.createElement("td");
-	     		 		var nodoNombre;
-	     		 		var nodoApellido;
-	     		 		var nodoTelefono;
-	     		 		var nodoFecha;
-	     		 		var nodoBorrar = document.createTextNode("borrar");
-	     		 		var nodoModificar = document.createTextNode("Modificar");
-	     		 		var nodoABor = document.createElement("a");
-	     		 		var nodoAMod = document.createElement("a");
-
-	     		 		nodoABor.setAttribute('href', "#");
-	     		 		nodoABor.addEventListener("click", Borrar);
-	     		 		nodoABor.appendChild(nodoBorrar);
-
-	     		 		nodoAMod.setAttribute('href', "#");
-	     		 		nodoAMod.addEventListener("click", Modificar);
-	     		 		nodoAMod.appendChild(nodoModificar);
-
-	   			 		nodoNombre = document.createTextNode(obj[i].nombre);
-	     		 		nodoApellido = document.createTextNode(obj[i].apellido);
-	     		 		nodoTelefono = document.createTextNode(obj[i].telefono);
-	     		 		nodoFecha = document.createTextNode(obj[i].fecha);
-
-	     		 		/* var persona = obj[i]; Lo mismo pero sin hardcodear tanto
-	     		 		var columns = object.keys(persona);
-	     		 		for(var j=0; j<columns.length;j++)
-	     		 		{
-							var cel = document.createElement("td");
-							var text = document.createTextNode(persona[columns[j]]);
-							cel.appendchild(text);
-							nodoTr.appendChild(cel); Falta el borar que se tendria que hardcodear. Para vos Pellita
-	     		 		}
-						*/
-	     		 		nodoTd1.appendChild(nodoNombre);
-	     		 		nodoTd2.appendChild(nodoApellido);
-	     		 		nodoTd3.appendChild(nodoTelefono);
-	     		 		nodoTd4.appendChild(nodoFecha);
-	     		 		nodoTd5.appendChild(nodoABor);
-	     		 		nodoTd6.appendChild(nodoAMod);
-
-	     		 		nodoTr.appendChild(nodoTd1);
-	     		 		nodoTr.appendChild(nodoTd2);
-	     		 		nodoTr.appendChild(nodoTd3);
-	     		 		nodoTr.appendChild(nodoTd4);
-	     		 		nodoTr.appendChild(nodoTd5);
-	     		 		nodoTr.appendChild(nodoTd6);
-
-
-	     		 		miTabla.appendChild(nodoTr);
-
-	     		 		localStorage.setItem("Tabla", miTabla.innerHTML);
-					}
+	     		 	localStorage.setItem("Tabla", res);
+					
+					CargarPersonas(obj);	
 	  			}
 	  			else
 	  			{
 	  				alert("Error del servidor ", xml.status);
 	  			}
   			}
+		}
+
+		function CargarPersonas(personas)
+		{
+			var miTabla = document.getElementById('tbody');
+
+			for (var i=0;i<personas.length;i++)
+	   		{
+	   			var nodoTr = document.createElement("tr");
+	     		var nodoTd1 = document.createElement("td");
+	     		var nodoTd2 = document.createElement("td");
+	     		var nodoTd3 = document.createElement("td");
+	     		var nodoTd4 = document.createElement("td");
+	     		var nodoTd5 = document.createElement("td");
+	     		var nodoTd6 = document.createElement("td");
+	     		var nodoNombre;
+	     		var nodoApellido;
+	     		var nodoTelefono;
+	     		var nodoFecha;
+	     		var nodoBorrar = document.createTextNode("borrar");
+	     		var nodoModificar = document.createTextNode("Modificar");
+	     		var nodoABor = document.createElement("a");
+	     		var nodoAMod = document.createElement("a");
+
+	     		nodoABor.setAttribute('href', "#");
+	     		nodoABor.addEventListener("click", Borrar);
+	     		nodoABor.appendChild(nodoBorrar);
+
+	     		nodoAMod.setAttribute('href', "#");
+	     		nodoAMod.addEventListener("click", Modificar);
+	     		nodoAMod.appendChild(nodoModificar);
+
+	   			nodoNombre = document.createTextNode(personas[i].nombre);
+	     		nodoApellido = document.createTextNode(personas[i].apellido);
+	     		nodoTelefono = document.createTextNode(personas[i].telefono);
+	     		nodoFecha = document.createTextNode(personas[i].fecha);
+
+ 		 		/* var persona = obj[i]; Lo mismo pero sin hardcodear tanto
+	     		var columns = object.keys(persona);
+	     		for(var j=0; j<columns.length;j++)
+	     		{
+					var cel = document.createElement("td");
+					var text = document.createTextNode(persona[columns[j]]);
+					cel.appendchild(text);
+					nodoTr.appendChild(cel); Falta el borar que se tendria que hardcodear. Para vos Pellita
+	     		 }
+				*/
+	     		nodoTd1.appendChild(nodoNombre);
+	     		nodoTd2.appendChild(nodoApellido);
+	     		nodoTd3.appendChild(nodoTelefono);
+	     		nodoTd4.appendChild(nodoFecha);
+	     		nodoTd5.appendChild(nodoABor);
+	     		nodoTd6.appendChild(nodoAMod);
+
+	     		nodoTr.appendChild(nodoTd1);
+	     		nodoTr.appendChild(nodoTd2);
+	     		nodoTr.appendChild(nodoTd3);
+	     		nodoTr.appendChild(nodoTd4);
+	     		nodoTr.appendChild(nodoTd5);
+	     		nodoTr.appendChild(nodoTd6);
+
+	     		miTabla.appendChild(nodoTr);
+
+			}
 		}
 
 		function Borrar(event)
@@ -96,9 +101,16 @@
 			var telefono = apellido.nextElementSibling;*/
 			tagTr.parentNode.removeChild(tagTr);
 
-			var miTabla = document.getElementById('tbody');
-
-			localStorage.setItem("Tabla", miTabla);
+			tabla = JSON.parse(localStorage.getItem("Tabla"));
+			for(i = 0; i < tabla.length; i++)
+			{
+				if(JSON.stringify(tabla[i]) == JSON.stringify(persona))
+				{
+					listaPersonas.splice(i, 1);
+					break;
+				}
+			}
+			localStorage.setItem("personas", JSON.stringify(listaPersonas));
 		}
 
 		function Modificar(event)
@@ -138,14 +150,12 @@
 			Cerrar('contModificar');
 			var miTabla = document.getElementById('tbody');
 
-			localStorage.setItem("Tabla", miTabla);
+			localStorage.setItem("Tabla", miTabla.innerHTML);
 		}
 
 		function listar()
 		{
 			var tabla = localStorage.getItem("Tabla");
-			var miTabla = document.getElementById('tbody');
-
 			if(tabla == null)
 			{
 				xml.open("GET", "http://localhost:3000/personas", true);
@@ -154,7 +164,7 @@
   			}
   			else
   			{
-  				miTabla.innerHTML = tabla;
+  				CargarPersonas(JSON.parse(tabla));
   			}
 		}
 
@@ -240,7 +250,7 @@
 
 		    	miTabla.appendChild(nodoTr);
 
-		    	localStorage.setItem("Tabla", miTabla);
+		    	localStorage.setItem("Tabla", miTabla.innerHTML);
 			}
 		}
 
