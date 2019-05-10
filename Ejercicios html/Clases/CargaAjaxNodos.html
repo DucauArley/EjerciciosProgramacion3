@@ -74,6 +74,8 @@
 
 
 	     		 		miTabla.appendChild(nodoTr);
+
+	     		 		localStorage.setItem("Tabla", miTabla.innerHTML);
 					}
 	  			}
 	  			else
@@ -92,7 +94,11 @@
 			/*var nombre = tagTr.firstElementChild; Datos de la lista que se encuentran en la fila
 			var apellido = nombre.nextElementSibling;
 			var telefono = apellido.nextElementSibling;*/
-			tagTr.parentNode.removeChild(tagTr)
+			tagTr.parentNode.removeChild(tagTr);
+
+			var miTabla = document.getElementById('tbody');
+
+			localStorage.setItem("Tabla", miTabla);
 		}
 
 		function Modificar(event)
@@ -107,15 +113,49 @@
 			var telefono = apellido.nextElementSibling;
 			var fecha = telefono.nextElementSibling;
 			var textNombre = document.getElementById("nombreMod");
-			textNombre.placeholder = nombre.innerHTML;
+			var textApellido = document.getElementById("apellidoMod");
+			var textTelefono = document.getElementById("telefonoMod");
+			var textFecha = document.getElementById("fechaMod");
+			var btnModificar = document.getElementById("btnModificar");
 
+			textNombre.value = nombre.innerHTML;
+			textApellido.value = apellido.innerHTML;
+			textTelefono.value = telefono.innerHTML;
+			textFecha.value = fecha.innerHTML;
+
+			btnModificar.addEventListener("click", function(){Guardar(textNombre, textApellido, textTelefono, textFecha, nombre, apellido, telefono, fecha);});
+
+
+		}
+
+		function Guardar(textNombre, textApellido, textTelefono, textFecha, nombre, apellido, telefono, fecha)
+		{
+			nombre.innerHTML = textNombre.value;
+			apellido.innerHTML = textApellido.value;
+			telefono.innerHTML = textTelefono.value;
+			fecha.innerHTML = textFecha.value;
+
+			Cerrar('contModificar');
+			var miTabla = document.getElementById('tbody');
+
+			localStorage.setItem("Tabla", miTabla);
 		}
 
 		function listar()
 		{
-			xml.open("GET", "http://localhost:3000/personas", true);
-			xml.onreadystatechange = callback;
-  			xml.send();
+			var tabla = localStorage.getItem("Tabla");
+			var miTabla = document.getElementById('tbody');
+
+			if(tabla == null)
+			{
+				xml.open("GET", "http://localhost:3000/personas", true);
+				xml.onreadystatechange = callback;
+	  			xml.send();
+  			}
+  			else
+  			{
+  				miTabla.innerHTML = tabla;
+  			}
 		}
 
 		function Agregar()
@@ -124,6 +164,7 @@
 			var nombre = document.getElementById("nombre").value;
 			var telefono = document.getElementById("telefono").value;
 			var fecha = document.getElementById("fecha").value;
+			var miTabla = document.getElementById('tbody');
 
 			if(nombre == "")
 			{
@@ -159,7 +200,6 @@
 				document.getElementById("nombre").className = "sinError";
 				document.getElementById("telefono").className = "sinError";
 				document.getElementById("fecha").className = "sinError";
-				var miTabla = document.getElementById("tbody");
 
 				var nodoTr = document.createElement("tr");
 		     	var nodoTd1 = document.createElement("td");
@@ -199,6 +239,8 @@
 		     	nodoTr.appendChild(nodoTd6);
 
 		    	miTabla.appendChild(nodoTr);
+
+		    	localStorage.setItem("Tabla", miTabla);
 			}
 		}
 
@@ -316,7 +358,7 @@
 			<input type="text" placeholder="Tu telefono..." class="sinError" size="40" id="telefonoMod"><br>
 			Frecha<br>
 			<input type="text" placeholder="Tu fecha de nacimiento..." class="sinError" size="40" id="fechaMod"><br><br>
-			<input type="button" value = "Modificar" class="boton"><br>
+			<input type="button" value = "Modificar" class="boton" id="btnModificar"><br>
 		</form>
 			<input type="button" id="btnAgregar" onclick="Abrir('contAgregar');" value="Agregar">
 			<h2>Lista de personas</h2>
