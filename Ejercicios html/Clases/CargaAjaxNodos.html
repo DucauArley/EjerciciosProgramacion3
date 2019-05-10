@@ -98,7 +98,7 @@
 		function Modificar(event)
 		{
 			event.preventDefault();
-			Abrir();
+			Abrir('contModificar');
 			var tagA = event.target;
 			var tagTd = tagA.parentNode;
 			var tagTr = tagTd.parentNode;
@@ -106,6 +106,8 @@
 			var apellido = nombre.nextElementSibling;
 			var telefono = apellido.nextElementSibling;
 			var fecha = telefono.nextElementSibling;
+			var textNombre = document.getElementById("nombreMod");
+			textNombre.placeholder = nombre.innerHTML;
 
 		}
 
@@ -200,17 +202,17 @@
 			}
 		}
 
-			function Abrir()
+			function Abrir(cont)
 			{
-				var contAgregar = document.getElementById("contAgregar");
+				var contAgregar = document.getElementById(cont);
 				var btn = document.getElementById("btnAgregar");
 				btn.hidden = true;
 				contAgregar.hidden = false;
 			}
 
-			function Cerrar()
+			function Cerrar(cont)
 			{
-				var contAgregar = document.getElementById("contAgregar");
+				var contAgregar = document.getElementById(cont);
 				var btn = document.getElementById("btnCerrar");
 				var btnAg = document.getElementById("btnAgregar");
 				btn.hidden = false;
@@ -293,9 +295,9 @@
 	</head>
 	<body>
 		<form class = "contenedor" hidden id="contAgregar">
-			<input type="button" value="x" class="cerrar" id="btnCerrar" onclick="Cerrar()"><br>
+			<input type="button" value="x" class="cerrar" id="btnCerrar" onclick="Cerrar('contAgregar')"><br>
 			Nombre<br>
-			<input type="text" placeholder="Tu nombre..." class="sinError" size="40" id="nombre"><br>
+			<input type="text"  class="sinError" size="40" id="nombre"><br>
 			Apellido<br>
 			<input type="text" placeholder="Tu apellido..." class="sinError" size="40" id="apellido"><br>
 			Telefono<br>
@@ -304,7 +306,19 @@
 			<input type="text" placeholder="Tu fecha de nacimiento..." class="sinError" size="40" id="fecha"><br><br>
 			<input type="button" value = "Guardar" onclick="Agregar()" class="boton"><br>
 		</form>
-			<input type="button" id="btnAgregar" onclick="Abrir();" value="Agregar">
+		<form class = "contenedor" hidden id="contModificar">
+			<input type="button" value="x" class="cerrar" id="btnCerrarMod" onclick="Cerrar('contModificar')"><br>
+			Nombre<br>
+			<input type="text" placeholder="Tu nombre..." class="sinError" size="40" id="nombreMod"><br>
+			Apellido<br>
+			<input type="text" placeholder="Tu apellido..." class="sinError" size="40" id="apellidoMod"><br>
+			Telefono<br>
+			<input type="text" placeholder="Tu telefono..." class="sinError" size="40" id="telefonoMod"><br>
+			Frecha<br>
+			<input type="text" placeholder="Tu fecha de nacimiento..." class="sinError" size="40" id="fechaMod"><br><br>
+			<input type="button" value = "Modificar" class="boton"><br>
+		</form>
+			<input type="button" id="btnAgregar" onclick="Abrir('contAgregar');" value="Agregar">
 			<h2>Lista de personas</h2>
 		<table style="width: 100%"  border = "0" class = "tabla">
            	<thread>
