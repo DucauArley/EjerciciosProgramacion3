@@ -6,6 +6,8 @@
 	$clave = $_POST["clave"];
 	$contador = 0;
 	$usuarios = leer("usuarios.txt");
+	$clave = $clave . PHP_EOL;
+
 	var_dump($clave);
 
 	//var_dump($usuarios);
