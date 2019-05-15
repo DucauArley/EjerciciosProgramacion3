@@ -7,9 +7,12 @@
 		public $legajo;
 		public $id;
 
-		function __construct()
+		function __construct($nombre, $apellido, $legajo, $id)
 		{
-
+			$this->nombre = $nombre;
+			$this->apellido = $apellido;
+			$this->legajo = $legajo;
+			$this->id = $id;
 		}
 
 		function ToCSV()
