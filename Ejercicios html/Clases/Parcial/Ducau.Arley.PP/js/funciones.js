@@ -121,14 +121,14 @@ window.addEventListener('load',listar);
                     respuesta = JSON.parse(respuesta);
                     console.log(respuesta.type);
 
-                    if(respuesta.type == "ok")
-                    {
+                   // if(respuesta.type == "ok")
+                    //{
                     	tag.parentNode.removeChild(tag);
-                    }
-                    else
-                    {
-                    	alert("Ocurrio un Error");
-                    }
+                   // }
+                    //else
+                   // {
+                   // 	alert("Ocurrio un Error");
+                    //}
 	  			}
 	  			else
 	  			{
@@ -194,11 +194,36 @@ window.addEventListener('load',listar);
 		{
 			event.preventDefault();
 			var tagTd = event.target
-			tag = tagTd.parentNode; 
+			tag = tagTd.parentNode;
+			var id = tag.firstElementChild;
+			var nombre = id.nextElementSibling;
+			var cuatrimestre = nombre.nextElementSibling;
+			var fecha = cuatrimestre.nextElementSibling;
+			var turno = fecha.nextElementSibling;
 			var contAgregar = document.getElementById("contAgregar");
 			var btnMod = document.getElementById("Modificar");
 			var btnBor = document.getElementById("Borrar");
 			contAgregar.hidden = false;
+			var textNombre = document.getElementById("nombre");
+			var textCuatrimestre = document.getElementById("cuatrimestre");
+			var turnoM = document.getElementById("turno");
+			var turnoN = document.getElementById("turno2");
+			var textFecha = document.getElementById("fecha");
+
+			textNombre.value = nombre.innerHTML;
+			textCuatrimestre.value = cuatrimestre.innerHTML;
+			textFecha.value = fecha.innerHTML;
+
+			console.log(fecha.innerHTML);
+
+			if(turno.innerHTML == "Noche")
+			{
+				turnoN.checked = true;
+			}
+			else
+			{
+				turnoM.checked = true;
+			}
 
 			btnMod.addEventListener("click", Modificar);
 			btnBor.addEventListener("click", Borrar);
