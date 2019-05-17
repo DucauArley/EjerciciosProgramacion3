@@ -71,8 +71,8 @@ window.addEventListener('load',listar);
                     respuesta = JSON.parse(respuesta);
                     console.log(respuesta.type);
 
-                    if(respuesta.type == "ok")
-                    {
+                    //if(respuesta.type == "ok")
+                    //{
                     	console.log("entro");
                     	var id = tag.firstElementChild;
                     	var nombre = id.nextElementSibling;
@@ -98,11 +98,11 @@ window.addEventListener('load',listar);
 							turno.innerHTML = textTurno2.value;
 						}
 
-                    }
-                    else
-                    {
-                    	alert("Ocurrio un Error");
-                    }
+                    //}
+                   // else
+                   // {
+                    	//alert("Ocurrio un Error");
+                    //}
 	  			}
 	  			else
 	  			{
@@ -163,7 +163,7 @@ window.addEventListener('load',listar);
 
 			//if(nombre.value.length > 6 && fecha.value >)
 			//{
-				//parametros = JSON.stringify(parametros);
+				parametros = JSON.stringify(parametros);
 				xml.open("POST", "http://localhost:3000/editar", true);
 				xml.setRequestHeader("Content-type", "application/json");
 				xml.onreadystatechange = callbackPostMod
