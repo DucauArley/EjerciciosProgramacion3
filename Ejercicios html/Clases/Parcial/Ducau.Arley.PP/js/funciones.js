@@ -30,7 +30,7 @@ window.addEventListener('load',listar);
 			     		var nodoFecha;
 
 			     		nodoTr.setAttribute('href', "#");
-			     		nodoTr.addEventListener("click", Abrir);
+			     		nodoTr.addEventListener("dblclick", Abrir);
 
 			     		nodoId = document.createTextNode(materias[i].id);
 			   			nodoNombre = document.createTextNode(materias[i].nombre);
@@ -71,8 +71,8 @@ window.addEventListener('load',listar);
                     respuesta = JSON.parse(respuesta);
                     console.log(respuesta.type);
 
-                    //if(respuesta.type == "ok")
-                    //{
+                    if(respuesta.type == "ok")
+                    {
                     	console.log("entro");
                     	var id = tag.firstElementChild;
                     	var nombre = id.nextElementSibling;
@@ -98,11 +98,11 @@ window.addEventListener('load',listar);
 							turno.innerHTML = textTurno2.value;
 						}
 
-                    //}
-                   // else
-                   // {
-                    	//alert("Ocurrio un Error");
-                    //}
+                    }
+                    else
+                    {
+                    	alert("Ocurrio un Error");
+                    }
 	  			}
 	  			else
 	  			{
@@ -121,14 +121,14 @@ window.addEventListener('load',listar);
                     respuesta = JSON.parse(respuesta);
                     console.log(respuesta.type);
 
-                   // if(respuesta.type == "ok")
-                    //{
+                    if(respuesta.type == "ok")
+                    {
                     	tag.parentNode.removeChild(tag);
-                   // }
-                    //else
-                   // {
-                   // 	alert("Ocurrio un Error");
-                    //}
+                    }
+                    else
+                    {
+                   		alert("Ocurrio un Error");
+                    }
 	  			}
 	  			else
 	  			{
@@ -147,44 +147,53 @@ window.addEventListener('load',listar);
 
 		function Modificar()
 		{
+			var id = tag.firstElementChild.innerHTML;
 			var nombre = document.getElementById("nombre").value;
 			var fecha = document.getElementById("fecha").value;
+			var cuatrimestre = document.getElementById("cuatrimestre").value;
 			var turno = document.getElementById("turno");
 			var parametros;
+			var fechaActual = new Date();
+			console.log(fecha);
+			//console.log(fechaActual.getDate()); Dia
+			//console.log(fechaActual.getMonth()); Mes pero 1 menos osea si es diciembre me sale 11
+			//console.log(fechaActual.getFullYear()); Año
 
 			if(turno.checked == true)
 			{
-				parametros = {"nombre": nombre, "fecha": fecha, "turno": "mañana"};
+				parametros = {"id": id, "nombre": nombre, "cuatrimestre": cuatrimestre, "fechaFinal": fecha, "turno": "mañana"};
 			}
 			else
 			{
-				parametros = {"nombre": nombre, "fecha": fecha, "turno": "noche"};
+				parametros = {"id": id, "nombre": nombre, "cuatrimestre": cuatrimestre, "fechaFinal": fecha, "turno": "noche"};
 			}
 
-			//if(nombre.value.length > 6 && fecha.value >)
-			//{
+			if(nombre.length >= 6 /*&& fecha.value > Date.now()*/)
+			{
 				parametros = JSON.stringify(parametros);
 				xml.open("POST", "http://localhost:3000/editar", true);
 				xml.setRequestHeader("Content-type", "application/json");
 				xml.onreadystatechange = callbackPostMod
 	  			xml.send(parametros);
-	  		//}
-	  		//else
-	  		//{
-	  		//	console.log("Error");
-	  		//}
+	  		}
+	  		else
+	  		{
+	  			console.log("Error");
+	  		}
 		}
 
 		function Borrar()
 		{
 			var id = tag.firstElementChild.innerHTML;
 			console.log(id);
-			var parametros = {id: id.innerText};
+			var parametros = {id: id};
 			//var fondo = document.getElementById("fondo");
     		//fondo.hidden = false;
 
 			parametros = JSON.stringify(parametros);
+			console.log(parametros)
 			xml.open("POST", "http://localhost:3000/eliminar", true);
+			xml.setRequestHeader("Content-type", "application/json");
 			xml.onreadystatechange = callbackPostBor;
 	  		xml.send(parametros);
 
@@ -195,6 +204,17 @@ window.addEventListener('load',listar);
 			event.preventDefault();
 			var tagTd = event.target
 			tag = tagTd.parentNode;
+			/*var hijos = event.target.parentNode.children
+
+			for(var i=0;i<hijos.length;i++)
+			{
+				console.log(hijos[i].innerHTML);
+			}
+
+			document.getElementById("nombre").value = hijos[1];
+			document.getElementById("nombre").value = hijos[2];
+			document.getElementById("nombre").value = hijos[3];
+			*/
 			var id = tag.firstElementChild;
 			var nombre = id.nextElementSibling;
 			var cuatrimestre = nombre.nextElementSibling;
@@ -214,7 +234,7 @@ window.addEventListener('load',listar);
 			textCuatrimestre.value = cuatrimestre.innerHTML;
 			textFecha.value = fecha.innerHTML;
 
-			console.log(fecha.innerHTML);
+			//console.log(fecha.innerHTML);
 
 			if(turno.innerHTML == "Noche")
 			{

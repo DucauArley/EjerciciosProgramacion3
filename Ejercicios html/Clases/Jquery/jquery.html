@@ -1,0 +1,46 @@
+<html>
+	<head>
+		<title>Jquery</title>
+		<script src = "./node_modules/jquery/dist/jquery.min.js"></script>
+
+		<script>
+			$(document).ready(function()//Creo que reemplaza el windows.onload
+			{
+				$("#btn").click(function()//$("#btn") lo mismo que document.getElementById("btn")
+				{
+					$.get("http://localhost:3000/personas",
+						function(data, status)//callback que puede recibir 2 parametros, data que es la respuesta del servidor no hay que hacer json.parse te tira el array de json y el otro es el status
+						{
+							alert("Data: " + data + "\nStatus: " + status);
+							console.log(data);
+						})
+				})
+
+				$(".btnPost").click(function()//.btnPost: todos los elementos que tengan esa clase
+				{
+					$.post("http://localhost:3000/nueva",
+					{
+						nombre: "Juan";//json que le pasa directamente como parametro
+						apellido: "Rodriguez"
+						edad: "20"
+					}
+						function(data, status)
+						{
+							alert("Data: " + data + "\nStatus: " + status);
+							console.log(data);
+						})
+				})
+
+			})
+
+
+
+
+
+		</script>
+
+	</head>
+	<body>
+
+	</body>
+</html>
