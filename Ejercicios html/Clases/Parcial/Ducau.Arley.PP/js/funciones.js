@@ -63,6 +63,7 @@ window.addEventListener('load',listar);
 
 		function callbackPostMod()
 		{
+			var gif = document.getElementById("fondo");
 			if(xml.readyState === 4)
 			{
 				if (xml.status === 200) 
@@ -109,10 +110,12 @@ window.addEventListener('load',listar);
 	  				alert("Error del servidor ", xml.status);
 	  			}
   			}
+  			gif.hidden = true;
 		}
 
 		function callbackPostBor()
 		{
+			var gif = document.getElementById("fondo");
 			if(xml.readyState === 4)
 			{
 				if (xml.status === 200) 
@@ -135,6 +138,7 @@ window.addEventListener('load',listar);
 	  				alert("Error del servidor ", xml.status);
 	  			}
   			}
+  			gif.hidden = true;
 		}
 
 		function listar()
@@ -147,17 +151,21 @@ window.addEventListener('load',listar);
 
 		function Modificar()
 		{
+			var gif = document.getElementById("fondo");
+			gif.hidden = false;
 			var id = tag.firstElementChild.innerHTML;
-			var nombre = document.getElementById("nombre").value;
-			var fecha = document.getElementById("fecha").value;
+			var textNombre = document.getElementById("nombre")
+			var nombre = textNombre.value;
+			var textFecha = document.getElementById("fecha");
+			var fecha = textFecha.value;
 			var cuatrimestre = document.getElementById("cuatrimestre").value;
 			var turno = document.getElementById("turno");
 			var parametros;
-			var fechaActual = new Date();
-			console.log(fecha);
-			//console.log(fechaActual.getDate()); Dia
-			//console.log(fechaActual.getMonth()); Mes pero 1 menos osea si es diciembre me sale 11
-			//console.log(fechaActual.getFullYear()); Año
+
+			var fechaString = fecha.split("-");
+			
+			
+			var fechaCambio = new Date(parseInt(fechaString[0]), parseInt(fechaString[1]) - 1, parseInt(fechaString[2]));
 
 			if(turno.checked == true)
 			{
@@ -168,27 +176,38 @@ window.addEventListener('load',listar);
 				parametros = {"id": id, "nombre": nombre, "cuatrimestre": cuatrimestre, "fechaFinal": fecha, "turno": "noche"};
 			}
 
-			if(nombre.length >= 6 /*&& fecha.value > Date.now()*/)
+			if(nombre.length >= 6)
 			{
-				parametros = JSON.stringify(parametros);
-				xml.open("POST", "http://localhost:3000/editar", true);
-				xml.setRequestHeader("Content-type", "application/json");
-				xml.onreadystatechange = callbackPostMod
-	  			xml.send(parametros);
+				if(fechaCambio.getTime() >= Date.now())
+				{
+					textNombre.className = "sinError";
+					textFecha.className = "sinError";
+					parametros = JSON.stringify(parametros);
+					xml.open("POST", "http://localhost:3000/editar", true);
+					xml.setRequestHeader("Content-type", "application/json");
+					xml.onreadystatechange = callbackPostMod
+		  			xml.send(parametros);
+	  			}
+	  			else
+	  			{
+	  				gif.hidden = true;
+	  				textFecha.className = "error";
+	  			}
 	  		}
 	  		else
 	  		{
-	  			console.log("Error");
+	  			gif.hidden = true;
+	  			textNombre.className = "error";
 	  		}
 		}
 
 		function Borrar()
 		{
+			var gif = document.getElementById("fondo");
+			gif.hidden = false;
 			var id = tag.firstElementChild.innerHTML;
 			console.log(id);
 			var parametros = {id: id};
-			//var fondo = document.getElementById("fondo");
-    		//fondo.hidden = false;
 
 			parametros = JSON.stringify(parametros);
 			console.log(parametros)
@@ -229,12 +248,21 @@ window.addEventListener('load',listar);
 			var turnoM = document.getElementById("turno");
 			var turnoN = document.getElementById("turno2");
 			var textFecha = document.getElementById("fecha");
+			var fechaNueva = fecha.innerHTML;
+
+			textNombre.className = "sinError";
+			textFecha.className = "sinError";
+
+			if(fechaNueva[2] == "/")
+			{
+				var fechaString = fecha.innerHTML.split("/");
+				fechaNueva = fechaString[2] + "-" + fechaString[1] + "-" + fechaString[0];
+			}
 
 			textNombre.value = nombre.innerHTML;
 			textCuatrimestre.value = cuatrimestre.innerHTML;
-			textFecha.value = fecha.innerHTML;
+			textFecha.value = fechaNueva;
 
-			//console.log(fecha.innerHTML);
 
 			if(turno.innerHTML == "Noche")
 			{
