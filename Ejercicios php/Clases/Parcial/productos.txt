@@ -1,1 +1,2 @@
-12 caramelos 1 QueSeYoEstoyReLoco cacho
+1 caramelos 1 {"name":"1.21\/05\/19","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\php875F.tmp","error":0,"size":44512} cacho
+1 caramelos 1 {"name":"1.21\/05\/19","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\php3BBD.tmp","error":0,"size":44512} cacho

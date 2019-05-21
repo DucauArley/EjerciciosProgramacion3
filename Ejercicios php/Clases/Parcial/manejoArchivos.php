@@ -1,6 +1,6 @@
 <?php
 
-function guardar($path, $datos, $tipo)
+		function guardar($path, $datos, $tipo)
 		{
 			if(is_null($tipo))
 			{

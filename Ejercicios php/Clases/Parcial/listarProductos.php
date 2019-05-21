@@ -7,8 +7,7 @@
 
 	foreach ($productos as $item) 
 	{
-		
-		echo $item[0] . " " . $item[1] . " " . $item[2] . " " . $item[3] . " " . $item[4];
+		echo $item[0] . " " . $item[1] . " " . $item[2] . " " . $item[3] . " " . $item[4] . "\r\n";
 		$hay ++;
 	}
 

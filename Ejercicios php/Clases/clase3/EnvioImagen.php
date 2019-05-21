@@ -1,10 +1,10 @@
 <?php
 	//Hacer marca de agua para las imagenes, hay una funcion en el git de octavio
 
-	$imagen = $_FILES["Koala"]["name"];
+	//$imagen = $_FILES["Koala"]["name"];
 	//$destino;
     var_dump($_FILES);
-    $origen = $_FILES["Koala"]["tmp_name"];
+    //$origen = $_FILES["Koala"]["tmp_name"];
     //var_dump($_POST);
 
     /*$apellido = $_POST["Apellido"];
