@@ -1,0 +1,50 @@
+<html>
+	<head>
+		<title>Primer Parcial</title>
+
+		<link rel="stylesheet" href="./css/estilos.css">
+		<script src = "./node_modules/jquery/dist/jquery.min.js"></script>
+		<script src="./js/funciones.js" ></script>
+	</head>
+	<body>
+		<form class = "contenedor" hidden = "true" id="contAgregar">
+				<input type="button" value="x" class="cerrar" id="btnCerrar" onclick="Cerrar('contAgregar')"><br>
+				Nombre<br>
+				<input type="text"  class="sinError" size="40" id="nombre"><br>
+				Cuatrimestre<br>
+				<select class="sinError" id="cuatrimestre"> 
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				</select><br>
+				Turno<br>
+				<input type="radio" id="turno" name="turno" class="sinError" size="40" value="Mañana" checked>Mañana
+				<input type="radio" id="turno2" name="turno" class="sinError" size="40" value="Noche">Noche
+				<br>
+				Fecha<br>
+				<input type="date" class="sinError" size="40" id="fecha"><br><br>
+				<input type="button" value = "Modificar" id="Modificar" class="boton">   
+				<input type="button" value = "Borrar" id="Borrar" class="boton2">
+
+			</form>
+				<h2>Lista de materias</h2>
+			<table style="width: 100%"  border = "0" class = "tabla">
+	           	<thread>
+	            	<th>Id</th>
+	            	<th>Nombre</th>
+	            	<th>Cuatrimestre</th>
+	            	<th>Fecha Final</th>
+	           		<th>Turno</th>
+	           	</thread>
+	           	<tbody id = "tbody">
+	           		
+	           	</tbody>
+	         </table>
+
+	         <div id="fondo" class="fondo" hidden>
+	         	<img src = "./img/giphy.gif">
+           	 </div>
+
+	</body>
+</html>
