@@ -12,7 +12,7 @@ $(document).ready(listar);
 				for (var i=0;i<data.length;i++)
 			   	{
 			   		var fila=$("<tr>"); 
-       				$(fila).attr('id','tr');
+       				$(fila).attr('id','tr');//Lo mismo que set atributte pero no se para que lo settea
         			var obj = data[i];
 					var columnas = Object.keys(obj);
 
@@ -85,6 +85,8 @@ $(document).ready(listar);
 									turno.innerHTML = $("#turno2").val();
 								}
 
+								Cerrar();
+
 		                    }
 		                    else
 		                    {
@@ -114,19 +116,19 @@ $(document).ready(listar);
 			$("#fondo").show();
 
 			var id = tag.firstElementChild.innerHTML;
-			var parametros = {id: id};
-
-			parametros = JSON.stringify(parametros);
 
 			$.post("http://localhost:3000/eliminar", 
 				{
-					id: id
+					"id": id
 				},
 				function(data, status)
 				{
+					console.log(data.type);
                     if(data.type == "ok")
                     {
                     	tag.parentNode.removeChild(tag);
+
+                    	Cerrar();
                     }
                     else
                     {
