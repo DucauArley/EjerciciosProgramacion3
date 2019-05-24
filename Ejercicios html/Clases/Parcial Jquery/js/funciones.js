@@ -11,40 +11,19 @@ $(document).ready(listar);
 			{
 				for (var i=0;i<data.length;i++)
 			   	{
-			   		var nodoTr = document.createElement("tr");
-			     	var nodoTd1 = document.createElement("td");
-			    	var nodoTd2 = document.createElement("td");
-			     	var nodoTd3 = document.createElement("td");
-			     	var nodoTd4 = document.createElement("td");
-			     	var nodoTd5 = document.createElement("td");
-			     	var nodoId
-			     	var nodoNombre;
-			     	var nodoCuatrimestre;
-			     	var nodoTurno;
-			     	var nodoFecha;
+			   		var fila=$("<tr>"); 
+       				$(fila).attr('id','tr');
+        			var obj = data[i];
+					var columnas = Object.keys(obj);
 
-			     	nodoTr.setAttribute('href', "#");
-			     	nodoTr.addEventListener("dblclick", Abrir);
-
-			     	nodoId = document.createTextNode(data[i].id);
-			   		nodoNombre = document.createTextNode(data[i].nombre);
-			     	nodoCuatrimestre = document.createTextNode(data[i].cuatrimestre);
-			     	nodoFecha = document.createTextNode(data[i].fechaFinal);
-			     	nodoTurno = document.createTextNode(data[i].turno);
-
-			     	nodoTd1.appendChild(nodoId);
-			     	nodoTd2.appendChild(nodoNombre);
-			     	nodoTd3.appendChild(nodoCuatrimestre);
-			     	nodoTd4.appendChild(nodoFecha);
-			     	nodoTd5.appendChild(nodoTurno);
-
-			     	nodoTr.appendChild(nodoTd1);
-			     	nodoTr.appendChild(nodoTd2);
-			     	nodoTr.appendChild(nodoTd3);
-			     	nodoTr.appendChild(nodoTd4);
-			     	nodoTr.appendChild(nodoTd5);
-
-			     	$("#tbody").append(nodoTr);
+					for (var j = 0; j < columnas.length; j++) 
+					{
+			            var cel= $('<td>');
+			            $(fila).append(cel);
+			            $(cel).text(obj[columnas[j]]);    
+			        }
+			        $(fila).dblclick(Abrir);
+			        $('#tbody').append(fila); 
 	  			}
 	  		});
 			
