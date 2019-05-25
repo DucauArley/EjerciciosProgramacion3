@@ -6,7 +6,7 @@
 
 	$id = $_POST["id"];
 	$imagen = $_FILES["imagen"];
-	$imagen["name"] = $id . date("d/m/y")
+	$imagen["name"] = $id . date("d/m/y");
 	$esta = 0;
 	$contador = 0;
 
@@ -14,7 +14,8 @@
 	{
 		if($item[0] == $id)
 		{
-			move_uploaded_file($item[3]["tmp_name"], "./backUpFotos/" . $item[3]["name"]);//aca iria todo lo de las imagenes
+			$imagenMod = json_decode($item[3], true);
+			move_uploaded_file($imagenMod["tmp_name"], "./backUpFotos/" . $imagenMod["name"]);//aca iria todo lo de las imagenes
 			//Se me ocurre un explode para sacar el nombre y otro para sacar el tmp las cosas estan separadas por comas
 			$item[1] = $_POST["nombre"]; 
 			$item[2] = $_POST["precio"];
@@ -47,9 +48,5 @@
 			}
 		}
 	}
-
-
-
-
 
 ?>

@@ -7,7 +7,9 @@
 
 	foreach ($productos as $item) 
 	{
-		echo $item[0] . " " . $item[1] . " " . $item[2] . " " . $item[3] . " " . $item[4] . "\r\n";
+		$imagen = json_decode($item[3], true);
+
+		echo $item[0] . " " . $item[1] . " " . $item[2] . " " . $imagen["tmp_name"] . " " . $item[4] . "\r\n";
 		$hay ++;
 	}
 

@@ -10,8 +10,6 @@
 			$this->nombre = $nombre;
 			$this->clave = $clave;
 		}
-
-
 	}
 
 ?>
