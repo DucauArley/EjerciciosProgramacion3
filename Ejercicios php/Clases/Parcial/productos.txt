@@ -1,2 +1,1 @@
 1 rewrwer 3234 {"name":"1-27.05.19","type":"image\/jpeg","tmp_name":".\/fotos\/1-27.05.19.jpg","error":0,"size":775702} werwerwer
-   null 

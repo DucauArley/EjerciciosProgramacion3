@@ -2,6 +2,9 @@
 
 	include "manejoArchivos.php";
 
+	//Hacer un cargar imagen para reducir codigo, Probar el modificar con varios productos, arreglar el crear usuario, y creo que nada mas
+	//Quizas pueda arreglar el guardar para que no me guarde un item del array vacio con el pop como lo use en el $vec
+	//Adaptar las demas funciones y crear carpetas para las funciones y los archivos y demas
 	$productos = leer("productos.txt");
 
 	$id = $_POST["id"];
@@ -22,7 +25,7 @@
 	{
 		if($item[0] == $id)
 		{
-			$imagenMod = json_decode($item[3], true);//Revisar bien esto
+			$imagenMod = json_decode($item[3], true);
 			rename($imagenMod["tmp_name"], "./backUpFotos/" . $imagenMod["name"] . "." . end($nombre));
 			var_dump($imagenMod);
 			$item[1] = $_POST["nombre"];
@@ -38,6 +41,7 @@
 		}
 	}
 
+
 	move_uploaded_file($origen, $destino);
 
 	if($esta == 0)
@@ -46,6 +50,10 @@
 	}
 	else
 	{
+		array_pop($vec);
+
+		var_dump($vec);
+
 		foreach ($vec as $item) 
 		{
 			$item[3] = json_encode($item[3]);
