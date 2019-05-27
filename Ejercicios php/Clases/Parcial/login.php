@@ -13,9 +13,9 @@
 	//var_dump($usuarios);
 	foreach ($usuarios as $item) 
 	{
-		//var_dump($item);
-		var_dump($item[1]);
-		if(/*strcmp($item[0], $nombre) == 0 && *//*strcmp($item[1], $clave) == 0*/ $item[1] == $clave)
+		var_dump($item);
+		
+		if(strcasecmp($item[0], $nombre) == 0 && strcasecmp($item[1], $clave) == 0 /*$item[1] == $clave*/)
 		{
 			$contador ++;
 		}

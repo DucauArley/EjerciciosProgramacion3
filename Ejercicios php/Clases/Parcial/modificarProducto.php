@@ -2,8 +2,7 @@
 
 	include "manejoArchivos.php";
 
-	//Hacer un cargar imagen para reducir codigo, Probar el modificar con varios productos, arreglar el crear usuario, y creo que nada mas
-	//Quizas pueda arreglar el guardar para que no me guarde un item del array vacio con el pop como lo use en el $vec
+	//Hacer un cargar imagen para reducir codigo, tratar de reducir codigo en las demas funciones, hay cosas que se repiten, hacer un validar o algo por el estilo, ya que se puede usar tanto para el crear usuario como para el cargar producto
 	//Adaptar las demas funciones y crear carpetas para las funciones y los archivos y demas
 	$productos = leer("productos.txt");
 
@@ -27,11 +26,12 @@
 		{
 			$imagenMod = json_decode($item[3], true);
 			rename($imagenMod["tmp_name"], "./backUpFotos/" . $imagenMod["name"] . "." . end($nombre));
-			var_dump($imagenMod);
+
 			$item[1] = $_POST["nombre"];
 			$item[2] = $_POST["precio"];
 			$item[3] = $imagen;
-			$item[4] = $_POST["usuario"];
+			$item[3] = json_encode($item[3]);
+			$item[4] = $_POST["usuario"] . PHP_EOL;
 			$esta ++;
 			$vec[] = $item;
 		}
@@ -41,7 +41,6 @@
 		}
 	}
 
-
 	move_uploaded_file($origen, $destino);
 
 	if($esta == 0)
@@ -50,14 +49,14 @@
 	}
 	else
 	{
-		array_pop($vec);
-
-		var_dump($vec);
+		/*if($id =! 1)
+		{
+			array_pop($vec);
+		}Deveria ir si el producto que modifico es el ultimo para que no me deje un item de mas en el array pero funciona igual no se como jajajajajajaja*/
 
 		foreach ($vec as $item) 
 		{
-			$item[3] = json_encode($item[3]);
-			$datos = $item[0] . " " . $item[1] . " " . $item[2] . " " . $item[3] . " " . $item[4] . PHP_EOL;
+			$datos = $item[0] . " " . $item[1] . " " . $item[2] . " " . $item[3] . " " . $item[4];
 
 			if($contador == 0)
 			{

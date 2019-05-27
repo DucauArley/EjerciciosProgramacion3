@@ -1,1 +1,4 @@
-1 rewrwer 3234 {"name":"1-27.05.19","type":"image\/jpeg","tmp_name":".\/fotos\/1-27.05.19.jpg","error":0,"size":775702} werwerwer
+1 Roberto 234 {"name":"1-27.05.19","type":"image\/jpeg","tmp_name":".\/fotos\/1-27.05.19.jpg","error":0,"size":845941} Perez
+2 Roberto 234 {"name":"2-27.05.19","type":"image\/jpeg","tmp_name":".\/fotos\/2-27.05.19.jpg","error":0,"size":845941} Perez
+3 Roberto 234 {"name":"3-27.05.19","type":"image\/jpeg","tmp_name":".\/fotos\/3-27.05.19.jpg","error":0,"size":845941} Perez
+    

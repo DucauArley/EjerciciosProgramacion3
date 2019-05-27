@@ -48,4 +48,42 @@
 			return $vec;
 		}
 
+		function cargarFotos($id)
+		{
+			$destino = "./Fotos/";
+			$destinoB = "./FotosBackUp/";
+		    $nombreImagen = $_FILES["imagen"]["name"];
+		    $hoy = date("m.d.y");
+			if($id!=null)
+			{
+				$datoImagen = $id . "-" . $hoy;
+			}
+		    else
+		    {
+		        $datoImagen = "sinDatos";
+		    }
+		    
+			$explode = explode(".", $nombreImagen);
+
+			$destino .= $datoImagen . "." . end($explode);
+
+		    $destinoB .= $datoImagen . "." . end($explode);
+
+			if(!file_exists($destino))
+			{
+		        
+		        move_uploaded_file($_FILES["imagen"]["tmp_name"], $destino);	
+		        	
+			}
+			else
+			{
+		        
+		        
+				move_uploaded_file($_FILES["imagen"]["tmp_name"], $dicBackup);
+			}
+		    
+		    return $destino;
+
+		}
+
 ?>
