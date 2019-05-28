@@ -48,12 +48,30 @@
 			return $vec;
 		}
 
-		function cargarFotos($id)
+		function validar($path, $comparacion)
 		{
-			$destino = "./Fotos/";
-			$destinoB = "./FotosBackUp/";
+			$vec = leer($path);
+			$esta = false;
+
+			foreach ($vec as $item) 
+			{
+				if(strcasecmp($item[0], $comparacion) == 0)
+				{
+					$esta = true;
+				}
+			}
+
+			return $esta;
+		}
+
+		//Funciona, ahora tengo que ver de que me sirve pasarle el destino, por ahi puedo escribir el tmp_name en el archivo con eso
+		//No Cambia las fotos de dias anteriores por mas que tenga la misma id porque se modifica en base a el tmp_name que es un nombre actual, o algo asi, es medio raro
+		function cargarFotos($id, $imagen)
+		{
+			$destino = "./fotos/";
+			$destinoB = "./backUpFotos/";
 		    $nombreImagen = $_FILES["imagen"]["name"];
-		    $hoy = date("m.d.y");
+		    $hoy = date("d.m.y");
 			if($id!=null)
 			{
 				$datoImagen = $id . "-" . $hoy;
@@ -67,19 +85,16 @@
 
 			$destino .= $datoImagen . "." . end($explode);
 
-		    $destinoB .= $datoImagen . "." . end($explode);
+		    $destinoB .= $imagen["name"] . "." . end($explode);
 
 			if(!file_exists($destino))
 			{
-		        
 		        move_uploaded_file($_FILES["imagen"]["tmp_name"], $destino);	
-		        	
 			}
 			else
 			{
-		        
-		        
-				move_uploaded_file($_FILES["imagen"]["tmp_name"], $dicBackup);
+				rename($imagen["tmp_name"], $destinoB);
+				move_uploaded_file($_FILES["imagen"]["tmp_name"], $destino);
 			}
 		    
 		    return $destino;

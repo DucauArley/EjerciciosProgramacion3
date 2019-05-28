@@ -2,23 +2,30 @@
 
 	include "manejoArchivos.php";
 
-	$usuarios = leer("usuarios.txt");
-	$nombre = $_GET["nombre"];
-	$esta = 0;
-
-	foreach ($usuarios as $item) 
+	if(isset($_POST["nombre"]))
 	{
-		
-		if(strcasecmp($item[0], $nombre) == 0)
+		$usuarios = leer("usuarios.txt");
+		$nombre = $_GET["nombre"];
+		$esta = 0;
+
+		foreach ($usuarios as $item) 
 		{
-			echo $item[0] . " " . $item[1];
-			$esta ++;
+			
+			if(strcasecmp($item[0], $nombre) == 0)
+			{
+				echo $item[0] . " " . $item[1];
+				$esta ++;
+			}
+		}
+
+		if($esta == 0)
+		{
+			echo "No existe " . $nombre;
 		}
 	}
-
-	if($esta == 0)
+	else
 	{
-		echo "No existe " . $nombre;
+		echo "Faltan datos";
 	}
 
 ?>
