@@ -1,0 +1,1 @@
+1 15 molde 18 {"name":"Penguins.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\phpF371.tmp","error":0,"size":777835} especial
