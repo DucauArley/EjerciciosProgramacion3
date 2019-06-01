@@ -1,0 +1,73 @@
+<html>
+<head>
+	<title>Colecciones</title>
+	<script type="text/javascript">
+		
+		//Map let es var
+		let nums = [1,2,3,4,5,6];
+		let numSqrt = [];
+
+		for(let i = 0; i<nums.lenght;i++)
+		{
+			numSqrt[i] = nums[i] * nums[i];
+		}
+
+		console.log("Numeros con foreach", numSqrt);
+		//Map devuelve un array con los mismos elementos que se le pasan
+
+		console.log("Numeros con map"nums.map(function(num)
+		{
+			return num * num;
+		}));
+
+		console.log("Numeros con arrowfunction"nums.map((num, index)=> num * num));//Lo mismo que lo de arriba pero en ves de function se pone la flecha
+
+		//Filter
+
+		let numFiltered = [];
+
+		let j=0;
+
+		for (let i = 0; i <nums.lenght; i++) 
+		{
+			if(nums[i]>3)
+			{
+				numFiltered[j] = nums[i];
+				j++;
+			}
+		}
+
+		console.log("Numeros mayores a 3", numFiltered);
+
+		//Retorna un booleano si se agrega a la nueva lista o no
+		//Filter devuelve el array con los items que cumplen con la condicion
+		nums.filter(function(num)
+		{
+			return num>3;
+		})//.map() Para poder cambiar los numeros que no sean mayores a 3 creo
+
+		//Reduce hace una sumatoria entre todos los numeros del array
+		//Segundo parametro es el item compelto del array
+
+
+		var a = 5;
+		var b = 10;
+		if(a === 5)
+		{
+			let a = 4 //Alcance dentro del bloque if
+			var b = 1 //El alcance es global
+
+			console.log(a); //4
+			console.log(b); //1
+		}
+
+		console.log(a) //5
+		console.log(b) //1
+
+	</script>
+
+</head>
+<body>
+
+</body>
+</html>
