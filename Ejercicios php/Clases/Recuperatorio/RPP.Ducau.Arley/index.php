@@ -17,6 +17,9 @@
                     case 'AltaVenta':
                         require_once "AltaVenta.php";
                         break;
+                    case 'BorrarItem':
+                        require_once "BorrarItem.php";
+                        break;
                 }
             }
             break;

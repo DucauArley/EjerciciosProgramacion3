@@ -34,7 +34,7 @@
 				}
 				else
 				{
-					$Agotado = true
+					$Agotado = true;
 				}
 				$vec[] = $item;
 			}
@@ -48,7 +48,7 @@
 
 		if($Agotado == false)
 		{
-			$datos = $id . " " . $venta->email . " " . $venta->tipo . " " . $venta->cantidad . " " . $precio . " " . $venta->sabor . PHP_EOL;
+			$datos =$id . " " . $venta->email . " " . $venta->tipo . " " . $venta->cantidad . " " . $precio . " " . $venta->sabor;
 
 			var_dump($datos);
 

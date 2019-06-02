@@ -24,7 +24,7 @@
 		}
 		else
 		{
-			echo "No hay de " . $tipo . " o de " . $sabor;
+			echo "No hay de " . $tipo . " y de " . $sabor;
 		}
 	}
 	else

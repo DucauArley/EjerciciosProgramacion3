@@ -1,8 +1,4 @@
-1 juancarlos@gmail.com piedra 1 15 jamon
+1 juancarlos@gmail.com piedra 20 400 especial
+2 roberto@gmail.com piedra 80 1600 especial
 
-2 juancarlos@gmail.com molde 1 15 jamon
-
-3 juancarlos@gmail.com molde 1 15 especial
-
-4 juancarlos@gmail.com molde 1 15 especial
-
+3 Marcos@gmail.com piedra 15 300 jamon
