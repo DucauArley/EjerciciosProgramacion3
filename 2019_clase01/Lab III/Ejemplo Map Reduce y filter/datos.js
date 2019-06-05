@@ -1054,29 +1054,26 @@ var datos =[
   // Retornar el promedio de edad de los usuarios (number)
   lib.userAgeAverage = function () 
   {
-  	var contador = 0;
-  	var promedio = 0;
   	console.log("Promedio de edad de los usuarios", datos.reduce(function(total, dato)
 	{
-		contador ++;
-
-		total += dato.age;
-		console.log(total);
-
-		if(contador == datos.length)
-		{
-			promedio = total / contador;
-			return promedio;
-    	}
-    	
-	},{age:0}));
+		return total += dato.age / datos.length;
+	}, 0));
   };
 
   // Retornar el promedio de edad de los usuarios hombres (number)
   lib.userMaleAgeAverage = function () 
   {
-    
-  
+  	var contador = 0;
+    console.log("Promedio de edad de los usuarios hombres", datos.filter(function(dato)
+	{
+    	return dato.gender == "male";
+	}).reduce(function(total, dato)
+	{
+		contador ++; //No se porque me divivde mal
+
+		return total += dato.age / contador;
+	}, 0));
+  	
   };
 
   // Retornar el promedio de edad de los usuarios mujeres (number)
