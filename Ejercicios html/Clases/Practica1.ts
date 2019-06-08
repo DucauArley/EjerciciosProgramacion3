@@ -1,8 +1,8 @@
 // Tipos
 var batman:string = "Bruce";
-var superman = "Clark";
+var superman:string = "Clark";
 
-var existe = false;
+var existe:bool = false;
 
 // Tuplas
 var parejaHeroes = [batman,superman];
@@ -12,10 +12,10 @@ var villano = ["Lex Lutor",5,true];
 var aliados = ["Mujer Maravilla","Acuaman","San", "Flash"];
 
 //Enumeraciones
-var fuerzaFlash = 5;
-var fuerzaSuperman = 100;
-var fuerzaBatman = 1;
-var fuerzaAcuaman = 0;
+var fuerzaFlash:number = 5;
+var fuerzaSuperman:number = 100;
+var fuerzaBatman:number = 1;
+var fuerzaAcuaman:number = 0;
 
 // Retorno de funciones
 function activar_batiseñal(){
