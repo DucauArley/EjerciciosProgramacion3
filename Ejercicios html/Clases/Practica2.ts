@@ -1,9 +1,9 @@
 // Funciones Básicas
-function sumar( a, b ){
+function sumar( a:number, b:number ){
   return a + b;
 }
 
-var contar = function( heroes ){
+var contar = function( heroes:string ){
   return heroes.length;
 }
 var superHeroes = ["Flash", "Arrow", "Superman", "Linterna Verde"];

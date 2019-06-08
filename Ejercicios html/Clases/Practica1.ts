@@ -2,7 +2,7 @@
 var batman:string = "Bruce";
 var superman:string = "Clark";
 
-var existe:bool = false;
+var existe = false;
 
 // Tuplas
 var parejaHeroes = [batman,superman];
@@ -18,15 +18,17 @@ var fuerzaBatman:number = 1;
 var fuerzaAcuaman:number = 0;
 
 // Retorno de funciones
-function activar_batiseñal(){
+function activar_batiseñal():string
+{
   return "activada";
 }
 
-function pedir_ayuda(){
+function pedir_ayuda()
+{
   console.log("Auxilio!!!");
 }
 
 // Aserciones de Tipo
-var poder = "100";
-var largoDelPoder = poder.length;
+var poder:string = "100";
+var largoDelPoder:number = poder.length;
 console.log( largoDelPoder );

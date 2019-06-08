@@ -12,7 +12,7 @@ var bumblebee = {
   modelo: "4x2",
   antibalas: true,
   pasajeros:4,
-  disparar()?{ // El metodo disparar es opcional
+  disparar(){ // El metodo disparar es opcional
     console.log("Disparando");
   }
 };
