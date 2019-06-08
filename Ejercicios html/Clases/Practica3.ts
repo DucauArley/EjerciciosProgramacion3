@@ -12,11 +12,10 @@ var bumblebee = {
   modelo: "4x2",
   antibalas: true,
   pasajeros:4,
-  disparar(){ // El metodo disparar es opcional
+  disparar()?{ // El metodo disparar es opcional
     console.log("Disparando");
   }
 };
-
 
 // Villanos debe de ser un arreglo de objetos personalizados
 var villanos = [{
