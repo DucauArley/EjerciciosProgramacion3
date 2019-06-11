@@ -5,11 +5,11 @@ var superman:string = "Clark";
 var existe = false;
 
 // Tuplas
-var parejaHeroes = [batman,superman];
-var villano = ["Lex Lutor",5,true];
+var parejaHeroes:[string, string] = [batman,superman];
+var villano:[string, number, boolean] = ["Lex Lutor",5,true];
 
 // Arreglos
-var aliados = ["Mujer Maravilla","Acuaman","San", "Flash"];
+var aliados:string[] = ["Mujer Maravilla","Acuaman","San", "Flash"];
 
 //Enumeraciones
 var fuerzaFlash:number = 5;
@@ -23,12 +23,12 @@ function activar_batiseñal():string
   return "activada";
 }
 
-function pedir_ayuda()
+function pedir_ayuda():void
 {
   console.log("Auxilio!!!");
 }
 
 // Aserciones de Tipo
 var poder:string = "100";
-var largoDelPoder:number = poder.length;
+var largoDelPoder:any = poder.length;
 console.log( largoDelPoder );
