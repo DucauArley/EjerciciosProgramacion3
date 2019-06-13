@@ -2,6 +2,7 @@
 	namespace Firebase\JWT;
 	use \Firebase\JWT\JWT;
 	require "vendor/autoload.php";
+
 	/*usar el composer para el slim composer require slim/slim "^3.12"
 	para el firebase composer require firebase/php-jwt
 	*/
@@ -29,9 +30,8 @@
 	{
 		var_dump($exception);
 	}
-    
-     
 	});
+
 	$app->post('/verificarToken', function (Request $request, Response $response) 
 	{
 	    $tokenDos =$request->getHeader('token');
@@ -45,11 +45,7 @@
 	    
 	    try
 	    {
-	    	$tokenDeco = JWT::decode($token,
-	    	"clave",
-	    		['HS256']
-	    	);
-	    		
+	    	$tokenDeco = JWT::decode($token, "claveloide",['HS256']);
 		}
 		catch(Exception $exception)
 		{
@@ -57,7 +53,6 @@
 		}
 	    
 	    return "ok";
-	     
 	});
 
 	$app->run();
