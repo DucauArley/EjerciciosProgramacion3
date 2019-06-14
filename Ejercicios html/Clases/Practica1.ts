@@ -1,3 +1,6 @@
+/*"%APPDATA%\Sublime Text 3\Packages"
+git clone --depth 1 https://github.com/Microsoft/TypeScript-Sublime-Plugin.git TypeScript*/
+
 // Tipos
 var batman:string = "Bruce";
 var superman:string = "Clark";
