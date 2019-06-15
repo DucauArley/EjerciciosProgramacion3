@@ -1,13 +1,23 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title></title>
-	<script src="Animal.js"></script> Importa el orden asique hay que ponerlo asi
-	<script src="Perro.js"></script>
-	<script src="Gato.js"></script>
-	<script src="Ejemplo.js"></script>
-</head>
-<body>
-
-</body>
+	<head>
+		<title></title>
+		<script src = "./node_modules/jquery/dist/jquery.min.js"></script>
+		<script src="Animal.js"></script> <!--Importa el orden asique hay que ponerlo asi-->
+		<script src="Perro.js"></script>
+		<script src="Gato.js"></script>
+		<script src="Ejemplo.js"></script>
+	</head>
+	<body>
+		<form class = "contenedor" id="contAgregar">
+				Nombre<br>
+				<input type="text"  class="sinError" size="40" id="nombre"><br>
+				Animal<br>
+				<input type="text"  class="sinError" size="40" id="animal"><br><br>
+				<input type="button" value="Agregar" id="btnAgregar">  
+				<input type="button" value="Modificar" id="btnModificar">  
+				<input type="button" value="Eliminar" id="btnEliminar">  
+				<input type="button" value="Listar" id="btnListar">  
+			</form>
+	</body>
 </html>

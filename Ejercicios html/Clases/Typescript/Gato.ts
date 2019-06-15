@@ -1,4 +1,4 @@
-namespace Animal //Asi se hace un namespace
+namespace Animal
 {
 	export class Gato implements Animal
 	{
