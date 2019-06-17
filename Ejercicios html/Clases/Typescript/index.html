@@ -7,11 +7,98 @@
 		<script src="Perro.js"></script>
 		<script src="Gato.js"></script>
 		<script src="Ejemplo.js"></script>
+		<style>
+			.boton
+			{
+				color: white;
+				background-color: green;
+				width: 225px;
+				height: 50px;
+			}
+			.boton2
+			{
+				color: white;
+				background-color: red;
+				width: 225px;
+				height: 50px;
+			}
+			.cerrar
+			{
+				color: white;
+				background-color: red; 
+				width: 9%;
+				padding: 16px;
+				position: absolute;
+				right: 1px;
+				top: 1px;
+			}
+			@keyframes aparecer
+			{
+				from{opacity: 0}
+				to{opacity: 1}
+			}
+			input[type='text']
+			{
+				width: 100%;
+				padding: 12px 20px;
+				display: inline-block;
+				border-radius: 4px;
+				box-sizing: border-box;
+			}
+			th
+			{
+				background-color: lightblue;
+				color: white;
+			}
+			tr:nth-child(even)
+			{
+				background-color: lightgrey;
+			}
+			.tabla
+			{
+				border-collapse: collapse;
+				text-align: left;
+				font-size: 15pt;
+			}
+			.contenedor
+			{
+				position: fixed;
+				width: 50%;
+				border-radius: 5px;
+				background-color: lightgrey;
+				padding: 20px;
+				box-sizing: border-box;
+				margin: 20px auto;
+				left: 25%;
+				top: 100px;
+				animation-name: aparecer;
+				animation-duration: 4s;
+			}
+			.sinError
+			{
+				border: 1px solid #ccc;
+			}
+			.error
+			{
+				border: 1px solid red;
+			}
+			.fondo 
+			{
+			    position:fixed;
+			    padding:0;
+				margin:0;
+				text-align: center;
+			    top:100px;
+			    left:0;
+			    width: 100%;
+			    height: 100%;
+			}
+		</style>
 	</head>
 	<body>
-		<form class = "contenedor" id="contAgregar">
+		<form id="contenedor">
 				Nombre<br>
-				<input type="text"  class="sinError" size="40" id="nombre"><br>
+				<input type="text" id="nombre"><br>
 				Animal<br>
 				<select id="animal"> 
 				<option value="Perro">Perro</option>
@@ -21,6 +108,17 @@
 				<input type="button" value="Modificar" id="btnModificar">  
 				<input type="button" value="Eliminar" id="btnEliminar">  
 				<input type="button" value="Listar" id="btnListar">  
-			</form>
+		</form>
+		<form class = "contenedor" hidden = "true" id="contModificar">
+				Nombre<br>
+				<input type="text" id="nombreMod"><br>
+				Animal<br>
+				<select id="animalMod"> 
+				<option value="Perro">Perro</option>
+				<option value="Gato">Gato</option>
+			</select><br><br>
+				<input type="button" value="Modificar" id="btnMod">  
+				<input type="button" value="Cancelar" id="btnCancelar" onclick= "$('#contModificar').hide();"> 
+		</form>
 	</body>
 </html>

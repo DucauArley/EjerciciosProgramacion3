@@ -3,7 +3,7 @@ namespace Animal
 	$("#document").ready(function()
 		{
 			$("#btnAgregar").click(agregar);
-			$("#btnModificar").click(modificar);
+			$("#btnModificar").click(modificarOpen);
 			$("#btnEliminar").click(eliminar);
 			$("#btnListar").click(listar);
 		});
@@ -30,24 +30,47 @@ namespace Animal
 		}
 	}
 
+	function modificarOpen()
+	{
+		$("#contModificar").show();
+
+		$("#btnMod").click(modificar);
+	}
+
+
 	function modificar()
 	{
 		var nombre:string = String($("#nombre").val());
+		var nombreNuevo:string = String($("#nombreMod").val());
+		var animalMod:string = String($("#animalMod").val());
+		var i:number = 0;
+
+		if(animalMod == "Perro")
+		{
+			var animal:Animal = new Perro(nombreNuevo);
+		}
+		else
+		{
+			var animal:Animal = new Gato(nombreNuevo);
+		}
+
 
 		lista.forEach(function(value)
 		{
 			if(value.nombre == nombre)
 			{
-				value.nombre = "Roberto";
+				lista.splice(i, 1, animal);
 			}
+			i++;
 		});
 
+		$("#contModificar").hide();
 	}
 
 	function eliminar()
 	{
 		var nombre:string = String($("#nombre").val());
-		var i = 0;
+		var i:number = 0;
 
 		lista.forEach(function(value)
 		{
