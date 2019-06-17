@@ -4,7 +4,7 @@ namespace Animal
 	{
 		private nombre:string;
 
-		constructor(nombre?:string)
+		constructor(nombre:string)
 		{
 			if(nombre)
 			{

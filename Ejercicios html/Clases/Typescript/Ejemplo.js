@@ -2,6 +2,8 @@ var Animal;
 (function (Animal) {
     $("#document").ready(function () {
         $("#btnAgregar").click(agregar);
+        $("#btnModificar").click(modificar);
+        $("#btnEliminar").click(eliminar);
         $("#btnListar").click(listar);
     });
     var lista = new Array();
@@ -11,7 +13,7 @@ var Animal;
     function agregar() {
         var nombre = String($("#nombre").val()); //Lo mismo con los demas, ej Number()	
         var animal = $("#animal").val() + ""; //Es lo mismo que el de arriba pero mas hardcodeado
-        if (animal == "perro") {
+        if (animal == "Perro") {
             lista.push(new Animal.Perro(nombre));
         }
         else {
@@ -19,11 +21,24 @@ var Animal;
         }
     }
     function modificar() {
+        var nombre = String($("#nombre").val());
+        lista.forEach(function (value) {
+            if (value.nombre == nombre) {
+                value.nombre = "Roberto";
+            }
+        });
     }
     function eliminar() {
+        var nombre = String($("#nombre").val());
+        var i = 0;
+        lista.forEach(function (value) {
+            if (value.nombre == nombre) {
+                lista.splice(i, 1);
+            }
+            i++;
+        });
     }
     function listar() {
-        var i = 0;
         lista.forEach(function (value) {
             console.log(value);
         });
