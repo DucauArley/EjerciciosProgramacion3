@@ -1,0 +1,3 @@
+composer require slim/slim "^3.12"
+require 'vendor/autoload.php'; Va en el archivo php
+composer require firebase/php-jwt

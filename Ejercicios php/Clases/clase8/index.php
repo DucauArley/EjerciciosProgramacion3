@@ -21,20 +21,20 @@
 	    "data" => $name,
 		);
 
-    try
-    {
-    	$token = JWT::encode($playload,"claveloide");
-    	return $response->withJson($token,200);	
-	}
-	catch(Exception $exception)
-	{
-		var_dump($exception);
-	}
+	    try
+	    {
+	    	$token = JWT::encode($playload,"claveloide");
+	    	return $response->withJson($token,200);	
+		}
+		catch(Exception $exception)
+		{
+			var_dump($exception);
+		}
 	});
 
 	$app->post('/verificarToken', function (Request $request, Response $response) 
 	{
-	    $tokenDos =$request->getHeader('token');
+	    $tokenDos = $request->getHeader('token');
 	    var_dump($tokenDos[0]);
 	    $token = $tokenDos[0];
     
