@@ -1,6 +1,6 @@
 <?php
 	//namespace Firebase\JWT;
-	//include_once "./administracion.php";
+	include_once "AccesoDatos.php";
 
 	class Usuario
 	{
@@ -24,7 +24,7 @@
 	    
 	    public static function Listar()
 	    {    
-	        $objetoAccesoDato = administracion::dameUnObjetoAcceso();
+	        $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
 	        
 	        $consulta = $objetoAccesoDato->RetornarConsulta("SELECT nombre, clave, sexo, perfil FROM usuarios");	        
 	        $consulta->execute();
@@ -36,7 +36,7 @@
 
 	    public static function Buscar()
 	    {    
-	        $objetoAccesoDato = administracion::dameUnObjetoAcceso();
+	        $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
 	        
 	        $consulta = $objetoAccesoDato->RetornarConsulta("SELECT * FROM usuarios WHERE nombre=:nombre AND clave=:clave AND sexo=:sexo");	        
 	        $consulta->execute();
@@ -48,7 +48,7 @@
 	    
 	    public function AltaUsuario()
 	    {
-	        $objetoAccesoDato = administracion::dameUnObjetoAcceso();
+	        $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
 	        
 	        $consulta = $objetoAccesoDato->RetornarConsulta("INSERT INTO usuarios (nombre, clave, sexo, perfil)"
 	                                                    . "VALUES(:nombre, :clave, :sexo, :perfil)");

@@ -1,17 +1,16 @@
 <?php
 
 	//namespace Firebase\JWT;
-	//use \Firebase\JWT\JWT;
+	use \Firebase\JWT\JWT;
 	require "vendor/autoload.php";
 	include_once "./Usuario.php";
-	include_once "./administracion.php";
+	include_once "./AccesoDatos.php";
 
-	use Psr\Http\Message\ServerRequestInterface as Request;
-	use Psr\Http\Message\ResponseInterface as Response;
+	$config["displayErrorDetails"] = true;
+	$config["addContentLengthHeader"] = false;
+	$app = new \Slim\App(["settings" => $config]);
 
-	$app = new \Slim\App;
-
-	$app->post('/usuario', function (Request $request, Response $response) 
+	$app->post('/usuario', function($request, $response) 
 	{
 		try
 		{
@@ -27,7 +26,7 @@
 		}
 	});
 
-	$app->post('/login', function (Request $request, Response $response) 
+	$app->post('/login', function($request, $response) 
 	{
 		$contador = 0;
 	    $datos = $request->getParsedBody();
