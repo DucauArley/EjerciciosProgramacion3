@@ -2,7 +2,7 @@
 
 	include_once "AccesoDato.php";
 
-	class Alumno
+		class Alumno
 		{
 			public $nombre;
 			public $apellido;
