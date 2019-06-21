@@ -29,21 +29,29 @@
 	        $consulta = $objetoAccesoDato->RetornarConsulta("SELECT nombre, clave, sexo, perfil FROM usuarios");	        
 	        $consulta->execute();
 	        
-	        $consulta->setFetchMode(PDO::FETCH_INTO, new Usuario);                                                
+	        $data = $consulta->fetchAll(PDO::FETCH_ASSOC);                                           
 
-	        return $consulta; 
+	        foreach ($data as $item) 
+	        {
+	        	echo "Nombre: ".$item["nombre"]." Clave: ".$item["clave"]." Sexo: ".$item["sexo"]." Perfil: ".$item["perfil"];
+	        }
 	    }
 
-	    public static function Buscar()
+	    public function Buscar()
 	    {    
 	        $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
 	        
-	        $consulta = $objetoAccesoDato->RetornarConsulta("SELECT * FROM usuarios WHERE nombre=:nombre AND clave=:clave AND sexo=:sexo");	        
-	        $consulta->execute();
-	        
-	        $consulta->setFetchMode(PDO::FETCH_INTO, new Usuario);                                                
+	        $consulta=$objetoAccesoDato->RetornarConsulta("SELECT * FROM usuarios WHERE nombre=:nombre AND clave=:clave AND sexo=:sexo");
 
-	        return $consulta; 
+	        $consulta->bindValue(':nombre', $this->nombre, PDO::PARAM_STR);
+	        $consulta->bindValue(':clave', $this->clave, PDO::PARAM_STR);
+	        $consulta->bindValue(':sexo', $this->sexo, PDO::PARAM_STR);
+
+	        $consulta->execute();
+
+	        $data = $consulta->fetch();
+
+	        return $data; 
 	    }
 	    
 	    public function AltaUsuario()
