@@ -19,7 +19,7 @@
 		                   <h5> <a class="nav-link" href="#">Lista</a> </h5	>
 		                </li>
 		                <li class="nav-item active">
-		                    <a class="nav-link" id="mostrarEmpleados" href="#">Mostrar</a>
+		                    <a class="nav-link" id="btnMostrar" href="#">Mostrar</a>
 		                </li>
 		                <li class="nav-item">
 		                    <a class="nav-link disabled" href="#" disabled>Formulario</a>
@@ -29,9 +29,9 @@
 		                        Ver
 		                    </a>
 		                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-		                        <a class="dropdown-item" id="promedio" href="#">Promedio</a>
-		                        <a class="dropdown-item" id="filtrar" href="#">Filtrar</a>
-		                        <a class="dropdown-item" id="NomYAp" href="#">Solo Nombre y Apellido</a>
+		                        <a class="dropdown-item" id="btnPromedio" href="#">Promedio</a>
+		                        <a class="dropdown-item" id="btnFiltrar" href="#">Filtrar</a>
+		                        <a class="dropdown-item" id="btnNomYAp" href="#">Solo Nombre y Apellido</a>
 		                    </div>
 		                </li>
 		            </ul>
@@ -42,8 +42,8 @@
 
             <div class="container">
 	            <div class="row">
-	            	<div class="col-lg-4 color1">
-		            	<h1>Alta Empleado</h1>
+	            	<div class="col-lg-4 color1" id="Alta">
+		            	<h2 id="header">Alta Empleado</h2>
 		            	Nombre:
 		          			<input type="text" class="form-control" id="nombre">
 		            	Apellido:
@@ -53,14 +53,14 @@
 		            	Legajo:
 		          			<input type="text" class="form-control" id="legajo">
 		            	Horario:
-		            	<select name="controlSelect" id="controlSelect" class="form-control col-lg-4">
+		            	<select name="controlSelect" id="horario" class="form-control col-lg-4">
 				          <option value="tarde">Tarde</option>
 				          <option value="maniana">Mañana</option>
 				          <option value="noche">Noche</option>
 				        </select><br>
 				        <div class="row justify-content-around">
-						    <button class="btn btn-danger col align-self-start col-lg-4">X Cancelar</button>
-						    <button class="btn btn-success col align-self-end col-lg-4">
+						    <button class="btn btn-danger col align-self-start col-lg-4" id="btnCancelar">X Cancelar</button>
+						    <button class="btn btn-success col align-self-end col-lg-4" id="btnAgregar">
 						    	<span class="glyphicon .glyphicon-floppy-disk"></span> Agregar
 						    </button>
 						</div>
@@ -69,7 +69,7 @@
 					
 					<div class="col-lg-8 color2">
 						<h1>Lista de empleados</h1>
-					   <table class="table">
+					   <table class="table" id="tbody">
 					     <thead class="bg-white">
 					       <tr>
 					         <th>Nombre</th>

@@ -16,3 +16,11 @@
     background-color: #bbb;
     height: 100px;
 }
+th
+{
+	background-color: #FEF1F7;
+}
+tr:nth-child(odd)
+{
+	background-color: white;
+}
