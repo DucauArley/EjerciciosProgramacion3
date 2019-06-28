@@ -4,7 +4,10 @@ var Personas;
         $("#btnAgregar").click(agregarEmpleado);
         $("#btnCancelar").click(limpiarFormulario);
         $("#btnMostrar").click(mostrarEmpleados);
-        $("#btnListar").click(listar);
+        //$("#btnListar").click(listar);
+        if (localStorage.getItem("lista")) {
+            lista = localStorage.getItem("lista"); //Creo que tendria que pasarle las cosas una por una 
+        }
     });
     var lista = new Array();
     function agregarEmpleado() {
@@ -20,17 +23,17 @@ var Personas;
         $("#nombre").val("");
         $("#apellido").val("");
         $("#edad").val("");
-        $("#horario").val("Mañana");
+        $("#horario").val("maniana");
         $("#legajo").val("");
         $("#btnAgregar").text("Agregar");
         $("#btnAgregar").click(agregarEmpleado);
-        $("#header").html("Alta empleado");
+        $("#header").html("Alta Empleado");
     }
     function mostrarEmpleados() {
         console.log(lista);
         $("#tBody").empty();
         for (var i = 0; i < lista.length; i++) {
-            var empleado = JSON.parse(lista[i].toString());
+            var empleado = JSON.parse(lista[i].toString()); //El error de la linea 33 esta aca
             var nodoTr = document.createElement("tr");
             var nodoTd1 = document.createElement("td");
             var nodoTd2 = document.createElement("td");
@@ -59,29 +62,34 @@ var Personas;
             btnModificar.innerHTML = "Modificar";
             nodoTr.appendChild(btnModificar);
             var btnEliminar = document.createElement("button");
-            btnEliminar.addEventListener("click", wrapEliminar);
+            btnEliminar.addEventListener("click", borrar);
             btnEliminar.innerHTML = "Borrar";
             nodoTr.appendChild(btnEliminar);
             $("#tBody").append(nodoTr);
         }
     }
     function openModificar(event) {
-        var trigger = event.target;
-        var horario = trigger.previousSibling;
-        var legajo = horario.previousSibling;
-        var edad = legajo.previousSibling;
-        var apellido = edad.previousSibling;
-        var nombre = apellido.previousSibling;
+        /*let trigger = event.target as HTMLElement;
+        let horario = trigger.previousSibling;
+        let legajo = horario.previousSibling;
+        let edad = legajo.previousSibling;
+        let apellido = edad.previousSibling;
+        let nombre = apellido.previousSibling;
+
         ($("#nombre").val(nombre.innerHTML));
         ($("#apellido").val(apellido.innerHTML));
         ($("#edad").val(edad.innerHTML));
         ($("#horario").val(horario.innerHTML));
         ($("#legajo").val(legajo.innerHTML));
+
         $("#btnAgregar").text("Modificar");
-        $("#btnAgregar").unbind("click");
+        $("#btnAgregar").unbind( "click" );
         $("#btnAgregar").click(wrapModificar);
-        $("#headerForm").html("Modificar empleado");
+
+        $("#headerForm").html("Modificar empleado");*/
     } //Tengo que arreglarlo y agregar los modificar y demas casos
+    function borrar(event) {
+    }
     function LocalStorage(empleado) {
         if (localStorage.getItem("lista") === null) {
             lista.push(empleado);
@@ -91,7 +99,7 @@ var Personas;
             var toParse = localStorage.getItem('lista');
             lista = JSON.parse(toParse);
             lista.push(empleado);
-            localStorage.setItem('storage', JSON.stringify(lista));
+            localStorage.setItem('lista', JSON.stringify(lista));
         }
     }
 })(Personas || (Personas = {}));

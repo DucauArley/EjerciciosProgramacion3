@@ -5,7 +5,12 @@ namespace Personas
 			$("#btnAgregar").click(agregarEmpleado);
 			$("#btnCancelar").click(limpiarFormulario);
 			$("#btnMostrar").click(mostrarEmpleados);
-			$("#btnListar").click(listar);
+			//$("#btnListar").click(listar);
+
+			if(localStorage.getItem("lista")) 
+		    {
+		        lista = localStorage.getItem("lista");//Creo que tendria que pasarle las cosas una por una 
+		    }
 		});
 
 	var lista:Array<Empleado> = new Array<Empleado>();
@@ -31,13 +36,13 @@ namespace Personas
 		$("#nombre").val("");
     	$("#apellido").val("");
     	$("#edad").val("");
-   	 	$("#horario").val("Mañana");
+   	 	$("#horario").val("maniana");
     	$("#legajo").val("");
 
     	$("#btnAgregar").text("Agregar");
     	$("#btnAgregar").click(agregarEmpleado);
 
-    	$("#header").html("Alta empleado");
+    	$("#header").html("Alta Empleado");
 	}
 
 	function mostrarEmpleados()
@@ -45,9 +50,9 @@ namespace Personas
 		console.log(lista);
 	    $("#tBody").empty();
 
-	    for (var i = 0; i < lista.length; i++) 
+	    for (var i:number = 0; i < lista.length; i++) 
 	    {
-	    	let empleado:Empleado = JSON.parse(lista[i].toString());
+	    	let empleado:Empleado = JSON.parse(lista[i].toString());//El error de la linea 33 esta aca
 
 	        let nodoTr:any = document.createElement("tr");
 			let nodoTd1:any = document.createElement("td");
@@ -81,7 +86,7 @@ namespace Personas
 	       	nodoTr.appendChild(btnModificar);
 
 	       	let btnEliminar = document.createElement("button");
-	       	btnEliminar.addEventListener("click", wrapEliminar);
+	       	btnEliminar.addEventListener("click", borrar);
 	       	btnEliminar.innerHTML = "Borrar";
 	       	nodoTr.appendChild(btnEliminar);
 
@@ -93,7 +98,7 @@ namespace Personas
 
 	function openModificar(event:Event) 
 	{
-	    let trigger = event.target as HTMLElement;
+	    /*let trigger = event.target as HTMLElement;
 	    let horario = trigger.previousSibling;
 	    let legajo = horario.previousSibling;
 	    let edad = legajo.previousSibling;
@@ -110,11 +115,14 @@ namespace Personas
 	    $("#btnAgregar").unbind( "click" );
 	    $("#btnAgregar").click(wrapModificar);
 
-	    $("#headerForm").html("Modificar empleado");
+	    $("#headerForm").html("Modificar empleado");*/
 	}//Tengo que arreglarlo y agregar los modificar y demas casos
 
 
+	function borrar(event:Event)
+	{
 
+	}
 
 
 
@@ -130,7 +138,7 @@ namespace Personas
             let toParse:any = localStorage.getItem('lista');
             lista = JSON.parse(toParse);
             lista.push(empleado);
-            localStorage.setItem('storage', JSON.stringify(lista));
+            localStorage.setItem('lista', JSON.stringify(lista));
         }
     }
 
