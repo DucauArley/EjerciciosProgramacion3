@@ -9,13 +9,13 @@ namespace Personas
 
 			if(localStorage.getItem("lista")) 
 		    {
-		        lista = localStorage.getItem("lista");//Creo que tendria que pasarle las cosas una por una 
+		    	let listaString:any = localStorage.getItem("lista"); 
+
+		    	lista = JSON.parse(listaString);
 		    }
 		});
 
 	var lista:Array<Empleado> = new Array<Empleado>();
-
-
 
 	function agregarEmpleado()
 	{
@@ -36,7 +36,7 @@ namespace Personas
 		$("#nombre").val("");
     	$("#apellido").val("");
     	$("#edad").val("");
-   	 	$("#horario").val("maniana");
+   	 	$("#horario").val("Maniana");
     	$("#legajo").val("");
 
     	$("#btnAgregar").text("Agregar");
@@ -47,12 +47,13 @@ namespace Personas
 
 	function mostrarEmpleados()
 	{
-		console.log(lista);
-	    $("#tBody").empty();
-
+		
 	    for (var i:number = 0; i < lista.length; i++) 
 	    {
-	    	let empleado:Empleado = JSON.parse(lista[i].toString());//El error de la linea 33 esta aca
+	    	$("#filaNueva " + i).remove();
+
+	    	console.log(lista[i]);
+	    	let empleado:Empleado = lista[i];
 
 	        let nodoTr:any = document.createElement("tr");
 			let nodoTd1:any = document.createElement("td");
@@ -78,17 +79,20 @@ namespace Personas
 			nodoTr.appendChild(nodoTd3);
 			nodoTr.appendChild(nodoTd4);
 			nodoTr.appendChild(nodoTd5);
-			nodoTr.appendChild(nodoTd6);
 
 			let btnModificar = document.createElement("button");
 	       	btnModificar.addEventListener("click", openModificar);
 	       	btnModificar.innerHTML = "Modificar";
-	       	nodoTr.appendChild(btnModificar);
+	       	nodoTd6.appendChild(btnModificar);
 
 	       	let btnEliminar = document.createElement("button");
 	       	btnEliminar.addEventListener("click", borrar);
 	       	btnEliminar.innerHTML = "Borrar";
-	       	nodoTr.appendChild(btnEliminar);
+	       	nodoTd6.appendChild(btnEliminar);
+
+	       	nodoTr.appendChild(nodoTd6);
+
+	       	nodoTr.setAttribute("id", "filaNueva " + i);
 
 	        $("#tBody").append(nodoTr);
 	    }
@@ -98,12 +102,14 @@ namespace Personas
 
 	function openModificar(event:Event) 
 	{
-	    /*let trigger = event.target as HTMLElement;
-	    let horario = trigger.previousSibling;
-	    let legajo = horario.previousSibling;
-	    let edad = legajo.previousSibling;
-	    let apellido = edad.previousSibling;
-	    let nombre = apellido.previousSibling;
+	    let tagTd = event.target as HTMLElement;
+	    let tagButton = tagTd.parentNode as HTMLElement;
+	    let tag = tagButton.parentNode as HTMLElement;
+	    let nombre = tag.firstElementChild as HTMLElement;
+	    let apellido = nombre.nextElementSibling as HTMLElement;
+	    let edad = apellido.nextElementSibling as HTMLElement;
+	    let legajo = edad.nextElementSibling as HTMLElement;
+	    let horario = legajo.nextElementSibling as HTMLElement;
 
 	    ($("#nombre").val(nombre.innerHTML));
 	    ($("#apellido").val(apellido.innerHTML));
@@ -111,12 +117,37 @@ namespace Personas
 	    ($("#horario").val(horario.innerHTML));
 	    ($("#legajo").val(legajo.innerHTML));
 
+	    console.log(tag);
+
+	    let id:string = tag.id;
+
+	    let array:Array<string> = id.split(" ", 1);
+
+	    id = array[1];
+
 	    $("#btnAgregar").text("Modificar");
 	    $("#btnAgregar").unbind( "click" );
-	    $("#btnAgregar").click(wrapModificar);
+	    $("#btnAgregar").click(function(){Modificar(id)});
 
-	    $("#headerForm").html("Modificar empleado");*/
-	}//Tengo que arreglarlo y agregar los modificar y demas casos
+	    $("#headerForm").html("Modificar empleado");
+	}
+
+	function Modificar(i:string)
+	{
+		let nombre:string = String($("#nombre").val());
+    	let apellido:string = String($("#apellido").val());
+    	let edad:number = Number($("#edad").val());
+    	let legajo:number = Number($("#legajo").val());
+   	 	let horario:string = String($("#horario").val());
+
+	    let empleado:Empleado = new Empleado(nombre, apellido, edad, horario, legajo);
+
+	    lista[Number(i)] = empleado;
+
+	    localStorage.setItem("lista", JSON.stringify(lista));
+
+	    mostrarEmpleados();
+	}
 
 
 	function borrar(event:Event)

@@ -6,7 +6,8 @@ var Personas;
         $("#btnMostrar").click(mostrarEmpleados);
         //$("#btnListar").click(listar);
         if (localStorage.getItem("lista")) {
-            lista = localStorage.getItem("lista"); //Creo que tendria que pasarle las cosas una por una 
+            var listaString = localStorage.getItem("lista");
+            lista = JSON.parse(listaString);
         }
     });
     var lista = new Array();
@@ -23,17 +24,17 @@ var Personas;
         $("#nombre").val("");
         $("#apellido").val("");
         $("#edad").val("");
-        $("#horario").val("maniana");
+        $("#horario").val("Maniana");
         $("#legajo").val("");
         $("#btnAgregar").text("Agregar");
         $("#btnAgregar").click(agregarEmpleado);
         $("#header").html("Alta Empleado");
     }
     function mostrarEmpleados() {
-        console.log(lista);
-        $("#tBody").empty();
         for (var i = 0; i < lista.length; i++) {
-            var empleado = JSON.parse(lista[i].toString()); //El error de la linea 33 esta aca
+            $("#filaNueva " + i).remove();
+            console.log(lista[i]);
+            var empleado = lista[i];
             var nodoTr = document.createElement("tr");
             var nodoTd1 = document.createElement("td");
             var nodoTd2 = document.createElement("td");
@@ -56,38 +57,53 @@ var Personas;
             nodoTr.appendChild(nodoTd3);
             nodoTr.appendChild(nodoTd4);
             nodoTr.appendChild(nodoTd5);
-            nodoTr.appendChild(nodoTd6);
             var btnModificar = document.createElement("button");
             btnModificar.addEventListener("click", openModificar);
             btnModificar.innerHTML = "Modificar";
-            nodoTr.appendChild(btnModificar);
+            nodoTd6.appendChild(btnModificar);
             var btnEliminar = document.createElement("button");
             btnEliminar.addEventListener("click", borrar);
             btnEliminar.innerHTML = "Borrar";
-            nodoTr.appendChild(btnEliminar);
+            nodoTd6.appendChild(btnEliminar);
+            nodoTr.appendChild(nodoTd6);
+            nodoTr.setAttribute("id", "filaNueva " + i);
             $("#tBody").append(nodoTr);
         }
     }
     function openModificar(event) {
-        /*let trigger = event.target as HTMLElement;
-        let horario = trigger.previousSibling;
-        let legajo = horario.previousSibling;
-        let edad = legajo.previousSibling;
-        let apellido = edad.previousSibling;
-        let nombre = apellido.previousSibling;
-
+        var tagTd = event.target;
+        var tagButton = tagTd.parentNode;
+        var tag = tagButton.parentNode;
+        var nombre = tag.firstElementChild;
+        var apellido = nombre.nextElementSibling;
+        var edad = apellido.nextElementSibling;
+        var legajo = edad.nextElementSibling;
+        var horario = legajo.nextElementSibling;
         ($("#nombre").val(nombre.innerHTML));
         ($("#apellido").val(apellido.innerHTML));
         ($("#edad").val(edad.innerHTML));
         ($("#horario").val(horario.innerHTML));
         ($("#legajo").val(legajo.innerHTML));
-
+        console.log(tag);
+        var id = tag.id;
+        var array = id.split(" ", 1);
+        id = array[1];
         $("#btnAgregar").text("Modificar");
-        $("#btnAgregar").unbind( "click" );
-        $("#btnAgregar").click(wrapModificar);
-
-        $("#headerForm").html("Modificar empleado");*/
-    } //Tengo que arreglarlo y agregar los modificar y demas casos
+        $("#btnAgregar").unbind("click");
+        $("#btnAgregar").click(function () { Modificar(id); });
+        $("#headerForm").html("Modificar empleado");
+    }
+    function Modificar(i) {
+        var nombre = String($("#nombre").val());
+        var apellido = String($("#apellido").val());
+        var edad = Number($("#edad").val());
+        var legajo = Number($("#legajo").val());
+        var horario = String($("#horario").val());
+        var empleado = new Personas.Empleado(nombre, apellido, edad, horario, legajo);
+        lista[Number(i)] = empleado;
+        localStorage.setItem("lista", JSON.stringify(lista));
+        mostrarEmpleados();
+    }
     function borrar(event) {
     }
     function LocalStorage(empleado) {
