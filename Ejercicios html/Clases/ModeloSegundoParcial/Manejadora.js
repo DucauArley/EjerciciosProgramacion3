@@ -32,7 +32,7 @@ var Personas;
     }
     function mostrarEmpleados() {
         for (var i = 0; i < lista.length; i++) {
-            $("#filaNueva " + i).remove();
+            $("#filaNueva." + i).remove(); //No me borra no se porque
             console.log(lista[i]);
             var empleado = lista[i];
             var nodoTr = document.createElement("tr");
@@ -66,7 +66,7 @@ var Personas;
             btnEliminar.innerHTML = "Borrar";
             nodoTd6.appendChild(btnEliminar);
             nodoTr.appendChild(nodoTd6);
-            nodoTr.setAttribute("id", "filaNueva " + i);
+            nodoTr.setAttribute("id", "filaNueva." + i);
             $("#tBody").append(nodoTr);
         }
     }
@@ -84,10 +84,10 @@ var Personas;
         ($("#edad").val(edad.innerHTML));
         ($("#horario").val(horario.innerHTML));
         ($("#legajo").val(legajo.innerHTML));
-        console.log(tag);
         var id = tag.id;
-        var array = id.split(" ", 1);
+        var array = id.split(".", 2);
         id = array[1];
+        console.log(array);
         $("#btnAgregar").text("Modificar");
         $("#btnAgregar").unbind("click");
         $("#btnAgregar").click(function () { Modificar(id); });

@@ -50,7 +50,7 @@ namespace Personas
 		
 	    for (var i:number = 0; i < lista.length; i++) 
 	    {
-	    	$("#filaNueva " + i).remove();
+	    	$("#filaNueva." + i).remove();//No me borra no se porque
 
 	    	console.log(lista[i]);
 	    	let empleado:Empleado = lista[i];
@@ -92,7 +92,7 @@ namespace Personas
 
 	       	nodoTr.appendChild(nodoTd6);
 
-	       	nodoTr.setAttribute("id", "filaNueva " + i);
+	       	nodoTr.setAttribute("id", "filaNueva." + i);
 
 	        $("#tBody").append(nodoTr);
 	    }
@@ -117,13 +117,13 @@ namespace Personas
 	    ($("#horario").val(horario.innerHTML));
 	    ($("#legajo").val(legajo.innerHTML));
 
-	    console.log(tag);
-
 	    let id:string = tag.id;
 
-	    let array:Array<string> = id.split(" ", 1);
+	    let array:Array<string> = id.split(".", 2);
 
 	    id = array[1];
+
+	    console.log(array);
 
 	    $("#btnAgregar").text("Modificar");
 	    $("#btnAgregar").unbind( "click" );
@@ -154,7 +154,6 @@ namespace Personas
 	{
 
 	}
-
 
 
 	function LocalStorage(empleado:Empleado) 
