@@ -4,7 +4,13 @@ var Personas;
         $("#btnAgregar").click(agregarEmpleado);
         $("#btnCancelar").click(limpiarFormulario);
         $("#btnMostrar").click(mostrarEmpleados);
-        //$("#btnListar").click(listar);
+        $("#btnPromedio").click(function () {
+            limpiarModal();
+            $("#containerMult").show();
+        });
+        $("#btnFiltrar").click(filtrarPorHorario);
+        $("#btnNomYAp").click();
+        $("#btnCancelar2").click(cerrar);
         if (localStorage.getItem("lista")) {
             var listaString = localStorage.getItem("lista");
             lista = JSON.parse(listaString);
@@ -27,13 +33,13 @@ var Personas;
         $("#horario").val("Maniana");
         $("#legajo").val("");
         $("#btnAgregar").text("Agregar");
+        $("#btnAgregar").unbind("click");
         $("#btnAgregar").click(agregarEmpleado);
         $("#header").html("Alta Empleado");
     }
     function mostrarEmpleados() {
         for (var i = 0; i < lista.length; i++) {
-            $("#filaNueva." + i).remove(); //No me borra no se porque
-            console.log(lista[i]);
+            $("#filaNueva" + i).remove();
             var empleado = lista[i];
             var nodoTr = document.createElement("tr");
             var nodoTd1 = document.createElement("td");
@@ -60,13 +66,16 @@ var Personas;
             var btnModificar = document.createElement("button");
             btnModificar.addEventListener("click", openModificar);
             btnModificar.innerHTML = "Modificar";
+            btnModificar.setAttribute("class", "btn btn-primary");
             nodoTd6.appendChild(btnModificar);
             var btnEliminar = document.createElement("button");
             btnEliminar.addEventListener("click", borrar);
             btnEliminar.innerHTML = "Borrar";
+            btnEliminar.setAttribute("class", "btn btn-primary");
             nodoTd6.appendChild(btnEliminar);
             nodoTr.appendChild(nodoTd6);
-            nodoTr.setAttribute("id", "filaNueva." + i);
+            nodoTr.setAttribute("id", "filaNueva" + i);
+            console.log(nodoTr);
             $("#tBody").append(nodoTr);
         }
     }
@@ -85,8 +94,8 @@ var Personas;
         ($("#horario").val(horario.innerHTML));
         ($("#legajo").val(legajo.innerHTML));
         var id = tag.id;
-        var array = id.split(".", 2);
-        id = array[1];
+        var array = id.split("a", 3);
+        id = array[2];
         console.log(array);
         $("#btnAgregar").text("Modificar");
         $("#btnAgregar").unbind("click");
@@ -103,8 +112,56 @@ var Personas;
         lista[Number(i)] = empleado;
         localStorage.setItem("lista", JSON.stringify(lista));
         mostrarEmpleados();
+        limpiarFormulario();
     }
     function borrar(event) {
+        var tagTd = event.target;
+        var tagButton = tagTd.parentNode;
+        var tag = tagButton.parentNode;
+        tag.remove();
+        var id = tag.id;
+        var array = id.split("a", 3);
+        var i = Number(array[2]);
+        lista.splice(i, 1);
+        localStorage.setItem("lista", JSON.stringify(lista));
+    }
+    function promedioPorHorario() {
+        var horario = String($("#horario2").val());
+        var contador = 0;
+        var numEmpleados = lista.length;
+        /*let promedio = lista.reduce(function(empleado)//No entiendo el problema
+        {
+            if(empleado.horario == horario)
+            {
+                contador ++;
+                return contador;
+            }
+
+        });*/
+        //alert("El promedio de empleados que cursan a la " + horario + " es: " + promedio/numEmpleados);//Aca iria el resultado del promedio
+    }
+    function filtrarPorHorario() {
+        var horario = String($("#horario2").val());
+        lista = lista.filter(function (empleado) { return empleado.horario == horario; });
+        //Tendria que hacer un mostrar para cada uno de los empleados pero alta paja
+    }
+    function limpiarModal() {
+        $("#horario2").val("Maniana");
+        $("#btnFiltrar2").text("Promedio");
+        $("#btnFiltrar2").unbind("click");
+        $("#btnFiltrar2").click(promedioPorHorario);
+        $("#header2").html("Promedio por horario");
+    }
+    function abrirFiltrar() {
+        $("#btnFiltrar2").text("Filtrar");
+        $("#btnFiltrar2").unbind("click");
+        $("#btnFiltrar2").click(filtrarPorHorario);
+        $("#header2").html("Filtrar por horario");
+        $("#containerMult").show();
+    }
+    function cerrar() {
+        $("#containerMult").hide();
+        limpiarModal();
     }
     function LocalStorage(empleado) {
         if (localStorage.getItem("lista") === null) {

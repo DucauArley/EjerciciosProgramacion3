@@ -5,7 +5,14 @@ namespace Personas
 			$("#btnAgregar").click(agregarEmpleado);
 			$("#btnCancelar").click(limpiarFormulario);
 			$("#btnMostrar").click(mostrarEmpleados);
-			//$("#btnListar").click(listar);
+			$("#btnPromedio").click(function()
+			{
+					limpiarModal();
+					$("#containerMult").show()
+			});
+			$("#btnFiltrar").click(filtrarPorHorario);
+			$("#btnNomYAp").click();
+			$("#btnCancelar2").click(cerrar);
 
 			if(localStorage.getItem("lista")) 
 		    {
@@ -40,6 +47,7 @@ namespace Personas
     	$("#legajo").val("");
 
     	$("#btnAgregar").text("Agregar");
+    	$("#btnAgregar").unbind( "click" );
     	$("#btnAgregar").click(agregarEmpleado);
 
     	$("#header").html("Alta Empleado");
@@ -50,9 +58,8 @@ namespace Personas
 		
 	    for (var i:number = 0; i < lista.length; i++) 
 	    {
-	    	$("#filaNueva." + i).remove();//No me borra no se porque
+	    	$("#filaNueva" + i).remove();
 
-	    	console.log(lista[i]);
 	    	let empleado:Empleado = lista[i];
 
 	        let nodoTr:any = document.createElement("tr");
@@ -83,16 +90,20 @@ namespace Personas
 			let btnModificar = document.createElement("button");
 	       	btnModificar.addEventListener("click", openModificar);
 	       	btnModificar.innerHTML = "Modificar";
+	       	btnModificar.setAttribute("class", "btn btn-primary");
 	       	nodoTd6.appendChild(btnModificar);
 
 	       	let btnEliminar = document.createElement("button");
 	       	btnEliminar.addEventListener("click", borrar);
 	       	btnEliminar.innerHTML = "Borrar";
+	       	btnEliminar.setAttribute("class", "btn btn-primary");
 	       	nodoTd6.appendChild(btnEliminar);
 
 	       	nodoTr.appendChild(nodoTd6);
 
-	       	nodoTr.setAttribute("id", "filaNueva." + i);
+	       	nodoTr.setAttribute("id", "filaNueva" + i);
+
+	       	console.log(nodoTr);
 
 	        $("#tBody").append(nodoTr);
 	    }
@@ -102,14 +113,14 @@ namespace Personas
 
 	function openModificar(event:Event) 
 	{
-	    let tagTd = event.target as HTMLElement;
-	    let tagButton = tagTd.parentNode as HTMLElement;
-	    let tag = tagButton.parentNode as HTMLElement;
-	    let nombre = tag.firstElementChild as HTMLElement;
-	    let apellido = nombre.nextElementSibling as HTMLElement;
-	    let edad = apellido.nextElementSibling as HTMLElement;
-	    let legajo = edad.nextElementSibling as HTMLElement;
-	    let horario = legajo.nextElementSibling as HTMLElement;
+	    let tagTd:any = event.target as HTMLElement;
+	    let tagButton:any = tagTd.parentNode as HTMLElement;
+	    let tag:any = tagButton.parentNode as HTMLElement;
+	    let nombre:any = tag.firstElementChild as HTMLElement;
+	    let apellido:any = nombre.nextElementSibling as HTMLElement;
+	    let edad:any = apellido.nextElementSibling as HTMLElement;
+	    let legajo:any = edad.nextElementSibling as HTMLElement;
+	    let horario:any = legajo.nextElementSibling as HTMLElement;
 
 	    ($("#nombre").val(nombre.innerHTML));
 	    ($("#apellido").val(apellido.innerHTML));
@@ -119,9 +130,9 @@ namespace Personas
 
 	    let id:string = tag.id;
 
-	    let array:Array<string> = id.split(".", 2);
+	    let array:Array<string> = id.split("a", 3);
 
-	    id = array[1];
+	    id = array[2];
 
 	    console.log(array);
 
@@ -147,14 +158,87 @@ namespace Personas
 	    localStorage.setItem("lista", JSON.stringify(lista));
 
 	    mostrarEmpleados();
+
+	    limpiarFormulario();
 	}
 
 
 	function borrar(event:Event)
 	{
+		let tagTd:any = event.target as HTMLElement;
+	    let tagButton:any = tagTd.parentNode as HTMLElement;
+	    let tag:any = tagButton.parentNode as HTMLElement;
+
+	    tag.remove();
+
+	    let id:string = tag.id;
+
+	    let array:Array<string> = id.split("a", 3);
+
+	    let i:number = Number(array[2]);
+
+	    lista.splice(i, 1);
+
+	    localStorage.setItem("lista", JSON.stringify(lista));
+	}
+
+
+	function promedioPorHorario()
+	{
+		let horario:string = String($("#horario2").val());
+		let contador:number = 0;
+		let numEmpleados:number = lista.length;
+    	/*let promedio = lista.reduce(function(empleado)//No entiendo el problema
+    	{
+    		if(empleado.horario == horario)
+    		{
+    			contador ++;
+    			return contador;
+    		}
+
+    	});*/
+
+
+    	//alert("El promedio de empleados que cursan a la " + horario + " es: " + promedio/numEmpleados);//Aca iria el resultado del promedio
+	}
+
+	function filtrarPorHorario()
+	{
+		let horario:string = String($("#horario2").val());
+    	lista = lista.filter(empleado => empleado.horario == horario);
+
+    	//Tendria que hacer un mostrar para cada uno de los empleados pero alta paja
 
 	}
 
+	function limpiarModal()
+	{
+		$("#horario2").val("Maniana");
+
+    	$("#btnFiltrar2").text("Promedio");
+    	$("#btnFiltrar2").unbind( "click" );
+    	$("#btnFiltrar2").click(promedioPorHorario);
+
+    	$("#header2").html("Promedio por horario");
+	}
+
+	function abrirFiltrar()
+	{
+		$("#btnFiltrar2").text("Filtrar");
+    	$("#btnFiltrar2").unbind( "click" );
+    	$("#btnFiltrar2").click(filtrarPorHorario);
+
+    	$("#header2").html("Filtrar por horario");
+
+		$("#containerMult").show();
+	}
+
+	function cerrar()
+	{
+		$("#containerMult").hide();
+
+		limpiarModal();
+	}
 
 	function LocalStorage(empleado:Empleado) 
 	{
