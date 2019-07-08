@@ -32,7 +32,7 @@
 		                        Ver
 		                    </a>
 		                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-		                        <a class="dropdown-item" id="btnPromedio" href="#">Promedio</a>
+		                        <a class="dropdown-item" id="btnPromedio" data-toggle="modal" data-target="#containerMult" href="#">Promedio</a>
 		                        <a class="dropdown-item" id="btnFiltrar" href="#">Filtrar</a>
 		                        <a class="dropdown-item" id="btnNomYAp" href="#">Solo Nombre y Apellido</a>
 		                    </div>
@@ -112,7 +112,7 @@
 					   </table>
 					</div>
 
-					<div class="color3 modal" id="containerMult" role="dialog" hidden="true">
+					<div class="color3 modal-lg fade" id="containerMult" role="dialog">
 			        	<h2 id="header2">Promedio por horario</h2>
 			        	<hr>
 			        	Horario
@@ -124,7 +124,7 @@
 						<br>
 						<hr>
 						<div class="row justify-content-between">
-						    <button class="btn btn-danger col align-self-start col-lg-3" id="btnCancelar2">X Cancelar</button>
+						    <button class="btn btn-danger col align-self-start col-lg-3" data-dismiss="modal" id="btnCancelar2">X Cancelar</button>
 						    <button class="btn btn-success col align-self-end col-lg-3" id="btnFiltrar2">
 						    	<span class="glyphicon .glyphicon-floppy-disk"></span> Promedio
 						    </button>
@@ -134,7 +134,6 @@
 
 	            </div>
 	        </div>
-
 
 	</body>
 </html>

@@ -22,8 +22,10 @@
 	margin: 20px auto;
 	left: 25%;
 	top: 100px;
-	animation-name: aparecer;
-	animation-duration: 4s;
+}
+.modal-backdrop
+{
+	z-index: -1;
 }
 .divRow
 {

@@ -8,7 +8,6 @@ namespace Personas
 			$("#btnPromedio").click(function()
 			{
 					limpiarModal();
-					$("#containerMult").show()
 			});
 			$("#btnFiltrar").click(filtrarPorHorario);
 			$("#btnNomYAp").click();
