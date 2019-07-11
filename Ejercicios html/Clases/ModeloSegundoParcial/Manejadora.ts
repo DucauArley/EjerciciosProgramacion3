@@ -1,5 +1,7 @@
 namespace Personas
 {
+	declare var $:any;
+
 	$("#document").ready(function()
 		{
 			$("#btnAgregar").click(agregarEmpleado);
@@ -9,9 +11,8 @@ namespace Personas
 			{
 					limpiarModal();
 			});
-			$("#btnFiltrar").click(filtrarPorHorario);
-			$("#btnNomYAp").click();
-			$("#btnCancelar2").click(cerrar);
+			$("#btnFiltrar").click(abrirFiltrar);
+			$("#btnNomYAp").click(nombreYApellido);
 
 			if(localStorage.getItem("lista")) 
 		    {
@@ -185,29 +186,49 @@ namespace Personas
 	function promedioPorHorario()
 	{
 		let horario:string = String($("#horario2").val());
-		let contador:number = 0;
 		let numEmpleados:number = lista.length;
-    	/*let promedio = lista.reduce(function(empleado)//No entiendo el problema
+    	let promedio:number = lista.reduce(function(total:number, empleado):any
     	{
     		if(empleado.horario == horario)
     		{
-    			contador ++;
-    			return contador;
+    			total ++;
     		}
 
-    	});*/
+    		return total;
+    	},0);
 
+    	console.log(promedio);
 
-    	//alert("El promedio de empleados que cursan a la " + horario + " es: " + promedio/numEmpleados);//Aca iria el resultado del promedio
+    	alert("El promedio de empleados que cursan a la " + horario + " es: " + promedio/numEmpleados);
 	}
 
 	function filtrarPorHorario()
 	{
 		let horario:string = String($("#horario2").val());
-    	lista = lista.filter(empleado => empleado.horario == horario);
 
-    	//Tendria que hacer un mostrar para cada uno de los empleados pero alta paja
+    	let listaFiltrada = lista.filter(function(empleado)
+    		{
+    			return empleado.horario == horario
+    		});
 
+    	//La logica es esta, tendria que llamar a la funcion que muestre a los empleados y pasarle listaFiltrada
+
+    	//Tendria que hacer un mostrar para cada uno de los empleados pero alta paja pero la logica es la misma
+
+	}
+
+	function nombreYApellido()
+	{
+		let listaNomYAp = lista.map(function(empleado)
+		{
+			let retorno = [empleado.nombre, empleado.apellido];
+
+			return retorno;
+		})
+
+		//La logica es esta, tendria que llamar a la funcion que muestre a los empleados y pasarle listaNomYAp
+
+		//Tendria que hacer un mostrar para cada uno de los empleados que solamente muestre los nombres y apellidos pero alta paja
 	}
 
 	function limpiarModal()
@@ -229,14 +250,7 @@ namespace Personas
 
     	$("#header2").html("Filtrar por horario");
 
-		$("#containerMult").show();
-	}
-
-	function cerrar()
-	{
-		$("#containerMult").hide();
-
-		limpiarModal();
+		$("#containerMult").modal("show");
 	}
 
 	function LocalStorage(empleado:Empleado) 

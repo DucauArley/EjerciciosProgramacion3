@@ -6,11 +6,9 @@ var Personas;
         $("#btnMostrar").click(mostrarEmpleados);
         $("#btnPromedio").click(function () {
             limpiarModal();
-            $("#containerMult").show();
         });
-        $("#btnFiltrar").click(filtrarPorHorario);
-        $("#btnNomYAp").click();
-        $("#btnCancelar2").click(cerrar);
+        $("#btnFiltrar").click(abrirFiltrar);
+        $("#btnNomYAp").click(nombreYApellido);
         if (localStorage.getItem("lista")) {
             var listaString = localStorage.getItem("lista");
             lista = JSON.parse(listaString);
@@ -127,23 +125,31 @@ var Personas;
     }
     function promedioPorHorario() {
         var horario = String($("#horario2").val());
-        var contador = 0;
         var numEmpleados = lista.length;
-        /*let promedio = lista.reduce(function(empleado)//No entiendo el problema
-        {
-            if(empleado.horario == horario)
-            {
-                contador ++;
-                return contador;
+        var promedio = lista.reduce(function (total, empleado) {
+            if (empleado.horario == horario) {
+                total++;
             }
-
-        });*/
-        //alert("El promedio de empleados que cursan a la " + horario + " es: " + promedio/numEmpleados);//Aca iria el resultado del promedio
+            return total;
+        }, 0);
+        console.log(promedio);
+        alert("El promedio de empleados que cursan a la " + horario + " es: " + promedio / numEmpleados);
     }
     function filtrarPorHorario() {
         var horario = String($("#horario2").val());
-        lista = lista.filter(function (empleado) { return empleado.horario == horario; });
-        //Tendria que hacer un mostrar para cada uno de los empleados pero alta paja
+        var listaFiltrada = lista.filter(function (empleado) {
+            return empleado.horario == horario;
+        });
+        //La logica es esta, tendria que llamar a la funcion que muestre a los empleados y pasarle listaFiltrada
+        //Tendria que hacer un mostrar para cada uno de los empleados pero alta paja pero la logica es la misma
+    }
+    function nombreYApellido() {
+        var listaNomYAp = lista.map(function (empleado) {
+            var retorno = [empleado.nombre, empleado.apellido];
+            return retorno;
+        });
+        //La logica es esta, tendria que llamar a la funcion que muestre a los empleados y pasarle listaNomYAp
+        //Tendria que hacer un mostrar para cada uno de los empleados que solamente muestre los nombres y apellidos pero alta paja
     }
     function limpiarModal() {
         $("#horario2").val("Maniana");
@@ -157,11 +163,7 @@ var Personas;
         $("#btnFiltrar2").unbind("click");
         $("#btnFiltrar2").click(filtrarPorHorario);
         $("#header2").html("Filtrar por horario");
-        $("#containerMult").show();
-    }
-    function cerrar() {
-        $("#containerMult").hide();
-        limpiarModal();
+        $("#containerMult").modal("show");
     }
     function LocalStorage(empleado) {
         if (localStorage.getItem("lista") === null) {

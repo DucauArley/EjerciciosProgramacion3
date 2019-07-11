@@ -11,22 +11,6 @@
 {
     background-color: #FEF1F7;
 }
-.color3
-{
-	position: fixed;
-	width: 50%;
-	border-radius: 5px;
-	background-color: lightgrey;
-	padding: 20px;
-	box-sizing: border-box;
-	margin: 20px auto;
-	left: 25%;
-	top: 100px;
-}
-.modal-backdrop
-{
-	z-index: -1;
-}
 .divRow
 {
     background-color: #bbb;

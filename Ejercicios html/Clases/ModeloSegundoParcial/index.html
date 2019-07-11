@@ -112,28 +112,33 @@
 					   </table>
 					</div>
 
-					<div class="color3 modal-lg fade" id="containerMult" role="dialog">
-			        	<h2 id="header2">Promedio por horario</h2>
-			        	<hr>
-			        	Horario
-			        	<select name="controlSelect" id="horario2" class="form-control col-lg-4">
-						          <option value="Tarde">Tarde</option>
-						          <option value="Maniana">Mañana</option>
-						          <option value="Noche">Noche</option>
-						</select>
-						<br>
-						<hr>
-						<div class="row justify-content-between">
-						    <button class="btn btn-danger col align-self-start col-lg-3" data-dismiss="modal" id="btnCancelar2">X Cancelar</button>
-						    <button class="btn btn-success col align-self-end col-lg-3" id="btnFiltrar2">
-						    	<span class="glyphicon .glyphicon-floppy-disk"></span> Promedio
-						    </button>
-						</div>
-
-			        </div>
-
 	            </div>
 	        </div>
+
+	       <div class="modal fade" id="containerMult" role="dialog">
+		      <div class="modal-dialog" role="document">
+		        <div class="modal-content">
+		          <div class="modal-header">
+		            <h2 class="modal-title" id="header2">Promedio por Horario</h2>
+		            <button id="btnCerrarPromedio" type="button" class="close" data-dismiss="modal" aria-label="Close">
+		              <span aria-hidden="true">&times;</span>
+		            </button>
+		          </div>
+		          <div class="modal-body">
+		            <select class="form-control" id="horario2">
+		            	<option value="Tarde">Tarde</option>
+			            <option value="Maniana">Mañana</option>
+			            <option value="Noche">Noche</option>
+		            </select>
+		              <p id="pPromedio"></p>
+		          </div>
+		          <div class="modal-footer justify-content-between">
+		            <button id="btnCancelar2" type="button" data-dismiss="modal" class="btn btn-danger">Cancelar</button>
+		            <button id="btnFiltrar2" type="button" class="btn btn-success">Promediar</button>
+		          </div>
+		        </div>
+		      </div>
+		    </div>
 
 	</body>
 </html>
