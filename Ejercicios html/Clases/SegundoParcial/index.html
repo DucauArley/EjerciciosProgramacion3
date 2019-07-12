@@ -1,12 +1,13 @@
 <html>
 	<head>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-		<link rel="stylesheet" href="estilos.css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
    		<script src="./node_modules/jquery/dist/jquery.min.js"></script>
     	<script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    	<script src="./Vehiculo.js"></script>
+    	<script src="./Auto.js"></script>
+    	<script src="./Camioneta.js"></script>
     	<script src="./Manejadora.js"></script>
-    	<script src="./Persona.js"></script>
-    	<script src="./Empleado.js"></script>
 
 		<title>Modelo de parcial</title>
 	</head>
@@ -16,7 +17,9 @@
 		        
 		            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 		            	<li class="nav-item">
-		                   <button class="btn-primary" id="btnAlta">Alta</button>
+		                   <button class="btn-primary" id="btnAlta">Alta
+		                   		<span class="fas fa-save"></span>
+		                   </button>
 		                </li>
 		            </ul>
 		    </nav>
@@ -32,13 +35,13 @@
 		            	<hr>
 		            	<div class="row justify-content-between">
 			            	Filtrar por: 
-			            	<select name="controlSelect" id="horario" class="form-control col-lg-2">
+			            	<select  id="selectTipo" class="form-control col-lg-2">
 					          <option value="Auto">Auto</option>
 					          <option value="Camioneta">Camioneta</option>
-					        </select>e
-					        Promedio d precios:
+					        </select>
+					        Promedio de precios:
 					        <input type="text" class="form-control col-lg-2" id="Promedio">
-							<button class="btn btn-primary col align-self-start col-lg-2" id="btnCancelar">Calcular Promedio</button>
+							<button class="btn btn-primary col align-self-start col-lg-2" id="btnPromedio">Calcular Promedio</button>
 						</div>
 					</div>
 
@@ -54,19 +57,19 @@
 		            	<hr>
 		            	<div class="row ">
 		            		 <div class="form-check-inline">
-						        <input type="checkbox" name="chk1" id="chk1" class="form-check-input">
+						        <input type="checkbox" name="chk1" id="chkId" checked="true" class="form-check-input">
 						        <label for="chk1" class="form-check-label">Id</label>
 						      </div>
 						      <div class="form-check-inline">
-						        <input type="checkbox" name="chk2" id="chk2" class="form-check-input">
+						        <input type="checkbox" name="chk2" id="chkMarca" checked="true" class="form-check-input">
 						        <label for="chk2" class="form-check-label">Marca</label>
 						      </div>
 						      <div class="form-check-inline">
-						        <input type="checkbox" name="chk3" id="chk3" class="form-check-input">
+						        <input type="checkbox" name="chk3" id="chkModelo" checked="true" class="form-check-input">
 						        <label for="chk3" class="form-check-label">Modelo</label>
 						      </div>
 						      <div class="form-check-inline">
-						        <input type="checkbox" name="chk4" id="chk4" class="form-check-input">
+						        <input type="checkbox" name="chk4" id="chkPrecio" checked="true" class="form-check-input">
 						        <label for="chk3" class="form-check-label">Precio</label>
 						      </div>     
 			            	
@@ -81,40 +84,9 @@
 		            <h1>Lista de Vehiculos</h1>
 				   <table class="table" id="tBody">
 				     <thead class="bg-white">
-				       <tr>
-				         <th>Nombre</th>
-				         <th>Apellido</th>
-				         <th>Edad</th>
-				         <th>Legajo</th>
-				         <th>Turno</th>
-				         <th>Accion</th>
-				       </tr>
+				       
 				     </thead>
 				     <tbody>
-				       <tr>
-				         <td>John</td>
-				         <td>Doe</td>
-				         <td>28</td>
-				         <td>3123151</td>
-				         <td>Tarde</td>
-				         <td>Borrar</td>
-				       </tr>
-				       <tr>
-				         <td>Mary</td>
-				         <td>Moe</td>
-				         <td>35</td>
-				         <td>453151</td>
-				         <td>Mañana</td>
-				         <td>Borrar</td>
-				       </tr>
-				       <tr>
-				         <td>July</td>
-				         <td>Dooley</td>
-				         <td>47</td>
-				         <td>2385789</td>
-				         <td>Noche</td>
-				         <td>Borrar</td>
-				       </tr>      
 				     </tbody>
 				   </table>
 				</div>
@@ -124,22 +96,29 @@
 		      <div class="modal-dialog" role="document">
 		        <div class="modal-content">
 		          <div class="modal-header">
-		            <h2 class="modal-title" id="header2">Promedio por Horario</h2>
-		            <button id="btnCerrarPromedio" type="button" class="close" data-dismiss="modal" aria-label="Close">
+		            <h2 class="modal-title" id="header2">Alta Vehiculo</h2>
+		            <button id="btnCerrarAlta" type="button" class="close" data-dismiss="modal" aria-label="Close">
 		              <span aria-hidden="true">&times;</span>
 		            </button>
 		          </div>
 		          <div class="modal-body">
-		            <select class="form-control" id="horario2">
-		            	<option value="Tarde">Tarde</option>
-			            <option value="Maniana">Mañana</option>
-			            <option value="Noche">Noche</option>
-		            </select>
-		              <p id="pPromedio"></p>
+		          		Id
+		            	<input type="text" class="form-control col-lg-10" disabled="disabled"  id="txtId">
+		            	Marca
+		            	<input type="text" class="form-control col-lg-10" id="txtMarca"><br>
+		            	Modelo
+		            	<input type="text" class="form-control col-lg-10" id="txtModelo"><br>
+		            	Precio
+		            	<input type="text" class="form-control col-lg-10" id="txtPrecio"><br>
+		            	Tipo
+		            	<select id="tipo" class="form-control col-lg-4">
+					          <option value="Auto">Auto</option>
+					          <option value="Camioneta">Camioneta</option>
+					    </select>
 		          </div>
-		          <div class="modal-footer justify-content-between">
-		            <button id="btnCancelar2" type="button" data-dismiss="modal" class="btn btn-danger">Cancelar</button>
-		            <button id="btnFiltrar2" type="button" class="btn btn-success">Promediar</button>
+		          <div class="modal-footer justify-content-end">
+		            <button id="btnCancelar" type="button" data-dismiss="modal" class="btn btn-danger">Cancelar</button>
+		            <button id="btnAgregar" type="button" data-dismiss="modal" class="btn btn-success">Agregar</button>
 		          </div>
 		        </div>
 		      </div>
