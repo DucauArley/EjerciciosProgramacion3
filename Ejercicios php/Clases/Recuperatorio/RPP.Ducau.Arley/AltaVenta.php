@@ -1,4 +1,8 @@
 <?php
+	
+	ini_set('display_errors', 0);
+	ini_set('display_startup_errors', 0);
+	error_reporting(E_ALL);
 
 	include "manejoArchivos.php";
 	include "venta.php";
@@ -16,6 +20,7 @@
 		$pizzas = leer("Pizza.txt");
 		$contador = 0;
 		$Agotado = false;
+		$esta = false;
 
 		while(validar("Venta.txt", $i) == true)
 		{
@@ -31,6 +36,7 @@
 				{
 					$item[3] = $item[3] - $venta->cantidad;
 					$precio = $cantidad * $item[1];
+					$esta = true;
 				}
 				else
 				{
@@ -44,19 +50,17 @@
 			}
 		}
 
-		var_dump($vec);
-
-		if($Agotado == false)
+		if($Agotado == false && $esta == true)
 		{
-			$datos =$id . " " . $venta->email . " " . $venta->tipo . " " . $venta->cantidad . " " . $precio . " " . $venta->sabor;
-
-			var_dump($datos);
+			$datos =$id . ";" . $venta->email . ";" . $venta->tipo . ";" . $venta->cantidad . ";" . $precio . ";" . $venta->sabor;
 
 			guardar("Venta.txt", $datos, null);
+
+			array_pop($vec);
 			
 			foreach ($vec as $item) 
 			{
-				$datos = $item[0] . " " . $item[1] . " " . $item[2] . " " . $item[3] . " " . $item[4] . " " . $item[5];
+				$datos = $item[0] . ";" . $item[1] . ";" . $item[2] . ";" . $item[3] . ";" . $item[4] . ";" . $item[5];
 
 				if($contador == 0)
 				{
@@ -69,10 +73,12 @@
 				}
 				
 			}
+
+			echo "Guardado correctamente";
 		}
 		else
 		{
-			echo "La cantidad de pizzas requeridas no esta disponible";
+			echo "La cantidad de pizzas requeridas no esta disponible o la pizza no existe";
 		}
 	}
 	else

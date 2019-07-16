@@ -30,20 +30,24 @@
 		{	
 			$i = 0;
 			$vec = null;
-			$archivo = fopen($path, "r");
 
-			if($archivo != false)
+			if(file_exists($path))
 			{
-				$vec = array();
-				while(!feof($archivo))
+				$archivo = fopen($path, "r");
+
+				if($archivo != false)
 				{
-					$vec[] =  fgets($archivo);
-					$vec[$i] = explode(" ", $vec[$i]);
+					$vec = array();
+					while(!feof($archivo))
+					{
+						$vec[] =  fgets($archivo);
+						$vec[$i] = explode(";", $vec[$i]);
 
-					$i++;
+						$i++;
+					}
+
+					fclose($archivo);
 				}
-
-				fclose($archivo);
 			}
 
 			return $vec;

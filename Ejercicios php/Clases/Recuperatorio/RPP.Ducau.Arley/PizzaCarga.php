@@ -1,5 +1,9 @@
 <?php
 
+	ini_set('display_errors', 0);
+	ini_set('display_startup_errors', 0);
+	error_reporting(E_ALL);
+
 	include "manejoArchivos.php";
 	include "pizza.php";
 
@@ -8,8 +12,6 @@
 		$id = 1;
 		$i = 1;
 		$imagen = $_FILES["imagen"];
-		$tipo = $_FILES["imagen"]["name"];
-		$tipo = explode(".", $tipo);
 		$pizzas = leer("Pizza.txt");
 		$esta = 0;
 		$tipo = $_POST["tipo"];
@@ -40,17 +42,18 @@
 
 				if($esta == 0)
 				{
-					move_uploaded_file($imagen["tmp_name"], "./fotos/" . $imagen["name"] . " . " . end($tipo));
+					$imagen["name"] = $id . "-" . $imagen["name"];
+					move_uploaded_file($imagen["tmp_name"], "./fotos/" . $imagen["name"]);
 
 					$imagen = json_encode($imagen);
 
 					$pizza = new pizza($_POST["precio"], $tipo, $_POST["cantidad"], $imagen, $sabor);
 
-					$datos = $id . " " . $pizza->precio . " " . $pizza->tipo . " " . $pizza->cantidad . " " . $pizza->imagen  . " " . $pizza->sabor;
-
-					echo $datos;
+					$datos = $id . ";" . $pizza->precio . ";" . $pizza->tipo . ";" . $pizza->cantidad . ";" . $pizza->imagen  . ";" . $pizza->sabor;
 					
 					guardar("Pizza.txt", $datos, null);
+
+					echo "Guardado correctamente";
 				}
 				else
 				{

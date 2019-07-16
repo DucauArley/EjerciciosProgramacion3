@@ -1,5 +1,9 @@
 <?php
-
+	
+	ini_set('display_errors', 0);
+	ini_set('display_startup_errors', 0);
+	error_reporting(E_ALL);
+	
 	include "manejoArchivos.php";
 
 	$ventas = leer("Venta.txt");
@@ -7,10 +11,14 @@
 
 	foreach ($ventas as $item) 
 	{
-		var_dump(count($item));
-		if ($item != "")
-		echo $item[0] . " " . $item[1] . " " . $item[2] . " " . $item[3] . " " . $item[4] . " " . $item[5] . "\r\n";
-		$hay ++;
+		foreach ($item as $key) 
+		{
+			if ($item != "")
+			{
+				echo $key . " ";
+				$hay ++;
+			}
+		}
 	}
 
 	if($hay == 0)

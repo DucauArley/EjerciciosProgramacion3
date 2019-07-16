@@ -1,3 +1,3 @@
-1 20 molde 100 {"name":"IMG-20190119-WA0001.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\phpFC62.tmp","error":0,"size":20463} jamon
-2 20 piedra 85 {"name":"IMG-20190119-WA0001.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\phpBB4F.tmp","error":0,"size":20463} jamon
-     
+1;20;molde;100;{"name":"1-Tulips.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\php635D.tmp","error":0,"size":620888};muzza
+2;20;piedra;45;{"name":"2-Tulips.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\php7835.tmp","error":0,"size":620888};muzza
+3;20;piedra;0;{"name":"3-Tulips.jpg","type":"image\/jpeg","tmp_name":"C:\\xampp\\tmp\\php8BD5.tmp","error":0,"size":620888};jamon
