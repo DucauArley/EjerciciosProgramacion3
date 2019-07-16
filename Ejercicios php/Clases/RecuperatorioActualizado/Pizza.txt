@@ -1,0 +1,2 @@
+1;20;molde;75;{"file":"C:\\xampp\\tmp\\php5C86.tmp"};muzza
+2;15;piedra;127;{"file":"C:\\xampp\\tmp\\phpBF00.tmp"};jamon
