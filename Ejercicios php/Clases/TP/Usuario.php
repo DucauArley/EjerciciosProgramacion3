@@ -23,7 +23,7 @@
 	        $data = $consulta->fetchAll(PDO::FETCH_ASSOC);                                           
 	        foreach ($data as $item) 
 	        {
-	        	if($item["activo"] == true)
+	        	if($item["activo"] == "true")
 	        	{
 	        		$activo = "si";
 	        	}
@@ -54,7 +54,7 @@
 	        $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
 	        
 	        $consulta = $objetoAccesoDato->RetornarConsulta("INSERT INTO usuarios (nombre, clave, tipo, activo)"
-	                                                    . "VALUES(:nombre, :clave, :sexo, :perfil)");
+	                                                    . "VALUES(:nombre, :clave, :tipo, :activo)");
 	        
 	        $consulta->bindValue(':nombre', $this->nombre, PDO::PARAM_STR);
 	        $consulta->bindValue(':clave', $this->clave, PDO::PARAM_STR);
@@ -63,27 +63,24 @@
 	        $consulta->execute();
 	    }
 	    
-	    public static function ModificarCD($nombre, $clave, $sexo, $perfil)
+	    public static function ModificarUsuario()
 	    {
 	        $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
 	        
-	        $consulta =$objetoAccesoDato->RetornarConsulta("UPDATE usuarios SET nombre = :nombre, sexo = :sexo, 
-	                                                        perfil = :perfil WHERE id = :id");
+	        $consulta =$objetoAccesoDato->RetornarConsulta("UPDATE usuarios SET activo = :activo WHERE nombre = :nombre");
 	        
-	        $consulta->bindValue(':id', $id, PDO::PARAM_INT);
-	        $consulta->bindValue(':titulo', $titulo, PDO::PARAM_INT);
-	        $consulta->bindValue(':anio', $anio, PDO::PARAM_INT);
-	        $consulta->bindValue(':cantante', $cantante, PDO::PARAM_STR);
+	        $consulta->bindValue(':nombre', $this->nombre, PDO::PARAM_STR);
+	        $consulta->bindValue(':activo', $this->activo, PDO::PARAM_BOOL);
 	        return $consulta->execute();
 	    }
 
-	    public static function EliminarUsuario($id)
+	    public static function EliminarUsuario()
 	    {
 	        $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
 	        
-	        $consulta =$objetoAccesoDato->RetornarConsulta("DELETE FROM usuarios WHERE id = :id");
+	        $consulta =$objetoAccesoDato->RetornarConsulta("DELETE FROM usuarios WHERE nombre = :nombre");
 	        
-	        $consulta->bindValue(':id', $id, PDO::PARAM_INT);
+	        $consulta->bindValue(':nombre', $this->nombre, PDO::PARAM_STR);
 	        return $consulta->execute();
 	    }
 	}

@@ -2,54 +2,44 @@
 
 	use \Firebase\JWT\JWT;
     require "./vendor/autoload.php";
+    include_once "funciones.php";
+    include_once "Usuario.php";
+    include_once "Pedido.php";
 
     $config["displayErrorDetails"] = true;
     $config["addContentLengthHeader"] = false;
     $app = new \Slim\App(["settings" => $config]);
 
-    $app->group('/usuario', function()
+    $app->post('/AltaUsuario', \funciones::class . ':AltaUsuario');
+    $app->get('/ListarUsuario', \Usuario::class . ':Listar');//->add(\MWparaAutentificar::class . ':VerificarToken');
+    $app->post('/EliminarUsuario', \funciones::class . ':EliminarUsuario');//->add(\MWparaAutentificar::class . ':VerificarToken');
+
+    $app->post('/login', \funciones::class . ':Login');
+
+    
+    $app->post('/AltaPedido', \funciones::class . ':AltaPedido');
+    $app->get('/ListarPedido', \Pedido::class . ':Listar');
+    $app->post('/ModificarPedido', \funciones::class . ':ModificarPedido');//->add(\MWparaAutentificar::class . ':VerificarToken');
+
+    $app->post('/AltaCliente', \funciones::class . ':AltaCliente');//->add(\MWparaAutentificar::class . ':VerificarToken');
+    $app->get('/{codigo}', \funciones::class . ':TraerTodos');
+
+    /*$app->group('/mesa', function()
     {
-        $this->post('/AltaUsuario', \Usuario::class . ':AltaUsuario');
-        $this->get('/Listar', \Usuario::class . ':Listar')->add(\MWparaAutentificar::class . ':VerificarToken');
-        $this->post('/borrar', \UsuarioApi::class . ':EliminarUsuario')->add(\MWparaAutentificar::class . ':VerificarToken');
+        $this->post('', \funciones::class . ':CargarUno')->add(\MWparaAutentificar::class . ':VerificarToken');
+        $this->post('/', \funciones::class . ':ModificarUno')->add(\MWparaAutentificar::class . ':VerificarToken');
+        $this->post('/foto', \funciones::class . ':fotoMesa')->add(\MWparaAutentificar::class . ':VerificarToken');
     });
 
-    $app->post('/login', function($request, $response) 
-	{
-	    $datos = $request->getParsedBody();
-	    $usuario = new Usuario($datos["nombre"], $datos["clave"], $datos["tipo"], $datos["activo"]);
-	    $aux = $usuario->Buscar();
+    $app->post('/', \funciones::class . ':CargarUno');
+     
+    $app->group('/logs', function()
+    {
+        $this->get('/operacionesPorSector', \funciones::class . ':OperacionesPorSector');
+        $this->get('/ingresos', \funciones::class . ':Ingresos');
+    })->add(\MWparaAutentificar::class . ':VerificarToken');*/
 
-		if($aux[0] == $usuario->nombre && $aux[1] == $usuario->clave && $aux[2] == $usuario->tipo)
-		{
-			$now = time();
-			$playload = array(
-			"iat" => $now,
-			"exp" => $now + (60*60),
-			"data" => $usuario,
-			);
-			try
-			{
-			 	$token = JWT::encode($playload,"claveloide");
-			   	return $response->withJson($token,200);	
-			}
-			catch(Exception $exception)
-			{
-				var_dump($exception);
-			}
-			$contador ++;
-		}
-	    else
-	    {
-	    	echo "La clave, el nombre o el sexo no existen";
-	    }
-	});
 
-    $app->group('/pedido', function(){
-        $this->post('', \pedidoApi::class . ':AltaPedido');
-        $this->get('', \pedidoApi::class . ':Listar');
-        $this->post('/', \pedidoApi::class . ':ModificarPedido');
-    })->add(\MWparaAutentificar::class . ':VerificarToken');
-
+    $app->run();
 
 ?>
