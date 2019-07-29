@@ -23,7 +23,7 @@
 	        $data = $consulta->fetchAll(PDO::FETCH_ASSOC);                                           
 	        foreach ($data as $item) 
 	        {
-	        	if($item["activo"] == "true")
+	        	if($item["activo"] == 1)
 	        	{
 	        		$activo = "si";
 	        	}
@@ -32,7 +32,7 @@
 	        		$activo = "no";
 	        	}
 
-	        	echo "Usuario: ".$item["nombre"]." Clave: ".$item["clave"]." Tipo: ".$item["tipo"]." Activo: ".$item["activo"];
+	        	echo "Usuario: ".$item["nombre"]." Clave: ".$item["clave"]." Tipo: ".$item["tipo"]." Activo: ".$activo;
 	        }
 	    }
 
@@ -40,10 +40,9 @@
 	    {    
 	        $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
 	        
-	        $consulta=$objetoAccesoDato->RetornarConsulta("SELECT * FROM usuarios WHERE nombre=:nombre AND clave=:clave AND tipo=:tipo");
+	        $consulta=$objetoAccesoDato->RetornarConsulta("SELECT * FROM usuarios WHERE nombre=:nombre");
 	        $consulta->bindValue(':nombre', $this->nombre, PDO::PARAM_STR);
-	        $consulta->bindValue(':clave', $this->clave, PDO::PARAM_STR);
-	        $consulta->bindValue(':tipo', $this->tipo, PDO::PARAM_STR);
+	        
 	        $consulta->execute();
 	        $data = $consulta->fetch();
 	        return $data; 
@@ -63,7 +62,7 @@
 	        $consulta->execute();
 	    }
 	    
-	    public static function ModificarUsuario()
+	    public function ModificarUsuario()
 	    {
 	        $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
 	        
@@ -74,7 +73,7 @@
 	        return $consulta->execute();
 	    }
 
-	    public static function EliminarUsuario()
+	    public function EliminarUsuario()
 	    {
 	        $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
 	        

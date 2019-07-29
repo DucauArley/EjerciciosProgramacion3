@@ -30,13 +30,33 @@
 	    {    
 	        $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
 	        
-	        $consulta=$objetoAccesoDato->RetornarConsulta("SELECT * FROM usuarios WHERE nombre=:nombre AND clave=:clave AND tipo=:tipo");
-	        $consulta->bindValue(':nombre', $this->nombre, PDO::PARAM_STR);
-	        $consulta->bindValue(':clave', $this->clave, PDO::PARAM_STR);
-	        $consulta->bindValue(':tipo', $this->tipo, PDO::PARAM_STR);
+	        $consulta=$objetoAccesoDato->RetornarConsulta("SELECT * FROM mesas WHERE codigo=:codigo ");
+	        $consulta->bindValue(':codigo', $this->codigo, PDO::PARAM_STR);
+
 	        $consulta->execute();
 	        $data = $consulta->fetch();
 	        return $data; 
+	    }
+
+	     public function Esta()
+	    {    
+	        $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
+	        
+	        $consulta=$objetoAccesoDato->RetornarConsulta("SELECT * FROM mesas WHERE codigo=:codigo");
+
+	        $consulta->bindValue(':codigo', $this->codigo, PDO::PARAM_STR);
+	        $consulta->execute();
+	        $data = $consulta->fetch();
+
+	        if($data == false)
+	        {
+	        	return false;
+	        }
+	        else
+	        {
+	        	return true;
+	        }
+
 	    }
 	    
 	    public function AltaMesa()
@@ -51,13 +71,12 @@
 	        $consulta->execute();
 	    }
 	    
-	    public static function ModificarMesa($id, $estado, $codigo)
+	    public static function ModificarMesa()
 	    {
 	        $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
 	        
-	        $consulta =$objetoAccesoDato->RetornarConsulta("UPDATE mesas SET estado = :estado, codigo = :codigo WHERE id = :id");
+	        $consulta =$objetoAccesoDato->RetornarConsulta("UPDATE mesas SET estado = :estado WHERE codigo = :codigo");
 	        
-	        $consulta->bindValue(':id', $id, PDO::PARAM_INT);
 	        $consulta->bindValue(':estado', $estado, PDO::PARAM_STR);
 	        $consulta->bindValue(':codigo', $codigo, PDO::PARAM_STR);
 	  
