@@ -103,7 +103,7 @@
 	        $consulta->execute();
 	    }
 	    
-	    public static function ModificarPedido()
+	    public function ModificarPedido()
 	    {
 	        $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
 	        
@@ -123,7 +123,7 @@
 	        return $consulta->execute();
 	    }
 
-	    public static function EliminarUsuario($id)
+	    public function EliminarUsuario($id)
 	    {
 	        $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
 	        

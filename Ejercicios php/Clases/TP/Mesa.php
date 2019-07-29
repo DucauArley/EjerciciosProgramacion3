@@ -56,7 +56,19 @@
 	        {
 	        	return true;
 	        }
+	    }
 
+	    public function setEstado($estado)
+	    {
+	    	if($estado == "con clientes esperando pedido" || $estado == "con clientes comiendo" || $estado == "con clientes pagando" || $estado == "cerrada")
+	    	{
+	    		$this->estado = $estado;
+	    		return true;
+	    	}
+	    	else
+	    	{
+	    		return false;
+	    	}
 	    }
 	    
 	    public function AltaMesa()
@@ -71,14 +83,14 @@
 	        $consulta->execute();
 	    }
 	    
-	    public static function ModificarMesa()
+	    public function ModificarMesa()
 	    {
 	        $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
 	        
 	        $consulta =$objetoAccesoDato->RetornarConsulta("UPDATE mesas SET estado = :estado WHERE codigo = :codigo");
 	        
-	        $consulta->bindValue(':estado', $estado, PDO::PARAM_STR);
-	        $consulta->bindValue(':codigo', $codigo, PDO::PARAM_STR);
+	        $consulta->bindValue(':estado', $this->estado, PDO::PARAM_STR);
+	        $consulta->bindValue(':codigo', $this->codigo, PDO::PARAM_STR);
 	  
 	        return $consulta->execute();
 	    }

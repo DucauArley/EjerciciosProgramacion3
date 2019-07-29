@@ -11,7 +11,7 @@
 		{
 		}
 
-	    public static function Listar()
+	    public function Listar()
 	    {    
 	        $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
 	        

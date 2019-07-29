@@ -8,6 +8,7 @@
 	include_once "Cliente.php";
 	include_once "Mesa.php";
 	include_once "Encuesta.php";
+	include_once "manejoArchivos.php";
 
 	class funciones
 	{
@@ -155,7 +156,7 @@
 					$pedido->idMesa = $datos["idMesa"];
 					$pedido->cantidad = $datos["cantidad"];
 					$pedido->precio = $auxCarta->precio;
-					$pedido->codigo = generarCodigo();
+					$pedido->codigo = $this->generarCodigo();
 
 					$pedido->AltaPedido();
 				}
@@ -168,7 +169,7 @@
 					$pedido->idMesa = $datos["idMesa"];
 					$pedido->cantidad = $datos["cantidad"];
 					$pedido->precio = $auxCarta->precio;
-					$pedido->codigo = generarCodigo();
+					$pedido->codigo = $this->generarCodigo();
 
 					$pedido->AltaPedido();
 				}
@@ -277,7 +278,7 @@
 			}
 		}
 
-		public static function AltaMesa($request, $response)
+		public function AltaMesa($request, $response)
 		{
 			try
 			{
@@ -288,9 +289,11 @@
 				{
 					$mesa = new Mesa();
 
-					$mesa->codigo = generarCodigo();
+					$mesa->codigo = $this->generarCodigo();
 
 					$mesa->AltaMesa();
+
+					echo "Mesa agregada";
 				}
 				else
 				{
@@ -314,18 +317,24 @@
 				if($datos["tipo"] == "mozo" || $datos["tipo"] == "socio")
 				{
 					$mesa = new Mesa();
-					$mesa->estado = $datos["estado"]; 
+					$okE = $mesa->setEstado($datos["estado"]); 
 					$mesa->codigo = $datos["codigo"];
 
-					$ok = $mesa->ModificarMesa();
-
-					if($ok)
+					if($okE)
 					{
-						echo "Se modifico la mesa exitosamente";
+						$ok = $mesa->ModificarMesa();
+						if($ok)
+						{
+							echo "Se modifico la mesa exitosamente";
+						}
+						else
+						{
+							echo "No se encontro la mesa";
+						}
 					}
 					else
 					{
-						echo "No se encontro la mesa";
+						echo "El estado al que se pretende cambiar no existe";
 					}
 				}
 				else
@@ -344,17 +353,21 @@
 			try
 			{
 				$datos = $request->getParsedBody();
+				$archivo = $request->getUploadedFiles();
 
-				if($datos["tipo"] == "mozo" || $datos["tipo"] == "socio")
+				$imagen = $archivo["imagen"];
+
+				$mesa = new Mesa();
+
+				$mesa->codigo = $datos["codigo"];
+
+				if($datos["tipo"] == "mozo" || $datos["tipo"] == "socio" && $mesa->Esta())
 				{
-
 					$array = $imagen->getClientFileName();
 					$array = explode(".", $array);
+					$path = $datos["codigo"] . "-" . date("d.m.y") . "." . end($array);
 
-
-					$imagen->moveTo("./fotos/" . $imagen->getClientFileName());
-
-
+					$imagen->moveTo("./fotos/" . $path);
 				}
 				else
 				{
@@ -373,25 +386,51 @@
 		{
 			try
 			{
-				//Tendria que poner algo que diga que hay un problema si no se puso un puntaje correcto o algo pero lo voy a hacer cuando empiece a debugear Aguante k1ng vieja es lo mas grande que hay, mas grande que bokita el mas grande
 				$datos = $request->getParsedBody();
 				$mesa = new Mesa();
 				$mesa->codigo = $datos["codigo"];
 
-				if($mesa->Esta())//Posible error
+				if($mesa->Esta())
 				{
 					$mesa = $mesa->Buscar();
 
-					if($mesa->estado == "cerrada")
+					if(strcasecmp($mesa["estado"], "cerrada") == 0)
 					{
 						$encuesta = new Encuesta();
-						$encuesta->mozo = $datos["mozo"];
-						$encuesta->restaurant = $datos["restaurant"];
-						$encuesta->mesa = $datos["mesa"];
-						$encuesta->cocinero = $datos["cocinero"];
-						$encuesta->setComentario($datos["comentario"]);
+						$encuesta->idMesa = $mesa["codigo"];
 
-						$encuesta->AltaEncuesta();
+						if($datos["mozo"] <= 10 && $datos["mozo"] >= 0)
+						{
+							$encuesta->mozo = $datos["mozo"];
+						}
+
+						if($datos["restaurant"] <= 10 && $datos["restaurant"] >= 0)
+						{
+							$encuesta->restaurant = $datos["restaurant"];
+						}
+
+						if($datos["mesa"] <= 10 && $datos["mesa"] >= 0)
+						{
+							$encuesta->mesa = $datos["mesa"];
+						}
+
+						if($datos["cocinero"] <= 10 && $datos["cocinero"] >= 0)
+						{
+							$encuesta->cocinero = $datos["cocinero"];
+						}
+
+						$ok = $encuesta->setComentario($datos["comentario"]);
+
+
+						if($ok)
+						{
+							$encuesta->AltaEncuesta();
+							echo "Encuesta realizada";
+						}
+						else
+						{
+							echo "El comentario excedio los caracteres permitidos";
+						}
 					}
 					else
 					{
@@ -411,11 +450,60 @@
 			}
 		}
 
+		public function getToken($request)
+		{
+			$arrayToken = $request->getHeader('token');
+			    $token = $arrayToken[0];
+		    
+			    if(empty($token) || $token === "")
+			    {
+			    	echo "Error";
+			    }
+				    
+		    $tokenDeco = JWT::decode($token, "claveloide",['HS256'])->data;
+
+		    return $tokenDeco;
+		}
+
 		public static function OperacionesPorSector($request, $response)
 		{
 			try
 			{
-				
+				//Segun esta logica, habria que guardar en un txt todos los pedidos, aunque los podria leer de la base de datos y asi no hacer un re quilombo con manejo de archivos y toda esa verga
+				$arrayPedidos = logs::leerArchivo("../logs/logs.txt");
+		        $mozos = 0;
+		        $bartender​ = 0;
+		        $cerveceros​ = 0;
+		        $cocineros​ = 0;
+		        foreach($arrayPedidos as $value)
+		        {
+		            if(strcasecmp($value["Tipo"], "mozos") == 0)
+		            {                
+		                $mozos++;
+		            }
+
+		            if(strcasecmp($value["Tipo"], "bartender​") == 0)
+		            {
+		                $bartender​++;
+		            }
+
+		            if(strcasecmp($value["Tipo"], "cerveceros​") == 0)
+		            {
+		                $cerveceros​++;
+		            }
+
+		            if(strcasecmp($value["Tipo"], "cocineros​") == 0)
+		            {
+		                $cocineros​++;  
+		            }
+		            
+		        }
+		        $objRespuesta = new stdClass;
+		        $objRespuesta->Mozos = $mozos;
+		        $objRespuesta->Bartender​ = $bartender​;
+		        $objRespuesta->Cerveceros​ = $cerveceros​;
+		        $objRespuesta->Cocineros​ = $cocineros​;
+		        return $response->withJson($objRespuesta, 200);
 			}
 			catch(Exception $e)
 			{
@@ -427,7 +515,7 @@
 		{
 			try
 			{
-				
+				//Lo mismo para este, habria que sumar todos los precios
 			}
 			catch(Exception $e)
 			{
