@@ -16,9 +16,10 @@
 
 		public function __construct()
 		{
+			date_default_timezone_set("America/Argentina/Buenos_Aires");
 			$this->estado = "En espera";
 			$this->tiempo = "Calculando";
-			$this->inicio = new DateTime('NOW');
+			$this->inicio = date("d.m.y H:i:s");
 		}
 
 	    public static function Listar()
@@ -46,6 +47,18 @@
 	        
 
 	        return $data;
+	    }
+
+	    public function setEstado($estado)
+	    {
+	    	if($estado == "en preparacion" || $estado == "listo para servir")
+	    	{
+	    		$this->estado = $estado;
+	    	}
+	    	else
+	    	{
+	    		echo "No existe ese estado";
+	    	}
 	    }
 
 
@@ -106,7 +119,7 @@
 	        $consulta = $objetoAccesoDato->RetornarConsulta("INSERT INTO pedidos (tipo, idMesa, estado, tiempo, cantidad, precio, codigo, inicio)" . "VALUES(:tipo, :idMesa, :estado, :tiempo, :cantidad, :precio, :codigo, :inicio)");
 	        
 	        $consulta->bindValue(':tipo', $this->tipo, PDO::PARAM_STR);
-	        $consulta->bindValue(':idMesa', $this->idMesa, PDO::PARAM_INT);
+	        $consulta->bindValue(':idMesa', $this->idMesa, PDO::PARAM_STR);
 	        $consulta->bindValue(':estado', $this->estado, PDO::PARAM_STR);
 	        $consulta->bindValue(':tiempo', $this->tiempo, PDO::PARAM_STR);
 	        $consulta->bindValue(':cantidad', $this->cantidad, PDO::PARAM_INT);
@@ -125,7 +138,7 @@
 	           	estado = :estado, tiempo = :tiempo, cantidad = :cantidad, precio = :precio, inicio = :inicio WHERE codigo = :codigo");
 	        
 	        $consulta->bindValue(':tipo', $this->tipo, PDO::PARAM_STR);
-	        $consulta->bindValue(':idMesa', $this->idMesa, PDO::PARAM_INT);
+	        $consulta->bindValue(':idMesa', $this->idMesa, PDO::PARAM_STR);
 	        $consulta->bindValue(':estado', $this->estado, PDO::PARAM_STR);
 	        $consulta->bindValue(':tiempo', $this->tiempo, PDO::PARAM_STR);
 	        $consulta->bindValue(':cantidad', $this->cantidad, PDO::PARAM_INT);
@@ -134,16 +147,6 @@
 	        $consulta->bindValue(':inicio', $this->inicio, PDO::PARAM_STR);
 
 
-	        return $consulta->execute();
-	    }
-
-	    public function EliminarUsuario($id)
-	    {
-	        $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
-	        
-	        $consulta =$objetoAccesoDato->RetornarConsulta("DELETE FROM usuarios WHERE id = :id");
-	        
-	        $consulta->bindValue(':id', $id, PDO::PARAM_INT);
 	        return $consulta->execute();
 	    }
 	}

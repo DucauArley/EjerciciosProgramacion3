@@ -135,29 +135,32 @@
 				$mesa = new Mesa();
 				$auxCli = new Cliente();
 
-				$auxCli->mesa = $datos["codigo"]
+				$auxCli->mesa = $datos["codigo"];
 				$mesa->codigo = $datos["codigo"];	
 			
 				$cliente = $auxCli->Buscar();
 
-				if($mesa->Esta() && $auxCli["nombre"] != "")//Posible error
+				if($mesa->Esta() && $cliente["nombre"] != "")
 				{
 					if(isset($datos["cerveceros"]))
 					{
 						$carta->item = $datos["cerveceros"];
 						$auxCarta = $carta->Buscar();
-						if($auxCarta["item"] != "")//Posible error
+						if($auxCarta["item"] != "")
 						{
-							$pedido->tipo = "cerveceros";
+							$pedido->tipo = "cervecero";
 							$pedido->idMesa = $mesa->codigo;
-							$pedido->cantidad = $datos["cantidad"];
-							$pedido->precio = $auxCarta->precio * $pedido->cantidad;
+							$pedido->cantidad = $datos["cantidadCer"];
+							$pedido->precio = $auxCarta["precio"] * $pedido->cantidad;
 							$pedido->codigo = $this->generarCodigo();
 
 							var_dump($pedido);
 
-							//$pedido->AltaPedido();
-							//Creo que tendria que cambiar el estado de la mesa ni bien se termina de pedir
+							$pedido->AltaPedido();
+						}
+						else
+						{
+							echo "No existe ese producto en la carta de cervezas";
 						}
 					}
 
@@ -165,30 +168,52 @@
 					{
 						$carta->item = $datos["bartenders"];
 						$auxCarta = $carta->Buscar();
-						$pedido->tipo = "bartenders";
-						$pedido->idMesa = $mesa->codigo;
-						$pedido->cantidad = $datos["cantidad"];
-						$pedido->precio = $auxCarta->precio * $pedido->cantidad;
-						$pedido->codigo = $this->generarCodigo();
+						if($auxCarta["item"] != "")
+						{
+							$pedido->tipo = "bartender";
+							$pedido->idMesa = $mesa->codigo;
+							$pedido->cantidad = $datos["cantidadBar"];
+							$pedido->precio = $auxCarta["precio"] * $pedido->cantidad;
+							$pedido->codigo = $this->generarCodigo();
 
-						$pedido->AltaPedido();
+							var_dump($pedido);
+
+							$pedido->AltaPedido();
+						}
+						else
+						{
+							echo "No existe ese producto en la carta de tragos y vinos";
+						}
 					}
 
 					if(isset($datos["cocineros"]))
 					{
 						$carta->item = $datos["cocineros"];
 						$auxCarta = $carta->Buscar();
-						$pedido->tipo = "cocineros";
-						$pedido->idMesa = $mesa->codigo;
-						$pedido->cantidad = $datos["cantidad"];
-						$pedido->precio = $auxCarta->precio * $pedido->cantidad;
-						$pedido->codigo = $this->generarCodigo();
+						if($auxCarta["item"] != "")
+						{
+							$pedido->tipo = "cocinero";
+							$pedido->idMesa = $mesa->codigo;
+							$pedido->cantidad = $datos["cantidadCo"];
+							$pedido->precio = $auxCarta["precio"] * $pedido->cantidad;
+							$pedido->codigo = $this->generarCodigo();
 
-						$pedido->AltaPedido();
+							var_dump($pedido);
+
+							$pedido->AltaPedido();
+						}
+						else
+						{
+							echo "No existe ese producto en la carta de comida";
+						}
 					}
+
+				}
+				else
+				{
+					echo "La mesa no existe o no tiene clientes";
 				}
 
-				echo "Se cargaron los pedidos correctamente";
 			}
 			catch(Exception $e)
 			{
@@ -229,43 +254,49 @@
 			try
 			{
 				$datos = $request->getParsedBody();
+				$mw = new MWAutentificador();
 
-				$pedidoAux = new Pedido();
+				$pedido= new Pedido();
 
-				$pedidoAux->codigo = $datos["codigo"];
+				$pedido->codigo = $datos["codigo"];
 
-				$pedido = $pedidoAux->Buscar();
+				$pedidoAux = $pedido->Buscar();
 
-				$usuario = getToken();
+				$pedido->estado = $pedidoAux["estado"];
+				$pedido->tipo = $pedidoAux["tipo"];
+				$pedido->idMesa = $pedidoAux["idMesa"];
+				$pedido->tiempo = $pedidoAux["tiempo"];
+				$pedido->cantidad = $pedidoAux["cantidad"];
+				$pedido->precio = $pedidoAux["precio"];
+				$pedido->inicio = $pedidoAux["inicio"];
 
-				if($pedido["tipo"] == $usuario->tipo)
+				$usuario = $mw->getToken($request);
+
+				if($pedido->tipo == $usuario->tipo)
 				{
 					if(isset($datos["estado"]))
 					{
-						$pedido->estado == $datos["estado"];
+						$pedido->setEstado($datos["estado"]);
 					}
 
 					if(isset($datos["tiempo"]))
 					{
-						$pedido->tiempo == $datos["tiempo"];
+						$pedido->tiempo = $datos["tiempo"];
 					}
 
 					if(isset($datos["cantidad"]))
 					{
-						$pedido->cantidad == $datos["cantidad"];
+						$pedido->cantidad = $datos["cantidad"];
 					}	
-
-					if(isset($datos["estado"]))
-					{
-						$pedido->estado == $datos["estado"];
-					}
 
 
 					$pedido->ModificarPedido();
+
+					echo "Se modifico exitosamente";
 				}
 				else
 				{
-					echo "No puede modificar un pedido de otro sector";
+					echo "No puede modificar un pedido de otro sector o este no existe";
 				}
 			
 			
@@ -526,36 +557,31 @@
 				$pedido = new Pedido();
 
 				$arrayPedidos = $pedido->TraerTodos();
-		        $mozos = 0;
 		        $bartender​ = 0;
 		        $cerveceros​ = 0;
 		        $cocineros​ = 0;
 
 		        foreach($arrayPedidos as $item)
 		        {
-		            if(strcasecmp($item["Tipo"], "mozos") == 0)
-		            {                
-		                $mozos++;
-		            }
-
-		            if(strcasecmp($item["Tipo"], "bartender​") == 0)
+		            if(strcasecmp($item["tipo"], "bartender​") == 0)
 		            {
 		                $bartender​++;
 		            }
 
-		            if(strcasecmp($item["Tipo"], "cerveceros​") == 0)
+		            if(strcasecmp($item["tipo"], "cervecero") == 0)
 		            {
 		                $cerveceros​++;
 		            }
 
-		            if(strcasecmp($item["Tipo"], "cocineros​") == 0)
+		            if(strcasecmp($item["tipo"], "cocinero") == 0)
 		            {
 		                $cocineros​++;  
 		            }
 		            
 		        }
 
-		        echo "Mozos: ".$mozo." Bartenders: ".$bartender​." Cerveceros: ".$cerveceros." Cocineros: ".$cocineros;
+		       	//echo "Bartenders: " . $bartender ​. " Cerveceros: " . $cerveceros . " Cocineros: " . $cocineros;
+		       	//No se porque carajo no me funciona
 			}
 			catch(Exception $e)
 			{
