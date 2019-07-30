@@ -32,7 +32,7 @@
 	        		$activo = "no";
 	        	}
 
-	        	echo "Usuario: ".$item["nombre"]." Clave: ".$item["clave"]." Tipo: ".$item["tipo"]." Activo: ".$activo;
+	        	echo "Usuario: ".$item["nombre"]." Clave: ".$item["clave"]." Tipo: ".$item["tipo"]." Activo: ".$activo . "\r\n"; 
 	        }
 	    }
 

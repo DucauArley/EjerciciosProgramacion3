@@ -8,7 +8,7 @@
 	include_once "Cliente.php";
 	include_once "Mesa.php";
 	include_once "Encuesta.php";
-	include_once "manejoArchivos.php";
+	include_once "MWAutentificador.php";
 
 	class funciones
 	{
@@ -56,8 +56,9 @@
 			try
 			{
 				$datos = $request->getParsedBody();
+				$socio = $request->getAttribute("token");
 
-				if($datos["tipo"] == "socio")//Tendria que usar token asi me aseguro que es socio
+				if($socio->tipo == "socio")
 				{
 					$usuario = new Usuario();
 					$usuario->nombre = $datos["nombre"];
@@ -105,7 +106,7 @@
 				$now = time();
 				$playload = array(
 				"iat" => $now,
-				"exp" => $now + (60*60),
+				"exp" => $now + (60*360),
 				"data" => $usuario,
 				);
 				try
@@ -124,9 +125,6 @@
 		    }
 		}
 
-		//Hasta aca funciona todo
-
-		//Las cosas de pedidos las dejo para despues porque depende de muchas cosas
 		public function AltaPedido($request, $response)
 		{
 			try
@@ -134,44 +132,60 @@
 				$datos = $request->getParsedBody();
 				$pedido = new Pedido();
 				$carta = new Carta();
-				
-				if(isset($datos["cerveceros"]))
+				$mesa = new Mesa();
+				$auxCli = new Cliente();
+
+				$auxCli->mesa = $datos["codigo"]
+				$mesa->codigo = $datos["codigo"];	
+			
+				$cliente = $auxCli->Buscar();
+
+				if($mesa->Esta() && $auxCli["nombre"] != "")//Posible error
 				{
-					$carta->item = $datos["cerveceros"];
-					$auxCarta = $carta->Buscar();
-					$pedido->tipo = "cerveceros";
-					$pedido->idMesa = $datos["idMesa"];//Le tendria que pasar el codigovich de la mesovich
-					$pedido->cantidad = $datos["cantidad"];
-					$pedido->precio = $auxCarta->precio * $pedido->cantidad;
-					$pedido->codigo = $this->generarCodigo();
-					var_dump($pedido);
-					//$pedido->AltaPedido();
-				}
+					if(isset($datos["cerveceros"]))
+					{
+						$carta->item = $datos["cerveceros"];
+						$auxCarta = $carta->Buscar();
+						if($auxCarta["item"] != "")//Posible error
+						{
+							$pedido->tipo = "cerveceros";
+							$pedido->idMesa = $mesa->codigo;
+							$pedido->cantidad = $datos["cantidad"];
+							$pedido->precio = $auxCarta->precio * $pedido->cantidad;
+							$pedido->codigo = $this->generarCodigo();
 
-				if(isset($datos["bartenders"]))
-				{
-					$carta->item = $datos["bartenders"];
-					$auxCarta = $carta->Buscar();
-					$pedido->tipo = "bartenders";
-					$pedido->idMesa = $datos["idMesa"];
-					$pedido->cantidad = $datos["cantidad"];
-					$pedido->precio = $auxCarta->precio;
-					$pedido->codigo = $this->generarCodigo();
+							var_dump($pedido);
 
-					$pedido->AltaPedido();
-				}
+							//$pedido->AltaPedido();
+							//Creo que tendria que cambiar el estado de la mesa ni bien se termina de pedir
+						}
+					}
 
-				if(isset($datos["cocineros"]))
-				{
-					$carta->item = $datos["cocineros"];
-					$auxCarta = $carta->Buscar();
-					$pedido->tipo = "cocineros";
-					$pedido->idMesa = $datos["idMesa"];
-					$pedido->cantidad = $datos["cantidad"];
-					$pedido->precio = $auxCarta->precio;
-					$pedido->codigo = $this->generarCodigo();
+					if(isset($datos["bartenders"]))
+					{
+						$carta->item = $datos["bartenders"];
+						$auxCarta = $carta->Buscar();
+						$pedido->tipo = "bartenders";
+						$pedido->idMesa = $mesa->codigo;
+						$pedido->cantidad = $datos["cantidad"];
+						$pedido->precio = $auxCarta->precio * $pedido->cantidad;
+						$pedido->codigo = $this->generarCodigo();
 
-					$pedido->AltaPedido();
+						$pedido->AltaPedido();
+					}
+
+					if(isset($datos["cocineros"]))
+					{
+						$carta->item = $datos["cocineros"];
+						$auxCarta = $carta->Buscar();
+						$pedido->tipo = "cocineros";
+						$pedido->idMesa = $mesa->codigo;
+						$pedido->cantidad = $datos["cantidad"];
+						$pedido->precio = $auxCarta->precio * $pedido->cantidad;
+						$pedido->codigo = $this->generarCodigo();
+
+						$pedido->AltaPedido();
+					}
 				}
 
 				echo "Se cargaron los pedidos correctamente";
@@ -200,7 +214,7 @@
 	        $auxPed = $pedido->Esta();
 	        $auxMes = $mesa->Esta();
 
-	        if($auxPed || $auxMes)//posible problema aca
+	        if($auxPed || $auxMes)
 	        {
 	            $codigo = generarCodigo();
 	        }
@@ -222,11 +236,39 @@
 
 				$pedido = $pedidoAux->Buscar();
 
-				//Creo que tambien habria que poner algo de los tokens para saber si es mozo o socio
-				//Habria que ver que keys tienen valores para asi ir reemplazando en pedido todas las cosas para poder modificarlo todo junto
+				$usuario = getToken();
 
-				$pedido->ModificarPedido();
+				if($pedido["tipo"] == $usuario->tipo)
+				{
+					if(isset($datos["estado"]))
+					{
+						$pedido->estado == $datos["estado"];
+					}
 
+					if(isset($datos["tiempo"]))
+					{
+						$pedido->tiempo == $datos["tiempo"];
+					}
+
+					if(isset($datos["cantidad"]))
+					{
+						$pedido->cantidad == $datos["cantidad"];
+					}	
+
+					if(isset($datos["estado"]))
+					{
+						$pedido->estado == $datos["estado"];
+					}
+
+
+					$pedido->ModificarPedido();
+				}
+				else
+				{
+					echo "No puede modificar un pedido de otro sector";
+				}
+			
+			
 			}
 			catch(Exception $e)
 			{
@@ -239,21 +281,36 @@
 			try
 			{
 				$datos = $request->getParsedBody();
+				$mesa = new Mesa();
 
-				//Creo que aca iria algo de los token, asi se mas facil si es de tipo mozo o que verga es
-				if($datos["tipo"] == "mozo" || $datos["tipo"] == "socio")
+				$mesa->codigo = $datos["codigo"];
+
+				$usuario = $request->getAttribute("token");
+
+				if($mesa->Esta())
 				{
-					$cliente = new Cliente();
+					$aux = new Cliente();
+					$aux->mesa = $mesa->codigo;
 
-					$cliente->nombre = $datos["nombre"];
-					$cliente->apellido = $datos["apellido"];
+					if(!$aux->Buscar())//Posible error
+					{
+						$cliente = new Cliente();
 
-					$cliente->AltaCliente();
+						$cliente->nombre = $datos["nombre"];
+						$cliente->apellido = $datos["apellido"];
+						$cliente->mesa = $mesa->codigo;
+						$cliente->AltaCliente();
 
+						echo "Se cargo el cliente exitosamente";
+					}
+					else
+					{
+						echo "La mesa esta ocupada";
+					}
 				}
 				else
 				{
-					echo "Solo los mozos/socios pueden cargar clientes";
+					echo "La mesa no existe";
 				}
 
 			}
@@ -284,8 +341,9 @@
 			{
 				$datos = $request->getParsedBody();
 
-				//Tengo que usar los tokens si o si
-				if($datos["tipo"] == "socio")
+				$usuario = $request->getAttribute("token");
+
+				if($usuario->tipo == "socio")
 				{
 					$mesa = new Mesa();
 
@@ -312,34 +370,43 @@
 			try
 			{
 				$datos = $request->getParsedBody();
-				//Usar los tokens para saber si es mozo o socio
+				
+				$usuario = $request->getAttribute("token");
+				$okE = false;
 
-				if($datos["tipo"] == "mozo" || $datos["tipo"] == "socio")
+				$mesa = new Mesa();
+				if($datos["estado"] != "cerrada")
 				{
-					$mesa = new Mesa();
-					$okE = $mesa->setEstado($datos["estado"]); 
-					$mesa->codigo = $datos["codigo"];
-
-					if($okE)
+					$okE = $mesa->setEstado($datos["estado"]);
+				}
+				else
+				{
+					if($datos["estado"] == "cerrada" && $usuario->tipo == "socio")
 					{
-						$ok = $mesa->ModificarMesa();
-						if($ok)
-						{
-							echo "Se modifico la mesa exitosamente";
-						}
-						else
-						{
-							echo "No se encontro la mesa";
-						}
+						$okE = $mesa->setEstado($datos["estado"]);
 					}
 					else
 					{
-						echo "El estado al que se pretende cambiar no existe";
+						echo "Solamente los socios pueden cerrar una mesa";
+					}
+				}
+				$mesa->codigo = $datos["codigo"];
+
+				if($okE)
+				{
+					$ok = $mesa->ModificarMesa();
+					if($ok)
+					{
+						echo "Se modifico la mesa exitosamente";
+					}
+					else
+					{
+						echo "No se encontro la mesa";
 					}
 				}
 				else
 				{
-					echo "Solamente los mozos y los socios pueden modificar";
+					echo "El estado al que se pretende cambiar no existe";
 				}
 			}
 			catch(Exception $e)
@@ -361,7 +428,9 @@
 
 				$mesa->codigo = $datos["codigo"];
 
-				if($datos["tipo"] == "mozo" || $datos["tipo"] == "socio" && $mesa->Esta())
+				$usuario = $request->getAttribute("token");
+
+				if($usuario->tipo == "mozo" || $usuario->tipo == "socio" && $mesa->Esta())
 				{
 					$array = $imagen->getClientFileName();
 					$array = explode(".", $array);
@@ -450,60 +519,43 @@
 			}
 		}
 
-		public function getToken($request)
-		{
-			$arrayToken = $request->getHeader('token');
-			    $token = $arrayToken[0];
-		    
-			    if(empty($token) || $token === "")
-			    {
-			    	echo "Error";
-			    }
-				    
-		    $tokenDeco = JWT::decode($token, "claveloide",['HS256'])->data;
-
-		    return $tokenDeco;
-		}
-
-		public static function OperacionesPorSector($request, $response)
+		public function OperacionesPorSector($request, $response)
 		{
 			try
 			{
-				//Segun esta logica, habria que guardar en un txt todos los pedidos, aunque los podria leer de la base de datos y asi no hacer un re quilombo con manejo de archivos y toda esa verga
-				$arrayPedidos = logs::leerArchivo("../logs/logs.txt");
+				$pedido = new Pedido();
+
+				$arrayPedidos = $pedido->TraerTodos();
 		        $mozos = 0;
 		        $bartender​ = 0;
 		        $cerveceros​ = 0;
 		        $cocineros​ = 0;
-		        foreach($arrayPedidos as $value)
+
+		        foreach($arrayPedidos as $item)
 		        {
-		            if(strcasecmp($value["Tipo"], "mozos") == 0)
+		            if(strcasecmp($item["Tipo"], "mozos") == 0)
 		            {                
 		                $mozos++;
 		            }
 
-		            if(strcasecmp($value["Tipo"], "bartender​") == 0)
+		            if(strcasecmp($item["Tipo"], "bartender​") == 0)
 		            {
 		                $bartender​++;
 		            }
 
-		            if(strcasecmp($value["Tipo"], "cerveceros​") == 0)
+		            if(strcasecmp($item["Tipo"], "cerveceros​") == 0)
 		            {
 		                $cerveceros​++;
 		            }
 
-		            if(strcasecmp($value["Tipo"], "cocineros​") == 0)
+		            if(strcasecmp($item["Tipo"], "cocineros​") == 0)
 		            {
 		                $cocineros​++;  
 		            }
 		            
 		        }
-		        $objRespuesta = new stdClass;
-		        $objRespuesta->Mozos = $mozos;
-		        $objRespuesta->Bartender​ = $bartender​;
-		        $objRespuesta->Cerveceros​ = $cerveceros​;
-		        $objRespuesta->Cocineros​ = $cocineros​;
-		        return $response->withJson($objRespuesta, 200);
+
+		        echo "Mozos: ".$mozo." Bartenders: ".$bartender​." Cerveceros: ".$cerveceros." Cocineros: ".$cocineros;
 			}
 			catch(Exception $e)
 			{
@@ -511,17 +563,52 @@
 			}
 		}
 
-		public static function Ingresos($request, $response)
+		public function Ingresos($request, $response)
 		{
 			try
 			{
-				//Lo mismo para este, habria que sumar todos los precios
+				$pedido = new Pedido();
+
+				$arrayPedidos = $pedido->TraerTodos();
+				$total = 0;
+				
+				foreach ($arrayPedidos as $item) 
+				{
+					$total = $item["precio"] + $total;
+				}
+
+
+				echo "Ingresos totales: " . $total;
 			}
 			catch(Exception $e)
 			{
 				throw new Exception($e);
 			}
 		}
+
+		/*public static function OrdenadaPorSectorLista($request, $response)
+		{
+			try
+			{
+				$pedido = new Pedido();
+
+				$arrayPedidos = $pedido->TraerTodos();
+				$total = 0;
+				
+				foreach ($arrayPedidos as $item) 
+				{
+					$total = $item["precio"] + $total;
+				}
+
+
+				echo "Ingresos totales: " . $total;
+			}
+			catch(Exception $e)
+			{
+				throw new Exception($e);
+			}
+		}*/
+
 
 	}
 

@@ -35,6 +35,20 @@
 	        }
 	    }
 
+	    public static function TraerTodos()
+	    {    
+	        $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
+	        
+	        $consulta = $objetoAccesoDato->RetornarConsulta("SELECT tipo, idMesa, estado, tiempo, cantidad, precio, codigo, inicio FROM pedidos");	        
+	        $consulta->execute();
+	        
+	        $data = $consulta->fetchAll(PDO::FETCH_ASSOC);                                           
+	        
+
+	        return $data;
+	    }
+
+
 	    public static function ListarPorMesa()
 	    {    
 	        $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
@@ -47,7 +61,7 @@
 	        $data = $consulta->fetchAll(PDO::FETCH_ASSOC);                                           
 	        foreach ($data as $item) 
 	        {
-	        	echo "Tipo: " . $item["tipo"] . " Id Mesa: " . $item["idMesa"] . " Estado: " . $item["estado"] . " Tiempo: " . $item["tiempo"] . " Cantidad: " . $item["cantidad"] . " Precio: " . $item["precio"] . " Codigo: " . $item["codigo"] . " Inicio: " .$item["inicio"];
+	        	echo "Tipo: " . $item["tipo"] . " Id Mesa: " . $item["idMesa"] . " Estado: " . $item["estado"] . " Tiempo: " . $item["tiempo"] . " Cantidad: " . $item["cantidad"] . " Precio: " . $item["precio"] . " Codigo: " . $item["codigo"] . " Inicio: " . $item["inicio"];
 	        }
 	    }
 
@@ -80,7 +94,7 @@
 
 	        $consulta->bindValue(':codigo', $this->codigo, PDO::PARAM_STR);
 	        $consulta->execute();
-	        $data = $consulta->fetch();
+	        $data = $consulta->fetch(PDO::FETCH_ASSOC);
 
 	        return $data;
 	    }
